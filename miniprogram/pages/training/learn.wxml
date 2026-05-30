@@ -1,0 +1,50 @@
+<view class="page no-tab learn-page" wx:if="{{level}}">
+  <view class="video-shell">
+    <view wx:if="{{preparingMedia}}" class="subtitle-bar">正在准备示范视频，请稍等一下。</view>
+    <video
+      wx:if="{{hasVideo && !preparingMedia}}"
+      id="learnVideo"
+      class="learn-video"
+      src="{{level.video}}"
+      poster="{{level.image || '/assets/images/goose-main.png'}}"
+      controls
+      object-fit="contain"
+      show-center-play-btn
+    ></video>
+    <image
+      wx:elif="{{!hasVideo}}"
+      class="learn-video learn-image"
+      src="{{level.image}}"
+      mode="aspectFit"
+    />
+    <view wx:if="{{!preparingMedia}}" class="subtitle-bar">{{level.guide}}</view>
+  </view>
+
+  <view class="card">
+    <view class="top-row">
+      <image class="round-img" src="{{level.image}}" mode="aspectFill" />
+      <view>
+        <text class="card-title">{{level.name}}</text>
+        <text class="card-copy">{{level.description}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="action-grid">
+    <button class="outline-btn" bindtap="replayVideo">再看一遍</button>
+    <button class="outline-btn" bindtap="notYet">还没学会</button>
+    <button class="primary-btn wide" bindtap="understood">学会了</button>
+    <button class="quit-btn wide" bindtap="quitTraining">先不练了</button>
+  </view>
+
+  <view wx:if="{{showDialog}}" class="modal-mask" bindtap="closeDialog">
+    <view class="modal-card penguin-dialog" catchtap="noop">
+      <view class="modal-body">
+        <image class="dialog-img" src="/assets/images/penguin/encourage.jpg" mode="aspectFill" />
+        <text class="dialog-title">太棒啦</text>
+        <text class="dialog-copy">如果动作已经看明白了，就进入练习。小鹅会在旁边提醒您慢慢做。</text>
+        <button class="primary-btn" bindtap="startPractice">进入练习</button>
+      </view>
+    </view>
+  </view>
+</view>

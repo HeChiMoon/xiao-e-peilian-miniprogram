@@ -1,0 +1,14 @@
+{
+  "name": "assessmentService",
+  "version": "1.0.0",
+  "description": "小鹅陪练测评报告云函数",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.4.0"
+  }
+}

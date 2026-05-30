@@ -1,0 +1,253 @@
+.training-page {
+  padding-bottom: 44rpx;
+}
+
+.progress-card,
+.plan-card {
+  margin-bottom: 28rpx;
+}
+
+.plan-card {
+  background: #ffffff;
+}
+
+.finish-tip {
+  margin-top: 20rpx;
+  padding: 18rpx;
+  border-radius: 20rpx;
+  background: #f0f9f4;
+}
+
+.finish-tip text {
+  display: block;
+  color: #4f9a68;
+  font-size: 26rpx;
+  font-weight: 800;
+}
+
+.restart-btn {
+  margin-top: 16rpx;
+  height: 78rpx;
+  border: 0;
+  border-radius: 39rpx;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #4f9a68;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 800;
+}
+
+.restart-btn::after {
+  border: 0;
+}
+
+.plan-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-bottom: 14rpx;
+}
+
+.plan-kicker,
+.plan-focus,
+.tip-item,
+.hint-name,
+.hint-text {
+  display: block;
+}
+
+.plan-kicker {
+  margin-bottom: 8rpx;
+  color: #4f9a68;
+  font-size: 24rpx;
+  font-weight: 900;
+}
+
+.plan-focus {
+  flex: 0 0 auto;
+  max-width: 190rpx;
+  padding: 12rpx 18rpx;
+  border-radius: 28rpx;
+  background: #f0f9f4;
+  color: #4f9a68;
+  font-size: 24rpx;
+  font-weight: 900;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.tip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10rpx;
+  margin-top: 20rpx;
+}
+
+.tip-item {
+  padding: 14rpx 18rpx;
+  border-radius: 18rpx;
+  background: #f7f5f0;
+  color: #6b6b6b;
+  font-size: 26rpx;
+  line-height: 1.35;
+}
+
+.progress-track {
+  height: 28rpx;
+  overflow: hidden;
+  margin-top: 24rpx;
+  border-radius: 14rpx;
+  background: #e8e6e1;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 14rpx;
+  background: #88c9a1;
+}
+
+.map-card {
+  position: relative;
+  min-height: 620rpx;
+  border-radius: 36rpx;
+  background: linear-gradient(180deg, #ffffff 0%, #f0f9f4 100%);
+  box-shadow: 0 8rpx 28rpx rgba(220, 215, 205, 0.62);
+}
+
+.map-card::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 110rpx;
+  bottom: 110rpx;
+  width: 12rpx;
+  border-radius: 10rpx;
+  background: rgba(244, 168, 130, 0.28);
+  transform: translateX(-50%);
+}
+
+.level-node {
+  position: absolute;
+  width: 198rpx;
+  min-height: 198rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  border: 8rpx solid #ffffff;
+  border-radius: 50%;
+  background: #f4a882;
+  color: #ffffff;
+  box-shadow: 0 16rpx 30rpx rgba(244, 168, 130, 0.32);
+  box-sizing: border-box;
+}
+
+.level-node.locked {
+  background: #e8e6e1;
+  color: #6b6b6b;
+  box-shadow: none;
+}
+
+.level-node.done {
+  background: #88c9a1;
+}
+
+.level-node.recommended {
+  border-color: #fff0e8;
+}
+
+.level-node.focus {
+  border-color: #ffffff;
+  box-shadow: 0 18rpx 34rpx rgba(79, 154, 104, 0.34);
+}
+
+.node-badge {
+  position: absolute;
+  top: -16rpx;
+  left: 50%;
+  min-width: 92rpx;
+  height: 38rpx;
+  padding: 0 14rpx;
+  border-radius: 19rpx;
+  background: #3f3f3f;
+  color: #ffffff;
+  font-size: 19rpx;
+  font-weight: 900;
+  line-height: 38rpx;
+  text-align: center;
+  transform: translateX(-50%);
+  white-space: nowrap;
+}
+
+.node-1 { left: 48rpx; top: 66rpx; }
+.node-2 { right: 48rpx; top: 206rpx; }
+.node-3 { left: 48rpx; top: 346rpx; }
+
+.node-number {
+  font-size: 44rpx;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.node-name {
+  max-width: 160rpx;
+  margin-top: 14rpx;
+  font-size: 24rpx;
+  font-weight: 900;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.node-status {
+  margin-top: 8rpx;
+  font-size: 20rpx;
+  opacity: 0.82;
+}
+
+.hint-card {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 26rpx;
+}
+
+.hint-row {
+  display: grid;
+  grid-template-columns: 132rpx minmax(0, 1fr);
+  gap: 14rpx;
+  align-items: start;
+  padding: 16rpx;
+  border-radius: 18rpx;
+  background: #f7f5f0;
+}
+
+.hint-name {
+  color: #4f9a68;
+  font-size: 26rpx;
+  font-weight: 900;
+}
+
+.hint-text {
+  color: #6b6b6b;
+  font-size: 25rpx;
+  line-height: 1.45;
+}
+
+.quit-btn {
+  height: 92rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 26rpx;
+  border: 3rpx solid #e8e6e1;
+  border-radius: 46rpx;
+  background: #ffffff;
+  color: #6b6b6b;
+  font-size: 32rpx;
+  font-weight: 900;
+}

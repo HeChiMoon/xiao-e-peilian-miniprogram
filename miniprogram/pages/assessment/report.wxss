@@ -1,0 +1,67 @@
+.report-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.report-card {
+  text-align: center;
+}
+
+.report-goose {
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 50%;
+}
+
+.report-title,
+.report-date,
+.score,
+.summary {
+  display: block;
+}
+
+.report-title {
+  margin-top: 22rpx;
+  color: #3F3F3F;
+  font-size: 34rpx;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.report-date {
+  margin-top: 8rpx;
+  color: #6B6B6B;
+  font-size: 25rpx;
+}
+
+.risk-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 180rpx;
+  height: 66rpx;
+  margin-top: 24rpx;
+  border-radius: 33rpx;
+  color: #FFFFFF;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.risk-badge.low { background: #88C9A1; }
+.risk-badge.medium { background: #FFA726; }
+.risk-badge.high { background: #E57373; }
+
+.score {
+  margin-top: 18rpx;
+  color: #F4A882;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.summary {
+  margin-top: 18rpx;
+  color: #3F3F3F;
+  font-size: 30rpx;
+  line-height: 1.7;
+}

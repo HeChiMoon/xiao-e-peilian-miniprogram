@@ -1,0 +1,14 @@
+{
+  "name": "trainingService",
+  "version": "1.0.0",
+  "description": "小鹅陪练训练进度云函数",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.4.0"
+  }
+}

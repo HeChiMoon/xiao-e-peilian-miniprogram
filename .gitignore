@@ -1,0 +1,31 @@
+# Windows
+[Dd]esktop.ini
+Thumbs.db
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+
+# Node.js
+node_modules/
+.npm-cache/
+
+# Local secrets
+AccessKey.csv
+*.secret.csv
+
+# Local tooling / personal config
+.claude/
+project.private.config.json
+
+# Temp assets / debug frames
+_pose_video_frames/
+*.log
+
+# Local reference media not used by miniprogram runtime
+pose/
+video/

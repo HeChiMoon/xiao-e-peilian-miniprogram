@@ -1,0 +1,9 @@
+<view class="page no-tab complete-page" wx:if="{{level}}">
+  <view class="celebrate-card">
+    <image class="celebrate-img" src="{{all ? '/assets/images/penguin/celebrate.jpg' : '/assets/images/penguin/happy.jpg'}}" mode="aspectFill" />
+    <text class="celebrate-title">{{title}}</text>
+    <text class="celebrate-copy">{{copy}}</text>
+    <button class="primary-btn" bindtap="nextLevel">{{primaryText}}</button>
+    <button class="outline-btn back-btn" bindtap="backMap">返回地图</button>
+  </view>
+</view>

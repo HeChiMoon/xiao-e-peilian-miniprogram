@@ -1,0 +1,110 @@
+<view class="page no-tab assessment-page">
+  <view wx:if="{{stage === 'intro'}}" class="content">
+    <view class="card intro-card">
+      <image class="intro-goose" src="/assets/images/goose-main.png" mode="aspectFill" />
+      <text class="hero-title">{{intro.title}}</text>
+      <text class="intro-text">{{intro.greeting}}</text>
+      <view class="warning-box">
+        <text>{{intro.safety}}</text>
+      </view>
+    </view>
+    <button class="primary-btn" bindtap="startAssessment">开始测评</button>
+    <button class="outline-btn" bindtap="resetAssessment">重新开始</button>
+  </view>
+
+  <view wx:if="{{stage === 'basic'}}" class="content">
+    <text class="stage-title">第一部分：先问问您</text>
+    <view wx:for="{{basicQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+      <text class="question-title">{{item.title}}</text>
+      <view class="option-list">
+        <button
+          wx:for="{{item.options}}"
+          wx:for-item="option"
+          wx:for-index="oindex"
+          wx:key="value"
+          class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
+          data-section="basicQuestions"
+          data-qindex="{{qindex}}"
+          data-oindex="{{oindex}}"
+          bindtap="chooseOption"
+        >
+          {{option.label}}
+        </button>
+      </view>
+    </view>
+    <view class="nav-actions">
+      <button class="outline-btn" bindtap="prevStage">上一步</button>
+      <button class="primary-btn" bindtap="nextFromBasic">下一步</button>
+    </view>
+  </view>
+
+  <view wx:if="{{stage === 'actions'}}" class="content">
+    <text class="stage-title">第二部分：跟着做动作</text>
+    <view wx:for="{{actionTests}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+      <view class="action-head">
+        <text class="action-index">{{qindex + 1}}</text>
+        <view>
+          <text class="question-title">{{item.title}}</text>
+          <text class="question-guide">{{item.guide}}</text>
+        </view>
+      </view>
+      <button class="outline-btn camera-guide" data-index="{{qindex}}" bindtap="openActionGuide">查看动作示范</button>
+      <view class="option-list">
+        <button
+          wx:for="{{item.options}}"
+          wx:for-item="option"
+          wx:for-index="oindex"
+          wx:key="value"
+          class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
+          data-section="actionTests"
+          data-qindex="{{qindex}}"
+          data-oindex="{{oindex}}"
+          bindtap="chooseOption"
+        >
+          {{option.label}}
+        </button>
+      </view>
+    </view>
+    <view class="nav-actions">
+      <button class="outline-btn" bindtap="prevStage">上一步</button>
+      <button class="primary-btn" bindtap="nextFromActions">下一步</button>
+    </view>
+  </view>
+
+  <view wx:if="{{stage === 'risk'}}" class="content">
+    <text class="stage-title">第三部分：最近情况</text>
+    <view wx:for="{{riskQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+      <text class="question-title">{{item.title}}</text>
+      <view class="option-list">
+        <button
+          wx:for="{{item.options}}"
+          wx:for-item="option"
+          wx:for-index="oindex"
+          wx:key="value"
+          class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
+          data-section="riskQuestions"
+          data-qindex="{{qindex}}"
+          data-oindex="{{oindex}}"
+          bindtap="chooseOption"
+        >
+          {{option.label}}
+        </button>
+      </view>
+    </view>
+    <view class="nav-actions">
+      <button class="outline-btn" bindtap="prevStage">上一步</button>
+      <button class="success-btn" loading="{{savingReport}}" bindtap="submitAssessment">{{savingReport ? '保存中...' : '生成报告'}}</button>
+    </view>
+  </view>
+
+  <view wx:if="{{showActionModal}}" class="modal-mask" bindtap="closeActionGuide">
+    <view class="modal-card" catchtap="noop">
+      <view class="modal-body action-modal">
+        <image class="action-preview" src="{{actionImage}}" mode="aspectFit" />
+        <text class="card-title">{{currentAction.title}}</text>
+        <text class="card-copy">{{currentAction.guide}}</text>
+        <button class="primary-btn" bindtap="closeActionGuide">继续答题</button>
+      </view>
+    </view>
+  </view>
+</view>
