@@ -1,0 +1,31 @@
+<view class="page no-tab role-page">
+  <view class="role-hero">
+    <image class="role-mascot" src="{{mascot}}" mode="aspectFill" />
+    <text class="role-kicker">小鹅陪练</text>
+    <text class="role-title">请选择您的身份</text>
+    <text class="role-copy">同一个微信号再次进入时，系统会自动续上您上次的身份和资料。</text>
+  </view>
+
+  <view wx:if="{{checkingLogin}}" class="resume-card">
+    <text class="resume-title">微信登录中</text>
+    <text class="resume-copy">{{checkingText}}</text>
+  </view>
+
+  <view class="role-list">
+    <button
+      wx:for="{{roles}}"
+      wx:key="role"
+      class="role-card {{item.role}}"
+      data-role="{{item.role}}"
+      bindtap="chooseRole"
+      disabled="{{checkingLogin}}"
+    >
+      <image class="role-icon" src="{{item.image}}" mode="aspectFill" />
+      <view class="role-content">
+        <text class="role-name">{{item.title}}</text>
+        <text class="role-desc">{{item.desc}}</text>
+        <text class="role-action">{{item.action}}</text>
+      </view>
+    </button>
+  </view>
+</view>

@@ -1,0 +1,67 @@
+<view class="page home-page">
+  <view class="hero-card">
+    <view>
+      <text class="hello">{{greeting}}</text>
+      <text class="hero-title">小鹅陪您每天练一练，让膝关节更轻松</text>
+      <text class="subtitle">先测评，再训练。动作慢一点、稳一点，小鹅会一直陪着您。</text>
+    </view>
+    <image class="hero-goose" src="{{mascot}}" mode="aspectFill" />
+  </view>
+
+  <view class="status-grid">
+    <view class="mini-card">
+      <text class="mini-label">今日训练</text>
+      <text class="mini-value">{{progressText}}</text>
+    </view>
+    <view class="mini-card">
+      <text class="mini-label">最近测评</text>
+      <text class="mini-value small">{{reportText}}</text>
+    </view>
+    <view class="mini-card wide">
+      <text class="mini-label">最近检测</text>
+      <text class="mini-value small">{{poseText}}</text>
+    </view>
+  </view>
+
+  <view class="content">
+    <view class="card focus-card">
+      <text class="card-title">{{dailyFocus.title}}</text>
+      <text class="card-copy">{{dailyFocus.copy}}</text>
+    </view>
+
+    <view class="card green feature-card">
+      <view>
+        <text class="card-title">小鹅小测评</text>
+        <text class="card-copy">先了解当前膝关节状态，再安排更合适的训练顺序。</text>
+      </view>
+      <button class="success-btn card-action" bindtap="goAssessment">开始测评</button>
+    </view>
+
+    <view class="card feature-card">
+      <view>
+        <text class="card-title">每日练</text>
+        <text class="card-copy">围绕 3 个核心动作练习，动作更聚焦，训练流程也更顺。</text>
+      </view>
+      <button class="primary-btn card-action" bindtap="goTraining">开始训练</button>
+    </view>
+
+    <view class="card video-entry" bindtap="goVideo">
+      <view class="video-head">
+        <view class="video-copy">
+          <text class="card-title">科普视频</text>
+          <text class="card-copy">今日推荐：{{recommendedVideo.title}}</text>
+          <text class="video-reason">{{recommendedVideo.reason}}</text>
+        </view>
+        <image class="video-mascot" src="{{mascot}}" mode="aspectFill" />
+      </view>
+      <view class="video-cover">
+        <text class="play-mark">▶</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="float-chat" bindtap="goChat">
+    <image class="float-chat-icon" src="{{mascot}}" mode="aspectFit" />
+    <text class="float-chat-text">小百科</text>
+  </view>
+</view>

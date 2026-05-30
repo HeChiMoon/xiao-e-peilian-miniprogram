@@ -1,0 +1,183 @@
+.pose-detail-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24rpx;
+}
+
+.detail-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 12rpx;
+}
+
+.empty-card {
+  min-height: 180rpx;
+  padding: 34rpx;
+  border-radius: 28rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 18rpx;
+  background: #FFFFFF;
+  color: #6B6B6B;
+  font-size: 28rpx;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.summary-card,
+.canvas-card,
+.angle-card,
+.compare-card,
+.suggestion-card {
+  margin-bottom: 22rpx;
+}
+
+.summary-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18rpx;
+  margin-bottom: 22rpx;
+}
+
+.detail-title,
+.detail-time,
+.metric-label,
+.metric-value,
+.suggestion-text,
+.compare-empty,
+.canvas-empty {
+  display: block;
+}
+
+.detail-title {
+  color: #3F3F3F;
+  font-size: 36rpx;
+  font-weight: 900;
+}
+
+.detail-time {
+  margin-top: 8rpx;
+  color: #9A948A;
+  font-size: 24rpx;
+}
+
+.risk-pill {
+  min-width: 128rpx;
+  min-height: 52rpx;
+  padding: 0 18rpx;
+  border-radius: 26rpx;
+  font-size: 24rpx;
+  font-weight: 900;
+  line-height: 52rpx;
+  text-align: center;
+}
+
+.risk-pill.safe {
+  background: #F0F9F4;
+  color: #4F9A68;
+}
+
+.risk-pill.warning {
+  background: #FFF8E1;
+  color: #8A4A00;
+}
+
+.risk-pill.danger {
+  background: #FFF0E8;
+  color: #C66F3C;
+}
+
+.score-row,
+.angle-grid,
+.compare-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14rpx;
+}
+
+.angle-grid {
+  margin-top: 20rpx;
+}
+
+.score-row view,
+.angle-grid view,
+.compare-grid view {
+  min-height: 126rpx;
+  padding: 18rpx 14rpx;
+  border-radius: 20rpx;
+  background: #F7F5F0;
+}
+
+.metric-label {
+  color: #6B6B6B;
+  font-size: 23rpx;
+}
+
+.metric-value {
+  margin-top: 12rpx;
+  color: #3F3F3F;
+  font-size: 34rpx;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+.metric-value.small {
+  font-size: 25rpx;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.metric-value.up {
+  color: #4F9A68;
+}
+
+.metric-value.down {
+  color: #C66F3C;
+}
+
+.metric-value.stable {
+  color: #6B6B6B;
+}
+
+.pose-canvas {
+  width: 100%;
+  height: 320rpx;
+  margin-top: 20rpx;
+  border-radius: 22rpx;
+  background: #F7F5F0;
+}
+
+.canvas-empty,
+.compare-empty {
+  margin-top: 18rpx;
+  padding: 22rpx;
+  border-radius: 18rpx;
+  background: #F7F5F0;
+  color: #6B6B6B;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.suggestion-text {
+  margin-top: 18rpx;
+  color: #3F3F3F;
+  font-size: 29rpx;
+  line-height: 1.65;
+}
+
+.detail-actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18rpx;
+}
+
+@media (max-width: 360px) {
+  .score-row,
+  .angle-grid,
+  .compare-grid,
+  .detail-actions {
+    grid-template-columns: 1fr;
+  }
+}

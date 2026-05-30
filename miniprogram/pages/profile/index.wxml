@@ -1,0 +1,116 @@
+<view class="page profile-page">
+  <view class="profile-card">
+    <image class="avatar-img" src="{{profile.avatar}}" mode="aspectFill" />
+    <view class="profile-main">
+      <text class="profile-name">{{profile.name}}</text>
+      <text class="subtitle">{{profile.age ? profile.age + '岁' : '年龄待完善'}} | 关节健康等级：{{profile.healthLevel}}</text>
+      <text class="subtitle">最近测评：{{reportText}} | 今日训练：{{trainingText}}</text>
+    </view>
+    <button class="qr-button" bindtap="showQr">绑定子女</button>
+  </view>
+
+  <view class="profile-grid">
+    <view class="mini-card">
+      <text class="mini-label">今日训练</text>
+      <text class="mini-value">{{trainingText}}</text>
+    </view>
+    <view class="mini-card">
+      <text class="mini-label">最近检测</text>
+      <text class="mini-value small">{{poseText}}</text>
+    </view>
+    <view class="mini-card wide">
+      <text class="mini-label">子女绑定</text>
+      <text class="mini-value small">{{bindingText}}</text>
+    </view>
+  </view>
+
+  <view class="card menu-card">
+    <view class="menu-row" bindtap="openProfileEdit">
+      <text>完善资料</text>
+      <text>病史、疼痛部位、紧急联系人</text>
+    </view>
+    <view class="menu-row" bindtap="openSettings">
+      <text>设置</text>
+      <text>提醒、清空当前数据、返回身份选择</text>
+    </view>
+    <view class="menu-row" bindtap="openTraining">
+      <text>训练记录</text>
+      <text>{{trainingText}}</text>
+    </view>
+    <view class="menu-row" bindtap="openHealth">
+      <text>健康档案</text>
+      <text>资料、测评和训练概览</text>
+    </view>
+    <view class="menu-row" bindtap="openPoseHistory">
+      <text>检测历史</text>
+      <text>角度、评分和训练建议</text>
+    </view>
+  </view>
+
+  <view wx:if="{{showQr}}" class="modal-mask" bindtap="closeQr">
+    <view class="modal-card" catchtap="noop">
+      <view class="modal-body qr-modal">
+        <text class="card-title">绑定子女</text>
+        <text class="binding-status">{{bindingLoading ? '正在生成绑定码…' : bindingStatus}}</text>
+        <image wx:if="{{bindingQrUrl}}" class="binding-qr-image" src="{{bindingQrUrl}}" mode="aspectFit" />
+        <view wx:else class="binding-qr-placeholder">二维码生成中</view>
+        <text class="binding-code">{{bindingCode || '请稍候'}}</text>
+        <view class="binding-actions">
+          <button class="outline-btn half-btn" bindtap="copyBindingCode">复制绑定码</button>
+          <button class="primary-btn half-btn" bindtap="closeQr">知道了</button>
+        </view>
+        <text class="card-copy">请让子女扫描这个二维码获取绑定码；如果当前设备不方便扫码，也可以直接复制绑定码手动输入完成绑定。</text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showSettings}}" class="modal-mask" bindtap="closeSettings">
+    <view class="modal-card settings-modal" catchtap="noop">
+      <view class="modal-body">
+        <text class="card-title">设置</text>
+        <view class="setting-row">
+          <view>
+            <text class="setting-label">训练提醒</text>
+            <text class="setting-desc">每日定时提醒您进行训练</text>
+          </view>
+          <switch checked="{{settings.reminderEnabled}}" color="#88C9A1" bindchange="onReminderToggle" />
+        </view>
+        <view class="setting-row">
+          <view>
+            <text class="setting-label">提醒时间</text>
+            <text class="setting-desc">当前 {{settings.reminderTime}}</text>
+          </view>
+          <picker mode="time" value="{{settings.reminderTime}}" bindchange="onTimeChange">
+            <view class="picker-pill">{{settings.reminderTime}}</view>
+          </picker>
+        </view>
+        <view class="setting-row">
+          <view>
+            <text class="setting-label">提醒频率</text>
+            <text class="setting-desc">{{settings.frequency}}</text>
+          </view>
+          <picker mode="selector" range="{{frequencies}}" bindchange="onFrequencyChange">
+            <view class="picker-pill">选择</view>
+          </picker>
+        </view>
+        <view class="setting-row">
+          <view>
+            <text class="setting-label">提醒声音</text>
+            <text class="setting-desc">{{settings.sound}}</text>
+          </view>
+          <picker mode="selector" range="{{sounds}}" bindchange="onSoundChange">
+            <view class="picker-pill">选择</view>
+          </picker>
+        </view>
+        <view class="setting-block">
+          <text class="setting-label">语速调节</text>
+          <slider value="{{settings.voiceSpeed * 100}}" min="60" max="110" activeColor="#F4A882" bindchange="onVoiceSpeedChange" />
+          <text class="setting-desc">用于调节当前语速偏好，方便日常使用。</text>
+        </view>
+        <button class="logout-btn" loading="{{resettingDemo}}" bindtap="resetDemoData">清空当前数据</button>
+        <button class="logout-btn" bindtap="logout">回到身份选择</button>
+        <button class="primary-btn" bindtap="closeSettings">关闭</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,92 @@
+<view class="page no-tab pose-detail-page">
+  <view class="detail-hero">
+    <text class="hero-title">检测详情</text>
+    <text class="subtitle">查看单次膝关节角度、标准范围、评分变化和骨架示意。</text>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty-card">正在读取检测详情…</view>
+
+  <view wx:elif="{{errorText}}" class="empty-card">
+    <text>{{errorText}}</text>
+    <button class="primary-btn" bindtap="retry">重试</button>
+  </view>
+
+  <view wx:else>
+    <view class="card summary-card">
+      <view class="summary-top">
+        <view>
+          <text class="detail-title">{{record.actionName}}</text>
+          <text class="detail-time">{{record.timeText}}</text>
+        </view>
+        <text class="risk-pill {{record.riskClass}}">{{record.riskText}}</text>
+      </view>
+      <view class="score-row">
+        <view>
+          <text class="metric-label">动作评分</text>
+          <text class="metric-value">{{record.scoreText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">平均角度</text>
+          <text class="metric-value">{{record.averageAngleText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card canvas-card">
+      <text class="card-title">骨架示意</text>
+      <canvas wx:if="{{record.hasKeypoints}}" class="pose-canvas" canvas-id="poseDetailCanvas"></canvas>
+      <view wx:else class="canvas-empty">这条记录没有可用骨架点，当前仅展示角度和建议。</view>
+    </view>
+
+    <view class="card angle-card">
+      <text class="card-title">角度对比</text>
+      <view class="angle-grid">
+        <view>
+          <text class="metric-label">左膝</text>
+          <text class="metric-value">{{record.leftAngleText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">右膝</text>
+          <text class="metric-value">{{record.rightAngleText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">标准范围</text>
+          <text class="metric-value small">{{record.standardText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">理想角度</text>
+          <text class="metric-value">{{record.idealText}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="card compare-card">
+      <text class="card-title">和上一次相比</text>
+      <view wx:if="{{compare.hasPrevious}}" class="compare-grid">
+        <view>
+          <text class="metric-label">上一条</text>
+          <text class="metric-value small">{{compare.previousTimeText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">评分变化</text>
+          <text class="metric-value {{compare.scoreDeltaClass}}">{{compare.scoreDeltaText}}</text>
+        </view>
+        <view>
+          <text class="metric-label">角度变化</text>
+          <text class="metric-value {{compare.angleDeltaClass}}">{{compare.angleDeltaText}}</text>
+        </view>
+      </view>
+      <text wx:else class="compare-empty">还没有上一条同动作记录，完成下一次检测后会显示变化。</text>
+    </view>
+
+    <view class="card suggestion-card">
+      <text class="card-title">小鹅建议</text>
+      <text class="suggestion-text">{{record.suggestion}}</text>
+    </view>
+
+    <view class="detail-actions">
+      <button class="outline-btn" bindtap="goHistory">返回历史</button>
+      <button class="primary-btn" bindtap="goTraining">去每日练</button>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,51 @@
+<view class="page no-tab short-video-page">
+  <view wx:if="{{preparingMedia}}" class="loading-banner">
+    <text>正在准备视频，请稍等一下。</text>
+  </view>
+
+  <swiper
+    class="video-swiper"
+    vertical
+    circular="{{false}}"
+    current="{{currentIndex}}"
+    bindchange="onSwiperChange"
+  >
+    <swiper-item wx:for="{{videos}}" wx:key="id">
+      <view class="video-slide">
+        <video
+          id="video-{{index}}"
+          class="short-video"
+          src="{{item.src}}"
+          poster="{{item.poster}}"
+          autoplay="{{currentIndex === index && !preparingMedia}}"
+          loop
+          show-center-play-btn="{{false}}"
+          show-play-btn="{{false}}"
+          controls="{{false}}"
+          enable-progress-gesture="{{false}}"
+          object-fit="cover"
+          bindplay="onVideoPlay"
+          bindpause="onVideoPause"
+          bindended="onVideoEnded"
+          binderror="onVideoError"
+        ></video>
+
+        <view class="video-mask" bindtap="toggleCurrentVideo">
+          <view class="top-tip">
+            <text class="tip-text">上下滑动切换视频</text>
+          </view>
+
+          <view class="bottom-panel">
+            <view class="panel-head">
+              <text class="page-title">科普视频</text>
+              <text wx:if="{{item.recommended}}" class="recommend-pill">推荐 {{item.recommendRank}}</text>
+            </view>
+            <text class="video-title">{{item.title}}</text>
+            <text class="video-desc">{{item.desc}}</text>
+            <text wx:if="{{item.recommended}}" class="recommend-reason">{{item.recommendReason}}</text>
+          </view>
+        </view>
+      </view>
+    </swiper-item>
+  </swiper>
+</view>

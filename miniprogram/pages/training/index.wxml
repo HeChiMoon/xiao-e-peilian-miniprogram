@@ -1,0 +1,55 @@
+<view class="page no-tab training-page">
+  <view class="card progress-card">
+    <text class="card-title">每日训练</text>
+    <text class="card-copy">今日进度：{{progressText}}</text>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressWidth}}"></view>
+    </view>
+    <view wx:if="{{allCompleted}}" class="finish-tip">
+      <text>今天的 3 个动作都完成了。</text>
+      <button class="restart-btn" loading="{{resetting}}" bindtap="restartToday">重新开始今日训练</button>
+    </view>
+  </view>
+
+  <view wx:if="{{plan}}" class="card plan-card">
+    <view class="plan-head">
+      <view>
+        <text class="plan-kicker">{{plan.riskText}}</text>
+        <text class="card-title">{{plan.headline}}</text>
+      </view>
+      <text class="plan-focus">{{plan.focusLevelName}}</text>
+    </view>
+    <text class="card-copy">{{plan.reason}}</text>
+    <view class="tip-list">
+      <text wx:for="{{plan.safetyTips}}" wx:key="*this" class="tip-item">{{item}}</text>
+    </view>
+  </view>
+
+  <view class="map-card">
+    <view
+      wx:for="{{levels}}"
+      wx:key="id"
+      class="level-node node-{{item.id}} {{item.locked ? 'locked' : ''}} {{item.done ? 'done' : ''}} {{item.recommended ? 'recommended' : ''}} {{item.focus ? 'focus' : ''}}"
+      data-id="{{item.id}}"
+      data-locked="{{item.locked ? 1 : 0}}"
+      bindtap="openLevel"
+    >
+      <text wx:if="{{item.badgeText}}" class="node-badge">{{item.badgeText}}</text>
+      <view class="node-number">{{item.id}}</view>
+      <text class="node-name">{{item.name}}</text>
+      <text class="node-status">{{item.statusText}}</text>
+    </view>
+  </view>
+
+  <view wx:if="{{plan}}" class="card hint-card">
+    <text class="card-title">动作小提示</text>
+    <block wx:for="{{levels}}" wx:key="id">
+      <view wx:if="{{item.recommended || item.focus}}" class="hint-row">
+        <text class="hint-name">{{item.shortName}}</text>
+        <text class="hint-text">{{item.planHint}}</text>
+      </view>
+    </block>
+  </view>
+
+  <button class="quit-btn" bindtap="quitTraining">先不练了</button>
+</view>

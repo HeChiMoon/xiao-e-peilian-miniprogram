@@ -1,0 +1,43 @@
+<view class="page no-tab records-page">
+  <view class="hero-card">
+    <text class="hero-title">训练记录</text>
+    <text class="subtitle">今日完成：{{progressText}}</text>
+  </view>
+
+  <view class="summary-card">
+    <text class="summary-value">{{progressText}}</text>
+    <text class="summary-label">今天已完成 {{completedCount}} 个动作</text>
+    <text class="summary-copy">{{tipText}}</text>
+  </view>
+
+  <view class="summary-grid">
+    <view class="mini-card">
+      <text class="mini-label">待完成</text>
+      <text class="mini-value">{{remainingCount}}</text>
+    </view>
+    <view class="mini-card">
+      <text class="mini-label">下一个动作</text>
+      <text class="mini-value small">{{nextLevelText}}</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">已完成</text>
+    <view wx:if="{{completedLevels.length === 0}}" class="empty-text">今天还没有完成关卡，慢慢开始就好。</view>
+    <view wx:for="{{completedLevels}}" wx:key="id" class="level-row done">
+      <text>{{item.id}}. {{item.name}}</text>
+      <text>已完成</text>
+    </view>
+  </view>
+
+  <view class="card">
+    <text class="card-title">待练习</text>
+    <view wx:for="{{todoLevels}}" wx:key="id" class="level-row">
+      <text>{{item.id}}. {{item.name}}</text>
+      <text>待完成</text>
+    </view>
+  </view>
+
+  <button class="outline-btn" bindtap="goTraining">去每日练</button>
+  <button class="primary-btn home-btn" bindtap="goHome">返回首页</button>
+</view>

@@ -1,0 +1,14 @@
+{
+  "name": "voiceService",
+  "version": "1.0.0",
+  "description": "Xiao-e voice interaction cloud function",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "wx-server-sdk": "~2.4.0"
+  }
+}

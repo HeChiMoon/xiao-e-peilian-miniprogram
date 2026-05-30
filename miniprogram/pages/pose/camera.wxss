@@ -1,0 +1,285 @@
+.camera-page {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #101010;
+  overflow: hidden;
+}
+
+.camera-shell {
+  position: relative;
+  flex: 0 0 65vh;
+  min-height: 700rpx;
+  max-height: none;
+  background: #000000;
+}
+
+.camera-view {
+  width: 100%;
+  height: 100%;
+}
+
+.body-frame {
+  position: absolute;
+  left: 28rpx;
+  right: 28rpx;
+  top: 28rpx;
+  bottom: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+  border: 4rpx dashed rgba(136, 201, 161, 0.95);
+  border-radius: 34rpx;
+  color: #ffffff;
+  text-align: center;
+  pointer-events: none;
+}
+
+.frame-title {
+  font-size: 34rpx;
+  font-weight: 900;
+}
+
+.frame-copy {
+  max-width: calc(100% - 48rpx);
+  padding: 8rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 25rpx;
+  font-weight: 800;
+  box-sizing: border-box;
+}
+
+.control-panel {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  background: #f7f5f0;
+  border-radius: 28rpx 28rpx 0 0;
+  overflow: hidden;
+}
+
+.panel-scroll {
+  flex: 1;
+  min-height: 0;
+}
+
+.panel-content {
+  padding: 20rpx 24rpx 16rpx;
+}
+
+.action-info,
+.status-box,
+.result-box {
+  padding: 20rpx;
+  border-radius: 22rpx;
+  background: #ffffff;
+}
+
+.status-box,
+.result-box {
+  margin-top: 18rpx;
+}
+
+.action-name,
+.action-guide,
+.status-box text,
+.result-label,
+.result-value,
+.suggestion,
+.debug-copy {
+  display: block;
+}
+
+.action-name {
+  color: #3f3f3f;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.action-guide {
+  margin-top: 8rpx;
+  color: #6b6b6b;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.status-box {
+  color: #6b6b6b;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.status-box.pass {
+  background: #f0f9f4;
+  color: #4f9a68;
+}
+
+.success-panel {
+  margin-top: 18rpx;
+  min-height: 300rpx;
+  padding: 28rpx 24rpx;
+  border-radius: 28rpx;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14rpx;
+  background: #f0f9f4;
+}
+
+.success-word {
+  display: block;
+  color: #4f9a68;
+  font-size: 56rpx;
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.success-hint,
+.success-tip {
+  display: block;
+  color: #5f7567;
+  text-align: center;
+}
+
+.success-hint {
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.success-tip {
+  font-size: 24rpx;
+  line-height: 1.35;
+}
+
+.result-box {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12rpx;
+}
+
+.result-box view {
+  min-height: 92rpx;
+  padding: 12rpx 10rpx;
+  border-radius: 18rpx;
+  background: #f7f5f0;
+  box-sizing: border-box;
+}
+
+.result-label {
+  color: #6b6b6b;
+  font-size: 22rpx;
+}
+
+.result-value {
+  margin-top: 8rpx;
+  color: #3f3f3f;
+  font-size: 32rpx;
+  font-weight: 900;
+}
+
+.result-value.small {
+  font-size: 25rpx;
+}
+
+.suggestion {
+  grid-column: 1 / 3;
+  color: #6b6b6b;
+  font-size: 26rpx;
+  line-height: 1.55;
+}
+
+.debug-copy {
+  grid-column: 1 / 3;
+  padding: 14rpx 16rpx;
+  border-radius: 16rpx;
+  background: #fff0e8;
+  color: #c66f3c;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.action-bar {
+  flex-shrink: 0;
+  display: grid;
+  gap: 14rpx;
+  padding: 16rpx 24rpx calc(24rpx + env(safe-area-inset-bottom));
+  border-top: 1rpx solid rgba(63, 63, 63, 0.08);
+  background: #f7f5f0;
+  box-shadow: 0 -10rpx 24rpx rgba(0, 0, 0, 0.04);
+}
+
+.primary-btn,
+.retry-btn,
+.outline-btn {
+  height: 92rpx;
+  border: 0;
+  border-radius: 46rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  font-size: 32rpx;
+  font-weight: 800;
+}
+
+.primary-btn,
+.retry-btn {
+  background: #f4a882;
+  color: #ffffff;
+}
+
+.outline-btn {
+  background: #ffffff;
+  color: #3f3f3f;
+  border: 2rpx solid rgba(63, 63, 63, 0.12);
+}
+
+.primary-btn::after,
+.retry-btn::after,
+.outline-btn::after {
+  border: 0;
+}
+
+.rotate-canvas {
+  position: fixed;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 360px) {
+  .camera-shell {
+    flex-basis: 62vh;
+    min-height: 620rpx;
+  }
+
+  .result-box {
+    grid-template-columns: 1fr;
+  }
+
+  .suggestion,
+  .debug-copy {
+    grid-column: 1;
+  }
+
+  .success-word {
+    font-size: 48rpx;
+  }
+
+  .success-hint {
+    font-size: 26rpx;
+  }
+}

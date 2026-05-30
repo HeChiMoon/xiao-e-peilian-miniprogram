@@ -1,0 +1,47 @@
+<view class="page no-tab edit-profile-page">
+  <view class="card header-card">
+    <text class="hero-title">完善老人资料</text>
+    <text class="subtitle">补充病史、疼痛部位和紧急联系人，后续训练建议会更准确。</text>
+  </view>
+
+  <view class="card form-card">
+    <view class="form-row">
+      <text class="form-label">手机号</text>
+      <input class="form-input" value="{{form.phone}}" placeholder="请输入手机号" bindinput="onInput" data-field="phone" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">病史</text>
+      <textarea class="form-textarea" value="{{form.medicalHistory}}" placeholder="例如：高血压、糖尿病、膝关节炎等" bindinput="onInput" data-field="medicalHistory" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">疼痛部位</text>
+      <input class="form-input" value="{{form.painAreas}}" placeholder="例如：左膝、右膝、腰背" bindinput="onInput" data-field="painAreas" />
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">紧急联系人</text>
+      <input class="form-input" value="{{form.emergencyContact}}" placeholder="姓名和电话" bindinput="onInput" data-field="emergencyContact" />
+    </view>
+
+    <view class="double-row">
+      <view class="form-row">
+        <text class="form-label">身高</text>
+        <input class="form-input" value="{{form.height}}" placeholder="cm" type="number" bindinput="onInput" data-field="height" />
+      </view>
+      <view class="form-row">
+        <text class="form-label">体重</text>
+        <input class="form-input" value="{{form.weight}}" placeholder="kg" type="number" bindinput="onInput" data-field="weight" />
+      </view>
+    </view>
+
+    <view class="form-row">
+      <text class="form-label">备注</text>
+      <textarea class="form-textarea" value="{{form.note}}" placeholder="其他需要家人或康复师知道的信息" bindinput="onInput" data-field="note" />
+    </view>
+  </view>
+
+  <button class="primary-btn" loading="{{saving}}" bindtap="saveProfile">{{saving ? '保存中...' : '保存资料'}}</button>
+  <button class="outline-btn" bindtap="goBack">返回</button>
+</view>

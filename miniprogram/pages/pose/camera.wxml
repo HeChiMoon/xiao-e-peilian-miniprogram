@@ -1,0 +1,73 @@
+<view class="camera-page">
+  <view class="camera-shell">
+    <camera
+      class="camera-view"
+      device-position="back"
+      flash="off"
+      frame-size="large"
+      bindinitdone="onCameraReady"
+      binderror="onCameraError"
+    ></camera>
+
+    <view class="body-frame">
+      <text class="frame-title">{{actionName}}</text>
+      <text class="frame-copy">{{frameCopy}}</text>
+    </view>
+  </view>
+
+  <view class="control-panel">
+    <scroll-view class="panel-scroll" scroll-y="true">
+      <view class="panel-content">
+        <view wx:if="{{!(result && result.pass && fromPractice)}}" class="action-info">
+          <text class="action-name">{{actionName}}</text>
+          <text class="action-guide">{{guide}}</text>
+        </view>
+
+        <view
+          wx:if="{{!(result && result.pass && fromPractice)}}"
+          class="status-box {{result && result.pass ? 'pass' : ''}}"
+        >
+          <text>{{statusText}}</text>
+        </view>
+
+        <view wx:if="{{result && result.pass && fromPractice}}" class="success-panel">
+          <text class="success-word">{{isFinalLevel ? '恭喜通关' : '做得真棒'}}</text>
+          <text wx:if="{{!isFinalLevel}}" class="success-hint">请稍等，正在进入下一关</text>
+          <text wx:if="{{!isFinalLevel}}" class="success-tip">小提示：可以先放松一下腿</text>
+        </view>
+
+        <view wx:elif="{{result}}" class="result-box">
+          <view>
+            <text class="result-label">膝关节角度</text>
+            <text class="result-value">{{result.angleText}}</text>
+          </view>
+          <view>
+            <text class="result-label">动作评分</text>
+            <text class="result-value">{{result.scoreText}}</text>
+          </view>
+          <text class="suggestion">{{result.suggestion}}</text>
+        </view>
+      </view>
+    </scroll-view>
+
+    <view class="action-bar">
+      <button
+        wx:if="{{!hasAttempted}}"
+        class="primary-btn"
+        loading="{{taking || uploading || analyzing}}"
+        bindtap="takePhoto"
+      >开始检测</button>
+
+      <button
+        wx:elif="{{!autoAdvancing}}"
+        class="retry-btn"
+        loading="{{taking || uploading || analyzing}}"
+        bindtap="takePhoto"
+      >重新检测</button>
+
+      <button wx:if="{{!autoAdvancing}}" class="outline-btn" bindtap="backPractice">{{backButtonText}}</button>
+    </view>
+  </view>
+
+  <canvas canvas-id="rotateCanvas" class="rotate-canvas"></canvas>
+</view>

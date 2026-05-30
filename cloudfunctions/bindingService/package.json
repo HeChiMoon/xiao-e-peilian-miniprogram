@@ -1,0 +1,15 @@
+{
+  "name": "bindingService",
+  "version": "1.0.0",
+  "description": "小鹅陪练子女绑定云函数",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"no tests\""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "qrcode": "^1.5.4",
+    "wx-server-sdk": "~2.4.0"
+  }
+}

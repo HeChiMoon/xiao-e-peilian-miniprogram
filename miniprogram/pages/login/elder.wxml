@@ -1,0 +1,106 @@
+<view class="page no-tab elder-login-page">
+  <view class="top-space"></view>
+
+  <view class="avatar-wrap">
+    <image class="doctor-goose" src="{{mascot}}" mode="aspectFill" />
+  </view>
+
+  <view class="info-panel">
+    <text class="panel-title">完善个人信息</text>
+
+    <view class="form-block">
+      <text class="form-label">性别</text>
+      <view class="gender-row">
+        <button
+          class="gender-btn {{gender === '男' ? 'active' : ''}}"
+          data-gender="男"
+          bindtap="chooseGender"
+        >男</button>
+        <button
+          class="gender-btn {{gender === '女' ? 'active' : ''}}"
+          data-gender="女"
+          bindtap="chooseGender"
+        >女</button>
+      </view>
+    </view>
+
+    <view class="form-block">
+      <text class="form-label">姓名</text>
+      <input
+        class="name-input"
+        value="{{name}}"
+        maxlength="12"
+        placeholder="请输入姓名"
+        placeholder-class="input-placeholder"
+        bindinput="onNameInput"
+      />
+    </view>
+
+    <view class="form-block">
+      <text class="form-label">出生年份</text>
+      <slider
+        value="{{birthYear}}"
+        min="{{yearMin}}"
+        max="{{yearMax}}"
+        step="1"
+        block-size="28"
+        block-color="#B56F49"
+        activeColor="#E8E2DA"
+        backgroundColor="#E8E8E8"
+        bindchange="onYearChange"
+        bindchanging="onYearChange"
+      />
+      <text class="year-value">{{birthYear}}年</text>
+    </view>
+
+    <button class="submit-btn" loading="{{saving}}" bindtap="submit">{{saving ? '保存中…' : '完成注册'}}</button>
+  </view>
+
+  <button class="voice-float" bindtap="openVoice">
+    <text class="voice-icon">语音助手</text>
+  </button>
+
+  <view wx:if="{{voiceOpen}}" class="modal-mask" bindtap="closeVoice">
+    <view class="modal-card voice-card" catchtap="noop">
+      <view class="modal-body">
+        <view class="voice-head">
+          <view class="voice-ring {{voiceListening ? 'listening' : ''}}">
+            <text>{{voiceListening ? '听' : '问'}}</text>
+          </view>
+          <view>
+            <text class="card-title">小鹅语音助手</text>
+            <text class="card-copy">现在会先把您的问题转成文字，再回答注册相关帮助。</text>
+          </view>
+        </view>
+
+        <view class="voice-result">
+          <text class="voice-query">我听到：{{voiceQuery || '还没有提问'}}</text>
+          <text class="voice-answer">{{voiceAnswer}}</text>
+        </view>
+
+        <button
+          class="voice-main-btn {{voiceListening ? 'recording' : ''}}"
+          loading="{{voiceLoading}}"
+          disabled="{{voiceLoading}}"
+          catchtouchstart="startVoiceRecording"
+          catchtouchend="finishVoiceRecording"
+          catchtouchcancel="cancelVoiceRecording"
+        >{{voiceListening ? '松开发送' : '按住说话'}}</button>
+
+        <view class="tip-list">
+          <button
+            wx:for="{{voiceTips}}"
+            wx:key="keyword"
+            class="tip-btn"
+            data-keyword="{{item.keyword}}"
+            bindtap="askVoiceTip"
+          >
+            {{item.keyword}}
+          </button>
+        </view>
+
+        <button class="primary-btn" bindtap="closeVoice">知道了</button>
+      </view>
+    </view>
+  </view>
+</view>

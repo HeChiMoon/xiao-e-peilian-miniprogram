@@ -1,0 +1,56 @@
+<view class="page no-tab chat-page">
+  <scroll-view class="chat-scroll" scroll-y>
+    <view wx:for="{{messages}}" wx:key="index" class="message {{item.role}}">
+      <view class="avatar">{{item.role === 'ai' ? '鹅' : '我'}}</view>
+      <view class="bubble">
+        <text class="bubble-text">{{item.text}}</text>
+        <button
+          wx:if="{{item.role === 'ai' && item.audioUrl}}"
+          class="bubble-audio-btn {{playingMessageIndex === index ? 'playing' : ''}}"
+          data-index="{{index}}"
+          bindtap="playMessageAudio"
+        >
+          {{playingMessageIndex === index ? '正在听' : '🔊'}}
+        </button>
+      </view>
+    </view>
+
+    <view wx:if="{{loading}}" class="message ai">
+      <view class="avatar">鹅</view>
+      <view class="bubble">小鹅正在处理，请稍等一下。</view>
+    </view>
+
+    <view class="faq-card">
+      <text class="faq-title">常见问题</text>
+      <button
+        wx:for="{{faq}}"
+        wx:key="question"
+        class="faq-item"
+        data-question="{{item.question}}"
+        bindtap="askQuestion"
+      >
+        {{item.question}}
+      </button>
+    </view>
+  </scroll-view>
+
+  <view class="voice-panel">
+    <button
+      class="voice-main {{recording ? 'recording' : ''}}"
+      loading="{{loading && !recording}}"
+      disabled="{{loading}}"
+      catchtouchstart="startVoiceRecording"
+      catchtouchend="finishVoiceRecording"
+      catchtouchcancel="cancelVoiceRecording"
+    >
+      <text class="voice-main-icon">{{recording ? '●' : '🎤'}}</text>
+      <text class="voice-main-text">{{recording ? '松开发送' : '按住说话'}}</text>
+    </button>
+    <text class="voice-status">{{voiceStatus}}</text>
+
+    <view class="input-bar">
+      <input value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" placeholder="也可以打字问我..." />
+      <view class="send-btn {{loading ? 'disabled' : ''}}" bindtap="sendMessage">发送</view>
+    </view>
+  </view>
+</view>

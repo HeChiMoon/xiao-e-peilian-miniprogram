@@ -1,0 +1,59 @@
+<view class="page no-tab pose-history-page">
+  <view class="history-hero">
+    <text class="hero-title">检测历史</text>
+    <text class="subtitle">查看每次检测的动作、角度、评分和训练建议，点击记录可进入详情。</text>
+  </view>
+
+  <view class="summary-card">
+    <view>
+      <text class="summary-label">累计检测</text>
+      <text class="summary-value">{{totalText}}</text>
+    </view>
+    <view>
+      <text class="summary-label">最近一次</text>
+      <text class="summary-value small">{{latestText}}</text>
+    </view>
+  </view>
+
+  <view class="history-actions">
+    <button class="primary-btn" bindtap="goTraining">去每日练</button>
+    <button class="outline-btn" bindtap="goHome">返回首页</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="empty-card">正在读取检测记录…</view>
+
+  <view wx:elif="{{records.length === 0}}" class="empty-card">
+    <text>还没有动作检测记录。</text>
+    <text>完成一次相机检测后，这里会显示历史结果。</text>
+  </view>
+
+  <view wx:else class="history-list">
+    <view
+      wx:for="{{records}}"
+      wx:key="_id"
+      class="card history-card"
+      data-id="{{item._id}}"
+      bindtap="openDetail"
+    >
+      <view class="history-top">
+        <view>
+          <text class="history-title">{{item.actionName}}</text>
+          <text class="history-time">{{item.timeText}}</text>
+        </view>
+        <text class="risk-pill {{item.riskClass}}">{{item.riskText}}</text>
+      </view>
+      <view class="history-grid">
+        <view>
+          <text class="history-label">平均角度</text>
+          <text class="history-value">{{item.angleText}}</text>
+        </view>
+        <view>
+          <text class="history-label">动作评分</text>
+          <text class="history-value">{{item.scoreText}}</text>
+        </view>
+      </view>
+      <text class="history-suggestion">{{item.suggestion}}</text>
+      <text class="history-link">查看详情 ></text>
+    </view>
+  </view>
+</view>

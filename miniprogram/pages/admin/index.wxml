@@ -1,0 +1,28 @@
+<view class="page no-tab admin-page">
+  <view class="admin-hero">
+    <text class="role-label">管理员端</text>
+    <text class="hero-title">小鹅陪练管理台</text>
+    <text class="subtitle">内容、训练和风险提醒的后台视图。</text>
+  </view>
+
+  <view class="metric-grid">
+    <view wx:for="{{dashboard.metrics}}" wx:key="label" class="metric-card">
+      <text class="metric-value">{{item.value}}</text>
+      <text class="metric-label">{{item.label}}</text>
+    </view>
+  </view>
+
+  <view class="card task-card">
+    <text class="card-title">管理事项</text>
+    <button
+      wx:for="{{dashboard.tasks}}"
+      wx:key="*this"
+      class="task-row"
+      bindtap="manage"
+    >
+      {{item}}
+    </button>
+  </view>
+
+  <button class="outline-btn" bindtap="goRole">返回身份选择</button>
+</view>
