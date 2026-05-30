@@ -46,7 +46,7 @@
 | 角色 | 入口 | 真实化程度 | 核心职责 |
 |------|------|-----------|---------|
 | **老人端** | `pages/login/elder` → `pages/home/index` | ✅ 已接入云开发 | 注册资料、每日训练、膝关节检测、测评、查看档案 |
-| **子女端** | `pages/caregiver/index` | ⚠️ 绑定码已接云端，工作台仍为 mock | 绑定老人、查看老人数据、一键提醒 |
+| **子女端** | `pages/caregiver/index` | ✅ 绑定码+扫码+数据看板已接云端 | 绑定老人、查看老人真实数据、扫码绑定 |
 | **管理员端** | `pages/admin/index` | ❌ 纯 mock | 运营看板、内容配置 |
 
 ### 2.2 老人端完整流程
@@ -64,9 +64,10 @@
 ### 2.3 子女端绑定流程
 
 ```
-老人端"我的" → 生成绑定码 → 云端创建 pending 记录
-  → 子女端输入绑定码 → 云端确认 → status: bound
-  → 绑定关系建立（后续可读取老人真实数据）
+老人端"我的" → 生成绑定码 + 二维码 → 云端创建 pending 记录
+  → 子女端扫码（wx.scanCode）或手动输入绑定码
+  → 云端确认 → status: bound
+  → 自动拉取老人真实数据看板（档案/测评/检测/训练）
 ```
 
 ---
@@ -78,7 +79,7 @@
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  微信小程序前端 (miniprogram/)         │
-│  21 个页面 · 9 个 Service · 本地 Storage 缓存          │
+│  20 个页面 · 9 个 Service · 本地 Storage 缓存          │
 ├─────────────────────────────────────────────────────┤
 │              微信云开发 (cloud1-7gh2sy5r1102b28c)     │
 │  ┌───────────────┬─────────────────┬──────────────┐  │
@@ -95,11 +96,11 @@
 
 | 云函数 | 集合 | 动作 | 状态 |
 |--------|------|------|------|
-| `elderService` | `elders` | `createOrUpdate` / `get` | ✅ 已上线 |
-| `trainingService` | `training_progress` | `get` / `completeLevel` | ✅ 已上线 |
-| `assessmentService` | `assessment_reports` | `saveLatest` / `getLatest` | ✅ 已上线 |
-| `bindingService` | `caregiver_bindings` | `createBindingCode` / `getLatest` / `confirmBinding` | ✅ 已上线 |
-| `poseService` | `pose_detection_records` / `action_standards` | `analyzeImage` / `getLatest` / `listHistory` / `listStandards` / `initStandards` / `diagnoseNetwork` | ✅ 已上线 |
+| `elderService` | `elders` | `createOrUpdate` / `get` / `deleteMine` | ✅ 已上线 |
+| `trainingService` | `training_progress` | `get` / `getPlan` / `completeLevel` / `reset` | ✅ 已上线 |
+| `assessmentService` | `assessment_reports` | `saveLatest` / `getLatest` / `clearLatest` | ✅ 已上线 |
+| `bindingService` | `caregiver_bindings` | `createBindingCode` / `getLatest` / `getOwnerBindingStatus` / `confirmBinding` / `getCaregiverBinding` / `clearMine` | ✅ 已上线 |
+| `poseService` | `pose_detection_records` / `action_standards` | `analyzeImage` / `analyzeVideo` / `getLatest` / `listHistory` / `getDetail` / `listStandards` / `initStandards` / `diagnoseNetwork` / `clearMine` | ✅ 已上线 |
 | `voiceService` | `tts_audio_cache` | `chat`（ASR→Qwen→TTS）/ `warmupTTSCache` | ✅ 已上线 |
 | `authService` | `elders` / `caregiver_bindings` | `getSessionState`（自动识别用户角色） | ✅ 已上线 |
 
@@ -158,21 +159,21 @@
 - 已验证端到端耗时：约 983ms
 
 **页面：**
-- `pages/pose/index`：3 个动作 Tab（靠墙静蹲/直腿抬高/单腿站立）→ 拍照 → 结果展示
+- `pages/pose/camera`：3 个动作 Tab（靠墙静蹲/直腿抬高/单腿站立）→ 拍照 → 结果展示
+- `pages/pose/detail`：检测详情页，左右膝分别角度、标准范围对比、Canvas 骨架图绘制、与上一次记录对比
 - `pages/pose/history`：检测历史列表，支持下拉刷新，显示引擎标识
 
 ### 4.2 每日练（训练系统）
 
-**关卡体系（6 关）：**
+**关卡体系（当前已启用 3 关）：**
 
 | 关卡 | 动作 | 映射云端标准 |
 |------|------|------------|
 | 1 静蹲类 | 靠墙静蹲 | `wallSquat` |
 | 2 直腿抬高类 | 直腿抬高 | `legRaise` |
-| 3 拉伸类 | 腘绳肌牵拉 | `legRaise` |
-| 4 臀桥类 | 臀桥 | `legRaise` |
-| 5 单腿站立类 | 单腿站立 | `singleLegStand` |
-| 6 踝泵类 | 踝泵运动 | `legRaise` |
+| 3 单腿站立类 | 单腿站立 | `singleLegStand` |
+
+> 注：`trainingVisionRules.js` 中预留了 6 套视觉规则（含腘绳肌牵拉、臀桥、踝泵），后续扩展时可直接激活对应关卡。
 
 **训练流程：**
 ```
@@ -258,8 +259,11 @@
 
 ### 4.7 子女端
 
-- **已真实接入**：输入绑定码确认绑定
-- **仍为 mock**：工作台卡片、老人健康摘要、训练/测评概览、多老人列表
+- **已真实接入**：
+  - 输入绑定码 / 扫码绑定（`wx.scanCode` 解析二维码）→ 确认绑定
+  - 绑定成功后自动拉取真实数据看板：老人档案、最近测评、最近检测、今日训练进度
+  - `getCaregiverBinding` 云函数从 `elders` / `assessment_reports` / `pose_detection_records` / `training_progress` 聚合真实数据
+- **仍为 mock**：多老人列表、一键提醒
 
 ### 4.8 管理员端
 
@@ -276,7 +280,7 @@
 | **相机帧视觉识别** | ✅ Phase 1 | 轻量门控（光线/轮廓/稳定性），6 关卡独立规则 |
 | **训练页实时姿态纠错** | ✅ Phase 1 | 周期抽检模式（~5.5s/次），复用 BodyPosture 链路 |
 | **AI 语音交互** | ✅ 已接入 | DashScope ASR (paraformer-v2) + TTS (cosyvoice-v3-flash) + Qwen (qwen3.6-flash)，支持按住语音→转写→对话→播报完整链路，含 TTS 缓存 |
-| **个性化训练计划** | ❌ 未接入 | 训练关卡为静态 6 关 |
+| **个性化训练计划** | ⚠️ 基础版 | `trainingService.getPlan` 基于老人档案/测评分数/姿态风险/疼痛史动态调整推荐顺序、风险等级和安全提示，V1.3 将升级为 JSON 动态关卡地图 |
 | **智能视频推送** | ❌ 未接入 | 视频列表为静态 mock |
 
 ---
@@ -299,8 +303,8 @@
 
 | ID | 故事 | 验收标准 |
 |----|------|---------|
-| C1 | 作为子女，我能通过绑定码关联老人 | 输入老人生成的绑定码 → 确认绑定 |
-| C2 | 作为子女，我能查看已绑定老人的健康数据 | 待实现（目前绑定后可看 mock 工作台） |
+| C1 | 作为子女，我能通过绑定码或扫码关联老人 | 输入绑定码或扫码 → 确认绑定 → 自动展示老人真实数据看板 |
+| C2 | 作为子女，我能查看已绑定老人的健康数据 | 绑定后展示老人档案/最近测评/最近检测/今日训练进度（从云端数据库实时读取） |
 
 ---
 
@@ -319,7 +323,7 @@
 2. **超时 Promise 悬挂**：`poseService` 云函数中 3 处 `request.destroy()` 不保证触发 error 事件
 3. **拍照效率**：单次检测约 1s，高频训练场景需要改为视频帧模式
 4. **OSS 时钟偏差**：云函数与 OSS 服务器时钟不同步可能导致签名失效
-5. **训练动作标准不全**：6 个训练关卡中 4 个共用 `legRaise` 标准，需各建独立标准
+5. **训练动作标准不全**：3 个已启用关卡分别映射 `wallSquat`/`legRaise`/`singleLegStand`，后续扩展关卡（腘绳肌牵拉、臀桥、踝泵）需各自建立独立云端动作标准
 6. **TTS 缓存命中依赖 temp URL**：缓存通过 `wx.cloud.getTempFileURL` 获取播放链接，链接过期后需重新生成
 7. **ASR 异步轮询延迟**：Paraformer 异步模式轮询最长 ~19s，高延迟场景下用户体验下降
 8. **Qwen 偶发拒绝回答**：即使 system prompt 设定了安全边界，大模型仍可能以医疗风险为由拒绝回答普通膝关节问题
@@ -334,24 +338,23 @@
 |--------|------|------|
 | P0 | 修复零置信度关键点过滤 | 跳过 `Confident === 0` 或坐标 (0,0) 的点 |
 | P0 | 修复超时 Promise 悬挂 | 3 处 `request.on('timeout')` 改为直接 reject |
-| P1 | 为 6 个关卡建立独立动作标准 | 替换当前共用 `legRaise` 的临时映射 |
+| P1 | 为扩展关卡建立独立动作标准 | 为腘绳肌牵拉、臀桥、踝泵等预留关卡建立独立云端标准 |
 | P1 | 训练页实时视频帧模式 | 利用 `onCameraFrame` 每秒取帧，替代 5.5s 拍照周期 |
 
 ### 9.2 中期（功能完善）
 
 | 优先级 | 任务 | 说明 |
 |--------|------|------|
-| P1 | 检测详情页 | 左右膝分别角度、标准范围对比、骨架图回放 |
-| P1 | 子女端真实数据读取 | 从绑定关系反查老人真实训练/测评/检测数据 |
-| P2 | 个性化训练计划 | 基于检测结果和用户档案生成定制方案 |
+| P1 | 训练关卡扩展 | 激活腘绳肌牵拉、臀桥、踝泵 3 个预留关卡，完善教学视频和云端标准 |
+| P2 | 个性化训练计划 V1.3 | 将 `getPlan` 基础版升级为 JSON 动态关卡地图，支持多周训练方案 |
 | P2 | 管理员端真实数据 | 接入云端聚合统计，替换 mock 看板 |
-| P2 | 扫码绑定 | 扫码解析二维码替代手动输入绑定码 |
+| P2 | 子女端多老人列表 | 支持一个子女绑定多位老人，切换查看 |
 
 ### 9.3 长期（体验升级）
 
 | 优先级 | 任务 | 说明 |
 |--------|------|------|
-| P2 | TTS 缓存预热优化 | 利用 `warmupTTSCache` 预生成高频问题音频，减少首次等待 |
+| P2 | ASR 实时流式识别 | 替换当前异步轮询模式，缩短语音识别等待时间 |
 | P2 | 多轮对话上下文增强 | 优化 Qwen history 传递策略，提升追问场景体验 |
 | P3 | 科普视频智能推送 | 基于老人档案和训练进度推荐视频 |
 | P3 | 训练语音实时纠错提示 | TTS 实时播报角度偏差和纠错建议（替代当前文字提示） |
@@ -376,7 +379,7 @@
 
 ## 11. 附录
 
-### 11.1 页面路由表（21 页）
+### 11.1 页面路由表（20 页）
 
 | 路由 | 页面 | TabBar |
 |------|------|--------|
@@ -389,8 +392,9 @@
 | `pages/training/learn` | 动作学习 | - |
 | `pages/training/practice` | 动作练习 | - |
 | `pages/training/complete` | 训练完成 | - |
-| `pages/pose/index` | 膝关节检测 | - |
+| `pages/pose/camera` | 膝关节检测 | - |
 | `pages/pose/history` | 检测历史 | - |
+| `pages/pose/detail` | 检测详情 | - |
 | `pages/assessment/index` | 健康测评 | - |
 | `pages/assessment/report` | 测评报告 | - |
 | `pages/video/index` | 视频号 | - |
