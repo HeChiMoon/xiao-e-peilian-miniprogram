@@ -1,6 +1,6 @@
 # 小鹅陪练 — 产品需求文档 (PRD)
 
-> 更新时间：2026-05-18 | 版本：V1.0
+> 更新时间：2026-05-31 | 版本：V1.1
 
 ---
 
@@ -21,10 +21,11 @@
 ### 1.3 产品形态
 
 - 平台：微信小程序（原生开发）
-- AppID：`wxfbdba99518be965a`
+- AppID：`wxde26c0a5776ed40b`
 - 基础库：`2.20.1`
 - 后端：微信云开发（云函数 + 云数据库 + 云存储）
-- AI 引擎：阿里云 BodyPosture（人体姿态识别）
+- 云环境：`cloud1-7gh2sy5r1102b28c`
+- AI 引擎：阿里云 BodyPosture（人体姿态识别）+ 阿里云百炼 DashScope（ASR / TTS / 大模型对话）
 
 ---
 
@@ -33,10 +34,13 @@
 ### 2.1 三角色体系
 
 ```
-启动小程序 → 身份选择页 (pages/role/index)
-              ├── 老人端 → 注册页 → 首页
-              ├── 子女端 → 家庭看护工作台
-              └── 管理员端 → 运营看板
+启动小程序 → authService.getSessionState() 读取登录态
+              ├── 已有老人资料 → 首页
+              ├── 新用户 → 身份选择 (pages/role/index)
+              │     ├── 老人端 → 注册页 → 首页
+              │     ├── 子女端 → 家庭看护工作台
+              │     └── 管理员端 → 运营看板
+              └── 已有子女绑定 → 子女工作台
 ```
 
 | 角色 | 入口 | 真实化程度 | 核心职责 |
@@ -53,7 +57,7 @@
   ├── 每日练 → 关卡地图 → 学习视频 → 相机练习 → 云端姿态抽检 → 完成
   ├── 健康测评 → Q&A 问答 → 动作测评 → 风险问答 → 测评报告
   ├── 视频号 → 康复科普视频列表
-  ├── 小鹅问答 → 关键词匹配知识库
+  ├── 小鹅问答 → 文字输入 / 按住语音 → ASR → Qwen 大模型 → TTS 语音播报
   └── 我的 → 训练记录 / 健康档案 / 完善资料 / 绑定子女
 ```
 
@@ -74,14 +78,15 @@
 ```
 ┌─────────────────────────────────────────────────────┐
 │                  微信小程序前端 (miniprogram/)         │
-│  21 个页面 · 7 个 Service · 本地 Storage 缓存          │
+│  21 个页面 · 9 个 Service · 本地 Storage 缓存          │
 ├─────────────────────────────────────────────────────┤
-│              微信云开发 (cloud1-d5g3p79uad048cf6a)    │
+│              微信云开发 (cloud1-7gh2sy5r1102b28c)     │
 │  ┌───────────────┬─────────────────┬──────────────┐  │
-│  │  云函数 (5个)  │  云数据库 (6个)  │  云存储       │  │
+│  │  云函数 (7个)  │  云数据库 (7个)  │  云存储       │  │
 │  └───────┬───────┴─────────────────┴──────────────┘  │
 ├──────────┼───────────────────────────────────────────┤
 │  阿里云   │  OSS（上海）→ BodyPosture API（上海）       │
+│          │  DashScope（百炼）→ ASR / TTS / Qwen       │
 │          │  18 COCO 关键点 → 膝关节角度计算             │
 └──────────┴───────────────────────────────────────────┘
 ```
@@ -95,6 +100,8 @@
 | `assessmentService` | `assessment_reports` | `saveLatest` / `getLatest` | ✅ 已上线 |
 | `bindingService` | `caregiver_bindings` | `createBindingCode` / `getLatest` / `confirmBinding` | ✅ 已上线 |
 | `poseService` | `pose_detection_records` / `action_standards` | `analyzeImage` / `getLatest` / `listHistory` / `listStandards` / `initStandards` / `diagnoseNetwork` | ✅ 已上线 |
+| `voiceService` | `tts_audio_cache` | `chat`（ASR→Qwen→TTS）/ `warmupTTSCache` | ✅ 已上线 |
+| `authService` | `elders` / `caregiver_bindings` | `getSessionState`（自动识别用户角色） | ✅ 已上线 |
 
 ### 3.3 数据库集合
 
@@ -106,6 +113,7 @@
 | `caregiver_bindings` | 子女绑定 | `ownerOpenId`, `bindingCode`, `status`, `caregiverOpenId` |
 | `pose_detection_records` | 膝关节检测记录 | `ownerOpenId`, `keypoints`, `angles`, `score`, `riskLevel`, `engine`, `source` |
 | `action_standards` | 动作标准库 | `actionKey`, `targetJoint`, `minAngle`, `maxAngle`, `idealAngle` |
+| `tts_audio_cache` | TTS 语音缓存 | `cacheKey`, `speechText`, `ttsModel`, `fileID`, `cloudPath` |
 
 ### 3.4 前端 Service 层
 
@@ -118,6 +126,8 @@
 | `services/poseService.js` | 姿态检测：上传图片 + 调用云函数分析 + 历史查询 |
 | `services/visionService.js` | 练习页本地视觉门控（光线/轮廓/稳定性） |
 | `services/trainingVisionRules.js` | 6 个训练关卡的独立视觉规则配置 |
+| `services/voiceService.js` | 语音对话：`chatByText`（文字提问）/ `chatByVoice`（语音提问+上传） |
+| `services/authService.js` | 登录态管理：`getSessionState`（自动判断老人/子女/绑定状态） |
 
 ---
 
@@ -196,11 +206,46 @@
 - 康复科普视频列表（当前为静态 mock）
 - 支持播放、点赞、收藏、评论（本地状态模拟）
 
-### 4.5 小鹅问答
+### 4.5 小鹅问答（AI 语音对话）
 
-- 常见问题快捷入口 + 手动输入
-- 关键词匹配固定知识库回复
-- 语音按钮占位（未接真实 ASR/TTS）
+**交互模式：**
+- **文字输入**：手动输入问题 → 发送 → AI 回复
+- **语音输入**：按住绿色按钮说话 → 松开自动发送 → ASR 转写 → AI 回复 → TTS 自动朗读
+
+**语音交互完整链路：**
+
+```
+用户按住录音（mp3/16k/单声道，最长 10s）
+  → wx.getRecorderManager 录音 → 上传云存储 (voice-recordings/)
+  → voiceService 云函数下载录音
+  → (可选) 中转至阿里云 OSS
+  → 调用 DashScope ASR (paraformer-v2) 异步转写
+  → 轮询等待转写结果（最长 ~19s）
+  → 将转写文本送入 Qwen (qwen3.6-flash) 大模型对话
+  → Qwen 以"小鹅"角色回复膝关节科普（system prompt 注入）
+  → 提取前 2-3 句作为播报文本（≤100 字）
+  → 调用 DashScope TTS (cosyvoice-v3-flash, 音色 longanyang)
+  → 下载 TTS MP3 → 上传微信云存储 → 写入 tts_audio_cache 缓存
+  → 前端自动播放语音 + 展示完整文字回答
+```
+
+**技术要点：**
+- ASR 模型：`paraformer-v2`，支持中文语言提示
+- 对话模型：`qwen3.6-flash`，temperature=0.7，max_tokens=600
+- TTS 模型：`cosyvoice-v3-flash`，默认音色 `longanyang`，fallback 音色切换
+- TTS 缓存：按 `speechText + model + voice` 生成 SHA1 cacheKey，避免重复生成
+- 回退策略：无 API Key → 关键词匹配 fallback；Qwen 失败 → fallback 答案 + 重试 TTS
+- 录音安全：权限拒绝保险超时 1.2s，最短有效录音 700ms
+
+**Qwen System Prompt（"小鹅"角色）：**
+- 身份：膝关节健康小百科，社区中老年科普
+- 领域：膝关节炎常识、居家训练动作、疼痛应对、饮食保养、日常防护
+- 风格："爷爷奶奶"开头，唠家常，短句口语，不吓唬人
+- 安全边界：不诊断、不开药、不承诺疗效；遇危险症状提醒就医
+
+**常见问题快捷入口：** 预设 3 个高频问题（膝关节疼痛/锻炼/日常保护），支持点击直接提问
+
+**页面：** `pages/chat/index`
 
 ### 4.6 我的页
 
@@ -230,7 +275,7 @@
 | **3D 人体姿态评估** | ✅ 已接入 | 阿里云 BodyPosture，18 COCO 关键点，端到端验证通过 |
 | **相机帧视觉识别** | ✅ Phase 1 | 轻量门控（光线/轮廓/稳定性），6 关卡独立规则 |
 | **训练页实时姿态纠错** | ✅ Phase 1 | 周期抽检模式（~5.5s/次），复用 BodyPosture 链路 |
-| **AI 语音交互** | ❌ 未接入 | 小百科为关键词匹配，语音按钮占位 |
+| **AI 语音交互** | ✅ 已接入 | DashScope ASR (paraformer-v2) + TTS (cosyvoice-v3-flash) + Qwen (qwen3.6-flash)，支持按住语音→转写→对话→播报完整链路，含 TTS 缓存 |
 | **个性化训练计划** | ❌ 未接入 | 训练关卡为静态 6 关 |
 | **智能视频推送** | ❌ 未接入 | 视频列表为静态 mock |
 
@@ -248,6 +293,7 @@
 | U4 | 作为老人，我能完成健康测评 | 回答问卷 → 做动作自评 → 回答风险问题 → 看到报告 |
 | U5 | 作为老人，我能查看训练记录和健康档案 | 独立大页面，大字展示已完成关卡和健康摘要 |
 | U6 | 作为老人，我能生成绑定码让子女关注我 | 我的页 → 绑定子女 → 生成二维码和绑定码 |
+| U7 | 作为老人，我能用语音和小鹅聊天问膝关节问题 | 按住按钮说话 → 松开自动发送 → 看到文字回答 + 自动语音朗读 |
 
 ### 子女端
 
@@ -274,6 +320,9 @@
 3. **拍照效率**：单次检测约 1s，高频训练场景需要改为视频帧模式
 4. **OSS 时钟偏差**：云函数与 OSS 服务器时钟不同步可能导致签名失效
 5. **训练动作标准不全**：6 个训练关卡中 4 个共用 `legRaise` 标准，需各建独立标准
+6. **TTS 缓存命中依赖 temp URL**：缓存通过 `wx.cloud.getTempFileURL` 获取播放链接，链接过期后需重新生成
+7. **ASR 异步轮询延迟**：Paraformer 异步模式轮询最长 ~19s，高延迟场景下用户体验下降
+8. **Qwen 偶发拒绝回答**：即使 system prompt 设定了安全边界，大模型仍可能以医疗风险为由拒绝回答普通膝关节问题
 
 ---
 
@@ -302,8 +351,10 @@
 
 | 优先级 | 任务 | 说明 |
 |--------|------|------|
-| P2 | AI 语音交互 | 接入 ASR + TTS，语音问答和训练语音提示 |
+| P2 | TTS 缓存预热优化 | 利用 `warmupTTSCache` 预生成高频问题音频，减少首次等待 |
+| P2 | 多轮对话上下文增强 | 优化 Qwen history 传递策略，提升追问场景体验 |
 | P3 | 科普视频智能推送 | 基于老人档案和训练进度推荐视频 |
+| P3 | 训练语音实时纠错提示 | TTS 实时播报角度偏差和纠错建议（替代当前文字提示） |
 | P3 | WebSocket 实时姿态 | 高帧率实时云端姿态分析 |
 
 ---
@@ -317,6 +368,9 @@
 | 微信云开发费用增长 | 运营成本上升 | 当前只保存检测结果 JSON，图片长期清理 |
 | 老人使用门槛高 | 用户流失 | 适老 UI（大字/大按钮/少步骤），详情页简洁 |
 | 姿态识别精度不足 | 训练指导不准确 | 保留 mock 兜底 + 人工校准阈值 + 后续引入更优模型 |
+| DashScope API 不可用 | 语音问答和 TTS 播报不可用 | 已实现关键词匹配 fallback + OSS 中转录音双重保障 |
+| TTS 音频缓存 temp URL 过期 | 用户无法回放历史语音 | 过期后自动重新调用 `getTempFileURL` |
+| Qwen 模型幻觉或拒答 | 回答不准确或拒绝回答 | system prompt 限定知识边界 + fallback 预设答案兜底 |
 
 ---
 
@@ -346,7 +400,9 @@
 | `pages/profile/index` | 我的 | ✅ |
 | `pages/profile/edit` | 完善资料 | - |
 
-### 11.2 云函数环境变量（poseService）
+### 11.2 云函数环境变量
+
+#### poseService
 
 | 变量名 | 说明 | 必填 |
 |--------|------|------|
@@ -356,6 +412,22 @@
 | `ALIYUN_OSS_ENDPOINT` | OSS 地域节点 | 可选 |
 | `ALIYUN_FACEBODY_ENDPOINT` | BodyPosture API 域名 | 可选 |
 | `ALIYUN_FACEBODY_IP` | DNS 回退 IP | 可选 |
+
+#### voiceService
+
+| 变量名 | 说明 | 必填 |
+|--------|------|------|
+| `DASHSCOPE_API_KEY` | 阿里云百炼 API Key（ASR/TTS/Qwen 共用） | ✅ |
+| `DASHSCOPE_BASE_URL` | DashScope API 基础 URL，默认 `https://dashscope.aliyuncs.com/api/v1` | 可选 |
+| `DASHSCOPE_CHAT_MODEL` | 对话模型，默认 `qwen3.6-flash` | 可选 |
+| `DASHSCOPE_ASR_MODEL` | 语音识别模型，默认 `paraformer-v2` | 可选 |
+| `DASHSCOPE_TTS_MODEL` | 语音合成模型，默认 `cosyvoice-v3-flash` | 可选 |
+| `DASHSCOPE_TTS_VOICE` | TTS 音色，默认 `longanyang` | 可选 |
+| `ALIYUN_ACCESS_KEY_ID` | 阿里云 AccessKey（OSS 中转录音） | 可选 |
+| `ALIYUN_ACCESS_KEY_SECRET` | 对应 Secret | 可选 |
+| `ALIYUN_OSS_BUCKET` | OSS Bucket（语音存储） | 可选 |
+| `ALIYUN_OSS_ENDPOINT` | OSS 地域节点 | 可选 |
+| `ALIYUN_OSS_PREFIX` | OSS 语音前缀，默认 `xiao-e-voice` | 可选 |
 
 ### 11.3 设计规范
 
