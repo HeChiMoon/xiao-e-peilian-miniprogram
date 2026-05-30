@@ -1,4 +1,4 @@
-const CLOUD_ENV_ID = 'cloud1-d5g3p79uad048cf6a'
+const CLOUD_ENV_ID = 'cloud1-7gh2sy5r1102b28c'
 const { initActionStandards } = require('./services/poseService')
 
 App({
