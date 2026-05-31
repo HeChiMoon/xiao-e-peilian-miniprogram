@@ -14,7 +14,7 @@ const activeTrainingLevels = [
     name: '直腿抬高',
     shortName: '抬腿',
     video: '',
-    image: '/pages/training/assets/leg-raise.jpg',
+    image: '/assets/images/action-leg-raise.jpg',
     description: '坐在椅子或床边后伸直一条腿，慢慢向前抬平，再平稳放下。',
     guide: '膝盖保持伸直，脚尖轻轻勾起，不要借助惯性。',
     feedback: '抬腿时不要憋气，保持匀速。'

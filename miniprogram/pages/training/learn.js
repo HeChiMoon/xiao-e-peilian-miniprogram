@@ -1,6 +1,6 @@
 const { trainingLevels } = require('../../data/mock')
 
-const MEDIA_CACHE_VERSION = '20260530-v2'
+const MEDIA_CACHE_VERSION = '20260531-v1'
 
 function ensureDir(dirPath) {
   const fs = wx.getFileSystemManager()
@@ -32,8 +32,10 @@ function resolveTrainingMedia(pathValue) {
       displaySrc: ''
     }
   }
+
   const normalized = String(pathValue).replace(/\\/g, '/')
   const fileName = normalized.split('/').pop()
+
   if (
     normalized.indexOf('/pages/training/assets/') === 0 ||
     normalized.indexOf('/assets/videos/training/') === 0 ||
@@ -41,9 +43,10 @@ function resolveTrainingMedia(pathValue) {
   ) {
     return {
       packagePath: `pages/training/assets/${fileName}`,
-      displaySrc: `pages/training/assets/${fileName}`
+      displaySrc: `assets/${fileName}`
     }
   }
+
   return {
     packagePath: normalized.replace(/^\//, ''),
     displaySrc: normalized
@@ -54,8 +57,10 @@ function normalizeLevel(level) {
   if (!level) {
     return null
   }
+
   const video = resolveTrainingMedia(level.video)
   const image = resolveTrainingMedia(level.image)
+
   return {
     ...level,
     video: video.displaySrc,
@@ -68,6 +73,7 @@ function copyPackagedVideoToUserPath(packagePath, levelId) {
   if (!packagePath) {
     return Promise.resolve('')
   }
+
   const normalized = String(packagePath).replace(/\\/g, '/').replace(/^\//, '')
   const userDir = `${wx.env.USER_DATA_PATH}/training-cache-${MEDIA_CACHE_VERSION}`
   const targetPath = `${userDir}/${MEDIA_CACHE_VERSION}-level-${levelId}.mp4`
@@ -79,6 +85,7 @@ function copyPackagedVideoToUserPath(packagePath, levelId) {
       if (exists) {
         return targetPath
       }
+
       return new Promise((resolve) => {
         fs.copyFile({
           srcPath: normalized,
@@ -101,6 +108,7 @@ Page({
   async onLoad(query) {
     const id = Number(query.id || 1)
     const level = normalizeLevel(trainingLevels.find((item) => item.id === id) || trainingLevels[0])
+
     this.setData({
       level,
       hasVideo: Boolean(level && level.video),
@@ -124,6 +132,7 @@ Page({
       wx.showToast({ title: '这个动作是图片示范', icon: 'none' })
       return
     }
+
     const ctx = wx.createVideoContext('learnVideo', this)
     ctx.seek(0)
     ctx.play()
