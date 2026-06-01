@@ -1,0 +1,3 @@
+display_name: 小鹅问题诊断
+short_description: Diagnoses Xiao-E bugs with reproducible verification.
+default_prompt: 请使用小鹅问题诊断技能，定位根因并修复。
