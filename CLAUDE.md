@@ -29,6 +29,8 @@ Before working on this repo, read:
 
 Claude Code should use `.claude/skills/` as the project-scoped skill entrypoint.
 
-`docs/ai-skills/` remains the cross-AI source copy. Keep both directories synchronized when changing skills.
+`docs/ai-skills/` remains the cross-AI source copy. Keep both directories semantically aligned when changing skills.
+
+Keep `.claude/skills/` English-only and preferably ASCII-only so Claude Code can read the skills reliably on Windows.
 
 Keep `.claude/settings.json`, `.claude/settings.local.json`, and `.claude/worktrees/` local and untracked. They contain personal model, permission, or worktree state and should not be committed.

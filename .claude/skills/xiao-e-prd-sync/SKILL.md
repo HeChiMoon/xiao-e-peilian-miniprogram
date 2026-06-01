@@ -1,6 +1,6 @@
 ---
 name: xiao-e-prd-sync
-description: Sync Xiao-E Peilian PRD, project status, README,成果表述, architecture notes, and scope boundaries with the real codebase. Use when rewriting PRD sections, summarizing current achievements, producing measurable indicators, updating handoff docs, or aligning docs after feature changes.
+description: Sync Xiao-E Peilian PRD, project status, README, achievement wording, architecture notes, and scope boundaries with the real codebase. Use when rewriting PRD sections, summarizing current achievements, producing measurable indicators, updating handoff docs, or aligning docs after feature changes.
 ---
 
 # Xiao-E PRD Sync
@@ -18,7 +18,7 @@ Use this skill when documentation must match current project reality.
    - `ALIYUN_BODY_POSTURE_SETUP.md`
    - `ROLE_LOGIN_DATA_ISOLATION.md`
 3. Verify implementation facts against code before making claims.
-4. Mark unknown metrics as `待收集`.
+4. Mark unknown metrics as "to be collected".
 5. Keep demo boundaries explicit.
 6. Use concise, copy-paste-ready wording when the user asks for report text.
 
@@ -29,7 +29,7 @@ Use RTK for broad doc reads and comparisons:
 - `rtk read PROJECT_STATUS.md`
 - `rtk read README.md`
 - `rtk read PRD.md`
-- `rtk grep "关键词" .`
+- `rtk grep "keyword" .`
 - `rtk diff`
 
 Use direct file reads before editing exact wording.
@@ -45,41 +45,40 @@ Do not invent:
 - launch or approval facts
 - medical-grade capability
 
-If the user provides official facts such as ICP备案 or上线状态, preserve them as user-provided unless asked to verify.
+If the user provides official facts such as ICP filing or launch status, preserve them as user-provided unless asked to verify.
 
 ## Preferred Structure
 
-For成果与指标:
+For achievements and metrics:
 
-- 关键指标
-- 达成数据
-- 成果描述
-- 待收集项
+- key indicator
+- achieved data
+- result description
+- items still to be collected
 
 For PRD updates:
 
-- Product positioning
-- Roles and flows
-- Implemented features
-- Data and cloud architecture
+- product positioning
+- roles and flows
+- implemented features
+- data and cloud architecture
 - AI capabilities
-- Demo boundaries
-- Future roadmap
+- demo boundaries
+- future roadmap
 
 ## Boundary Language
 
 Use:
 
-- "可演示 Demo"
-- "老人端主流程已跑通"
-- "子女端真实绑定与轻量概览"
-- "管理员端 mock 展示"
-- "姿势识别可用但非医疗级判断"
+- "presentable demo"
+- "elder-side main flow is runnable"
+- "caregiver side has real binding and lightweight overview"
+- "admin side is mock display"
+- "pose recognition is demoable but not medical-grade"
 
 Avoid:
 
-- "完整商业化系统"
-- "医疗诊断"
-- "实时 WebSocket 姿态纠错已完成"
+- "complete commercial system"
+- "medical diagnosis"
+- "realtime WebSocket pose correction is complete"
 - unverified quantified claims
-

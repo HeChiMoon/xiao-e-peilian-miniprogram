@@ -11,10 +11,10 @@ Use this skill only when the task involves WeChat subscription messages or remin
 
 Before writing code, ask whether the user has:
 
-- Subscription message template ID
-- Template field names such as `thing1`, `date2`, `name3`
-- Exact template content from WeChat Public Platform
-- Reminder scenario: one-time, repeated, or accumulated authorization count
+- subscription message template ID
+- template field names such as `thing1`, `date2`, `name3`
+- exact template content from WeChat Public Platform
+- reminder scenario: one-time, repeated, or accumulated authorization count
 
 If template ID and field definitions are missing, stop implementation and guide the user to create the template first. Cloud function payloads depend on these fields.
 
@@ -75,9 +75,9 @@ After changing trigger config, remind the user to upload trigger configuration i
 
 Good scenarios:
 
-- Daily training reminder
-- Caregiver reminder after missed training
-- Review health profile reminder
+- daily training reminder
+- caregiver reminder after missed training
+- health profile review reminder
 
 Avoid building notification infrastructure during demo polish unless it directly supports the demo goal.
 
@@ -88,4 +88,3 @@ Avoid building notification infrastructure during demo polish unless it directly
 - Cloud function has `subscribeMessage.send` permission.
 - Scheduler does not send duplicate reminders.
 - User-facing text explains that authorization is controlled by WeChat.
-

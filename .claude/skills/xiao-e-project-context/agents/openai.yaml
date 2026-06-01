@@ -1,3 +1,3 @@
-display_name: 小鹅项目上下文
-short_description: Loads Xiao-E mini-program status, terms, and boundaries.
-default_prompt: 请使用小鹅项目上下文技能，先对齐当前项目现状和边界。
+display_name: Xiao-E Context
+short_description: Loads Xiao-E mini-program status and boundaries.
+default_prompt: Use the Xiao-E project context skill to align on current project state.

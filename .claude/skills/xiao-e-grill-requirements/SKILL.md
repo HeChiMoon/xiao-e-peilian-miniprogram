@@ -1,6 +1,6 @@
 ---
 name: xiao-e-grill-requirements
-description: Clarify and pressure-test Xiao-E Peilian mini-program feature requests before implementation. Use when the user asks for a new feature, backend phase, AI capability, UI overhaul, demo plan, PRD change, or "下一步/制定计划/继续开发" and requirements could affect product scope, data model, cloud functions, role login, pose recognition, or demo boundaries.
+description: Clarify and pressure-test Xiao-E Peilian mini-program feature requests before implementation. Use when the user asks for a new feature, backend phase, AI capability, UI overhaul, demo plan, PRD change, next-step plan, or continued development, especially when requirements could affect product scope, data model, cloud functions, role login, pose recognition, or demo boundaries.
 ---
 
 # Xiao-E Requirements Grill
@@ -19,7 +19,7 @@ Use this skill before committing to ambiguous or high-impact development.
    - data model impact
    - demo risk
    - validation plan
-5. If the user says "可以/继续/执行", implement the plan.
+5. If the user confirms approval or asks to continue, implement the plan.
 
 ## RTK Rule
 

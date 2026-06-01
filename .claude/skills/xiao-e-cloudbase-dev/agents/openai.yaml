@@ -1,3 +1,3 @@
-display_name: 小鹅云开发
+display_name: Xiao-E CloudBase
 short_description: Builds Xiao-E CloudBase functions and data flows.
-default_prompt: 请使用小鹅云开发技能，继续后端云开发。
+default_prompt: Use the Xiao-E CloudBase skill to continue backend cloud development.

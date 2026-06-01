@@ -57,6 +57,5 @@ Voice Q&A:
 1. Elder path works smoothly.
 2. Caregiver binding and overview are credible.
 3. Pose recognition is demoable with clear fallback messages.
-4. Voice Q&A is useful and not overclaiming medical ability.
+4. Voice Q&A is useful and does not overclaim medical ability.
 5. Docs match code reality.
-

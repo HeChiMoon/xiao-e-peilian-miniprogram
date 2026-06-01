@@ -1,3 +1,3 @@
-display_name: 小鹅姿态识别
+display_name: Xiao-E Pose AI
 short_description: Maintains Xiao-E pose recognition and training checks.
-default_prompt: 请使用小鹅姿态识别技能，处理动作检测和评分问题。
+default_prompt: Use the Xiao-E pose AI skill to handle action detection and scoring issues.

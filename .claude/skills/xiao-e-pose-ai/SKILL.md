@@ -42,7 +42,7 @@ Paused:
 Use RTK for broad search and status:
 
 - `rtk grep "actionKey" miniprogram cloudfunctions`
-- `rtk grep "直腿抬高" miniprogram cloudfunctions`
+- `rtk grep "legRaise" miniprogram cloudfunctions`
 - `rtk diff`
 
 Use direct reads for `poseService`, camera page, and training rule files before patching thresholds or user-facing messages.
@@ -51,7 +51,7 @@ Use direct reads for `poseService`, camera page, and training rule files before 
 
 - Require enough usable keypoints for the selected action.
 - Filter or downweight zero/low-confidence keypoints.
-- Prefer action-specific messages over generic "识别失败".
+- Prefer action-specific messages over generic recognition-failure text.
 - Do not demand impossible full-body framing when the action only needs lower-body points, but be honest when the upstream model needs more context.
 
 ## Demo Priority

@@ -1,3 +1,3 @@
-display_name: 小鹅Demo收尾
+display_name: Xiao-E Demo Polish
 short_description: Polishes Xiao-E demo UX, docs, and presentation.
-default_prompt: 请使用小鹅Demo收尾技能，整理演示版体验和文档。
+default_prompt: Use the Xiao-E demo polish skill to prepare the demo version.
