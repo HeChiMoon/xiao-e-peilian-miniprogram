@@ -19,7 +19,12 @@ AccessKey.csv
 *.secret.csv
 
 # Local tooling / personal config
-.claude/
+.claude/*
+!.claude/skills/
+!.claude/skills/**
+.claude/settings.json
+.claude/settings.local.json
+.claude/worktrees/
 project.private.config.json
 
 # Temp assets / debug frames

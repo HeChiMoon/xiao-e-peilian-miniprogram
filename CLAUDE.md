@@ -1,12 +1,12 @@
 # Claude Code Project Guide
 
-This project uses shared AI workflow docs instead of committing personal `.claude/` configuration.
+This project uses shared AI workflow docs and project-scoped Claude Code skills.
 
 Before working on this repo, read:
 
 1. `docs/AI_SKILLS.md`
-2. `docs/ai-skills/xiao-e-project-context/SKILL.md`
-3. The task-specific skill under `docs/ai-skills/`
+2. `.claude/skills/xiao-e-project-context/SKILL.md`
+3. The task-specific skill under `.claude/skills/`
 
 ## Core Rules
 
@@ -27,4 +27,8 @@ Before working on this repo, read:
 
 ## Local Claude Config
 
-Keep `.claude/` local and untracked. It should only contain personal Claude Code settings, such as model and local permission preferences. Shared project workflow belongs in `docs/AI_SKILLS.md` and `docs/ai-skills/`.
+Claude Code should use `.claude/skills/` as the project-scoped skill entrypoint.
+
+`docs/ai-skills/` remains the cross-AI source copy. Keep both directories synchronized when changing skills.
+
+Keep `.claude/settings.json`, `.claude/settings.local.json`, and `.claude/worktrees/` local and untracked. They contain personal model, permission, or worktree state and should not be committed.
