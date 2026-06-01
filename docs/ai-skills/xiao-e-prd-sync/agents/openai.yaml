@@ -1,0 +1,3 @@
+display_name: 小鹅PRD同步
+short_description: Keeps Xiao-E PRD, status docs, and claims accurate.
+default_prompt: 请使用小鹅PRD同步技能，按项目现状更新文档。

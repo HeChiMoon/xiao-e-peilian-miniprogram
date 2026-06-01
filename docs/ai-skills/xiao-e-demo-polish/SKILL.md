@@ -24,6 +24,9 @@ Use this skill when the goal is a cleaner demo, not a new product expansion.
 - Do not expose raw exception text to users.
 - After success, show a brief encouraging state before navigation unless it is final completion.
 - For final completion, avoid redundant "next level" prompts.
+- Keep UI polished and intentional, but optimize for elderly mini-program usability over decorative web-style effects.
+- Avoid generic or flashy aesthetics that conflict with a calm rehabilitation demo.
+- Make spacing, typography, button hierarchy, and state feedback consistent across elder and caregiver flows.
 
 ## Documentation Sync
 

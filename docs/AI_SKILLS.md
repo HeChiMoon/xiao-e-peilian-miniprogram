@@ -60,6 +60,18 @@ rtk gain -p
 - `xiao-e-cloudbase-dev`：微信云开发、云函数、CloudDB、数据隔离。
 - `xiao-e-pose-ai`：姿态识别、动作评分、训练检测。
 - `xiao-e-demo-polish`：Demo 收尾、UI 打磨、文档同步、演示准备。
+- `xiao-e-prd-sync`：PRD、项目状态、成果表述和范围边界同步。
+- `xiao-e-subscription-messages`：微信订阅消息、提醒任务和模板字段接入。
+
+## Claude Code 统一入口
+
+Claude Code 进入项目时应先读取根目录的 `CLAUDE.md`。项目共享规则仍以 `docs/AI_SKILLS.md` 和 `docs/ai-skills/` 为准。
+
+`.claude/` 目录继续作为本机个人配置保留，不进入 Git。旧 `.claude/skills` 中有价值的内容已经收敛到项目共享 skills：
+
+- `frontend-design` 的通用审美要求，收敛到 `xiao-e-demo-polish`，并以适老化小程序为优先，不照搬网页炫技风格。
+- `prd-skill` 收敛到 `xiao-e-prd-sync`。
+- `wechat-subscription-guide` 收敛到 `xiao-e-subscription-messages`。
 
 ## 项目内源文件与本机安装副本
 
