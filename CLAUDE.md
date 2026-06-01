@@ -27,11 +27,4 @@ Before working on this repo, read:
 
 ## Local Claude Config
 
-Keep `.claude/` local and untracked. It may contain personal model settings, local permissions, or experimental skills. Shared project workflow belongs in `docs/AI_SKILLS.md` and `docs/ai-skills/`.
-
-The old local `.claude` skills map to shared project skills as follows:
-
-- `.claude/skills/frontend-design` -> use `xiao-e-demo-polish` for mini-program UI polish.
-- `.claude/skills/prd-skill` -> use `xiao-e-prd-sync`.
-- `.claude/skills/wechat-subscription-guide` -> use `xiao-e-subscription-messages`.
-
+Keep `.claude/` local and untracked. It should only contain personal Claude Code settings, such as model and local permission preferences. Shared project workflow belongs in `docs/AI_SKILLS.md` and `docs/ai-skills/`.
