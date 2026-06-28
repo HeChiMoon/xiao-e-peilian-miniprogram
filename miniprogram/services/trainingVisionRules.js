@@ -1,6 +1,6 @@
 const DEFAULT_RULE = {
   name: '基础稳定识别',
-  hint: '保持动作慢一点、稳一点，身体尽量完整入镜。',
+  hint: '动作慢一点、稳一点，身体尽量完整入镜。',
   minBrightness: 34,
   maxBrightness: 238,
   minContrast: 13,
@@ -32,12 +32,12 @@ const RULES = {
       qualified: '静蹲姿势比较稳，继续保持背部贴墙。',
       counted: '这次静蹲完成得不错，继续保持。',
       unstable: '静蹲时先别着急，稳住身体再继续。',
-      noBody: '请让上半身和膝盖都进到画面里，系统才看得清。'
+      noBody: '请让上半身和膝盖都进入画面里，系统才看得清。'
     }
   },
   2: {
     name: '直腿抬高识别',
-    hint: '现在按坐姿版本识别，伸直一条腿后慢慢抬起，再稳稳放下。',
+    hint: '当前按坐姿版本识别，伸直一条腿后慢慢抬起，再稳稳放下。',
     maxMotion: 0.22,
     minQualityScore: 70,
     stableFrames: 3,
@@ -62,7 +62,7 @@ const RULES = {
       qualified: '现在站得比较稳，继续扶稳慢慢保持。',
       counted: '这次单腿站立已经完成，累了就先放下休息。',
       unstable: '身体有点晃，先扶稳再继续。',
-      noBody: '请让全身和支撑物一起进到画面里。'
+      noBody: '请让全身和支撑物一起进入画面里。'
     }
   }
 }

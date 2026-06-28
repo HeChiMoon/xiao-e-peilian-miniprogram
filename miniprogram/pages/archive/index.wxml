@@ -1,68 +1,39 @@
 <view class="page no-tab archive-page">
-  <view class="archive-hero">
+  <view class="archive-hero card">
     <image class="archive-avatar" src="{{profile.avatar}}" mode="aspectFill" />
-    <view>
+    <view class="archive-copy">
+      <text class="section-kicker sky-kicker">健康档案</text>
       <text class="hero-title">健康档案</text>
-      <text class="subtitle">{{profileSummary || '为每日训练提供基础参考'}}</text>
+      <text class="subtitle">{{profileSummary || '为每日训练提供基础参考。'}}</text>
     </view>
   </view>
 
   <view class="card info-card">
-    <view class="info-row">
-      <text>姓名</text>
-      <text>{{profile.name}}</text>
-    </view>
-    <view class="info-row">
-      <text>年龄</text>
-      <text>{{profile.age}}岁</text>
-    </view>
-    <view class="info-row">
-      <text>性别</text>
-      <text>{{profile.gender || '未填写'}}</text>
-    </view>
-    <view class="info-row">
-      <text>健康等级</text>
-      <text>{{profile.healthLevel}}</text>
-    </view>
-    <view class="info-row">
-      <text>最近测评</text>
-      <text>{{reportText}}</text>
-    </view>
-    <view class="info-row">
-      <text>病史</text>
-      <text>{{profile.medicalHistory || '未填写'}}</text>
-    </view>
-    <view class="info-row">
-      <text>疼痛部位</text>
-      <text>{{profile.painAreas || '未填写'}}</text>
-    </view>
+    <text class="card-title">基础资料</text>
+    <view class="info-row"><text>姓名</text><text>{{profile.name}}</text></view>
+    <view class="info-row"><text>年龄</text><text>{{profile.age}}岁</text></view>
+    <view class="info-row"><text>性别</text><text>{{profile.gender || '未填写'}}</text></view>
+    <view class="info-row"><text>健康等级</text><text>{{profile.healthLevel}}</text></view>
+    <view class="info-row"><text>最近测评</text><text>{{reportText}}</text></view>
+    <view class="info-row"><text>病史</text><text>{{profile.medicalHistory || '未填写'}}</text></view>
+    <view class="info-row"><text>疼痛部位</text><text>{{profile.painAreas || '未填写'}}</text></view>
   </view>
 
   <view class="card pose-card">
     <view class="pose-card-head">
       <view>
+        <text class="section-kicker green-kicker">最近检测</text>
         <text class="card-title">最近动作检测</text>
         <text class="card-copy">查看最近一次角度、评分和训练建议</text>
       </view>
       <button class="outline-btn history-btn" bindtap="goPoseHistory">历史</button>
     </view>
+
     <view class="pose-grid">
-      <view>
-        <text>检测动作</text>
-        <text>{{poseRecord.actionName}}</text>
-      </view>
-      <view>
-        <text>平均角度</text>
-        <text>{{poseRecord.angleText}}</text>
-      </view>
-      <view>
-        <text>动作评分</text>
-        <text>{{poseRecord.scoreText}}</text>
-      </view>
-      <view>
-        <text>风险提示</text>
-        <text>{{poseRecord.riskText}}</text>
-      </view>
+      <view class="pose-item"><text>检测动作</text><text>{{poseRecord.actionName}}</text></view>
+      <view class="pose-item"><text>平均角度</text><text>{{poseRecord.angleText}}</text></view>
+      <view class="pose-item"><text>动作评分</text><text>{{poseRecord.scoreText}}</text></view>
+      <view class="pose-item"><text>风险提示</text><text>{{poseRecord.riskText}}</text></view>
     </view>
     <text class="pose-suggestion">{{poseRecord.suggestion}}</text>
   </view>

@@ -1,7 +1,16 @@
 <view class="page no-tab chat-page">
   <scroll-view class="chat-scroll" scroll-y>
+    <view class="chat-hero card">
+      <text class="section-kicker green-kicker">语音问答</text>
+      <text class="card-title">膝关节健康小百科</text>
+      <text class="card-copy">按住说话就能提问，也可以点常见问题，小鹅会用更容易听懂的话回答您。</text>
+    </view>
+
     <view wx:for="{{messages}}" wx:key="index" class="message {{item.role}}">
-      <view class="avatar">{{item.role === 'ai' ? '鹅' : '我'}}</view>
+      <view class="avatar">
+        <image wx:if="{{item.role === 'ai'}}" class="avatar-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+        <text wx:else>我</text>
+      </view>
       <view class="bubble">
         <text class="bubble-text">{{item.text}}</text>
         <button
@@ -10,18 +19,23 @@
           data-index="{{index}}"
           bindtap="playMessageAudio"
         >
-          {{playingMessageIndex === index ? '正在听' : '🔊'}}
+          {{playingMessageIndex === index ? '播放中' : '听一听'}}
         </button>
       </view>
     </view>
 
     <view wx:if="{{loading}}" class="message ai">
-      <view class="avatar">鹅</view>
-      <view class="bubble">小鹅正在处理，请稍等一下。</view>
+      <view class="avatar">
+        <image class="avatar-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+      </view>
+      <view class="bubble">
+        <text class="bubble-text">小鹅正在整理回答，请稍等一下。</text>
+      </view>
     </view>
 
     <view class="faq-card">
-      <text class="faq-title">常见问题</text>
+      <text class="section-kicker peach-kicker">常见问题</text>
+      <text class="faq-title">不知道怎么问时，可以先点这里</text>
       <button
         wx:for="{{faq}}"
         wx:key="question"
@@ -49,7 +63,13 @@
     <text class="voice-status">{{voiceStatus}}</text>
 
     <view class="input-bar">
-      <input value="{{inputValue}}" bindinput="onInput" confirm-type="send" bindconfirm="sendMessage" placeholder="也可以打字问我..." />
+      <input
+        value="{{inputValue}}"
+        bindinput="onInput"
+        confirm-type="send"
+        bindconfirm="sendMessage"
+        placeholder="也可以打字提问..."
+      />
       <view class="send-btn {{loading ? 'disabled' : ''}}" bindtap="sendMessage">发送</view>
     </view>
   </view>

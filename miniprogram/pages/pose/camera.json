@@ -1,4 +1,6 @@
 {
-  "navigationBarTitleText": "\u76f8\u673a\u68c0\u6d4b",
+  "navigationBarTitleText": "相机检测",
+  "navigationBarBackgroundColor": "#000000",
+  "navigationBarTextStyle": "white",
   "disableScroll": true
 }

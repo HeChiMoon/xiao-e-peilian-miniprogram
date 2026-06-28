@@ -1,49 +1,55 @@
 <view class="page profile-page">
-  <view class="profile-card">
+  <view class="profile-card card">
     <image class="avatar-img" src="{{profile.avatar}}" mode="aspectFill" />
     <view class="profile-main">
+      <text class="section-kicker peach-kicker">我的信息</text>
       <text class="profile-name">{{profile.name}}</text>
       <text class="subtitle">{{profile.age ? profile.age + '岁' : '年龄待完善'}} | 关节健康等级：{{profile.healthLevel}}</text>
-      <text class="subtitle">最近测评：{{reportText}} | 今日训练：{{trainingText}}</text>
+      <text class="subtitle">最近测评：{{reportText}}</text>
+      <text class="subtitle">今日训练：{{trainingText}}</text>
     </view>
     <button class="qr-button" bindtap="showQr">绑定子女</button>
   </view>
 
-  <view class="profile-grid">
-    <view class="mini-card">
-      <text class="mini-label">今日训练</text>
-      <text class="mini-value">{{trainingText}}</text>
-    </view>
-    <view class="mini-card">
-      <text class="mini-label">最近检测</text>
-      <text class="mini-value small">{{poseText}}</text>
-    </view>
-    <view class="mini-card wide">
-      <text class="mini-label">子女绑定</text>
-      <text class="mini-value small">{{bindingText}}</text>
-    </view>
-  </view>
-
   <view class="card menu-card">
     <view class="menu-row" bindtap="openProfileEdit">
-      <text>完善资料</text>
-      <text>病史、疼痛部位、紧急联系人</text>
+      <view class="menu-main">
+        <text class="menu-title">完善资料</text>
+        <text class="menu-desc">病史、疼痛部位、紧急联系人</text>
+      </view>
+      <text class="menu-arrow">›</text>
     </view>
+
     <view class="menu-row" bindtap="openSettings">
-      <text>设置</text>
-      <text>提醒、清空当前数据、返回身份选择</text>
+      <view class="menu-main">
+        <text class="menu-title">设置</text>
+        <text class="menu-desc">提醒、清空当前数据、返回身份选择</text>
+      </view>
+      <text class="menu-arrow">›</text>
     </view>
+
     <view class="menu-row" bindtap="openTraining">
-      <text>训练记录</text>
-      <text>{{trainingText}}</text>
+      <view class="menu-main">
+        <text class="menu-title">训练记录</text>
+        <text class="menu-desc">{{trainingText}}</text>
+      </view>
+      <text class="menu-arrow">›</text>
     </view>
+
     <view class="menu-row" bindtap="openHealth">
-      <text>健康档案</text>
-      <text>资料、测评和训练概览</text>
+      <view class="menu-main">
+        <text class="menu-title">健康档案</text>
+        <text class="menu-desc">资料、测评和训练概览</text>
+      </view>
+      <text class="menu-arrow">›</text>
     </view>
+
     <view class="menu-row" bindtap="openPoseHistory">
-      <text>检测历史</text>
-      <text>角度、评分和训练建议</text>
+      <view class="menu-main">
+        <text class="menu-title">检测历史</text>
+        <text class="menu-desc">角度、评分和训练建议</text>
+      </view>
+      <text class="menu-arrow">›</text>
     </view>
   </view>
 
@@ -51,7 +57,7 @@
     <view class="modal-card" catchtap="noop">
       <view class="modal-body qr-modal">
         <text class="card-title">绑定子女</text>
-        <text class="binding-status">{{bindingLoading ? '正在生成绑定码…' : bindingStatus}}</text>
+        <text class="binding-status">{{bindingLoading ? '正在生成绑定码...' : bindingStatus}}</text>
         <image wx:if="{{bindingQrUrl}}" class="binding-qr-image" src="{{bindingQrUrl}}" mode="aspectFit" />
         <view wx:else class="binding-qr-placeholder">二维码生成中</view>
         <text class="binding-code">{{bindingCode || '请稍候'}}</text>
@@ -59,7 +65,7 @@
           <button class="outline-btn half-btn" bindtap="copyBindingCode">复制绑定码</button>
           <button class="primary-btn half-btn" bindtap="closeQr">知道了</button>
         </view>
-        <text class="card-copy">请让子女扫描这个二维码获取绑定码；如果当前设备不方便扫码，也可以直接复制绑定码手动输入完成绑定。</text>
+        <text class="card-copy">请让子女扫描这个普通二维码获取绑定码；如果当前设备不方便扫码，也可以直接复制绑定码手动输入完成绑定。</text>
       </view>
     </view>
   </view>
@@ -73,7 +79,7 @@
             <text class="setting-label">训练提醒</text>
             <text class="setting-desc">每日定时提醒您进行训练</text>
           </view>
-          <switch checked="{{settings.reminderEnabled}}" color="#88C9A1" bindchange="onReminderToggle" />
+          <switch checked="{{settings.reminderEnabled}}" color="#87c99f" bindchange="onReminderToggle" />
         </view>
         <view class="setting-row">
           <view>
@@ -104,7 +110,7 @@
         </view>
         <view class="setting-block">
           <text class="setting-label">语速调节</text>
-          <slider value="{{settings.voiceSpeed * 100}}" min="60" max="110" activeColor="#F4A882" bindchange="onVoiceSpeedChange" />
+          <slider value="{{settings.voiceSpeed * 100}}" min="60" max="110" activeColor="#f0a174" bindchange="onVoiceSpeedChange" />
           <text class="setting-desc">用于调节当前语速偏好，方便日常使用。</text>
         </view>
         <button class="logout-btn" loading="{{resettingDemo}}" bindtap="resetDemoData">清空当前数据</button>

@@ -26,7 +26,7 @@ const DEFAULT_PROFILE = {
   birthYear: CURRENT_YEAR - DEFAULT_AGE,
   age: DEFAULT_AGE,
   healthLevel: '良好',
-  avatar: '/assets/images/goose-main.png',
+  avatar: '/assets/images/xiao-e/avatar.png',
   phone: '',
   medicalHistory: '',
   painAreas: '',
@@ -72,7 +72,7 @@ function getFriendlyVoiceError(error) {
 
 Page({
   data: {
-    mascot: '/assets/images/goose-main.png',
+    mascot: '/assets/images/xiao-e/mascot.png',
     name: '',
     gender: '男',
     birthYear: CURRENT_YEAR - DEFAULT_AGE,

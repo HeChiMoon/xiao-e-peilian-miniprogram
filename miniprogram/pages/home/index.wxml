@@ -1,11 +1,21 @@
 <view class="page home-page">
   <view class="hero-card">
-    <view>
+    <view class="hero-copy">
       <text class="hello">{{greeting}}</text>
       <text class="hero-title">小鹅陪您每天练一练，让膝关节更轻松</text>
       <text class="subtitle">先测评，再训练。动作慢一点、稳一点，小鹅会一直陪着您。</text>
+      <view class="hero-tags">
+        <text class="hero-tag">先测评</text>
+        <text class="hero-tag">再训练</text>
+        <text class="hero-tag">动作慢一点</text>
+      </view>
     </view>
-    <image class="hero-goose" src="{{mascot}}" mode="aspectFill" />
+
+    <view class="hero-art">
+      <view class="hero-orbit hero-orbit-outer"></view>
+      <view class="hero-orbit hero-orbit-inner"></view>
+      <image class="hero-goose" src="{{mascot}}" mode="aspectFill" />
+    </view>
   </view>
 
   <view class="status-grid">
@@ -13,10 +23,12 @@
       <text class="mini-label">今日训练</text>
       <text class="mini-value">{{progressText}}</text>
     </view>
+
     <view class="mini-card">
       <text class="mini-label">最近测评</text>
       <text class="mini-value small">{{reportText}}</text>
     </view>
+
     <view class="mini-card wide">
       <text class="mini-label">最近检测</text>
       <text class="mini-value small">{{poseText}}</text>
@@ -25,22 +37,31 @@
 
   <view class="content">
     <view class="card focus-card">
+      <text class="section-kicker">今日提醒</text>
       <text class="card-title">{{dailyFocus.title}}</text>
       <text class="card-copy">{{dailyFocus.copy}}</text>
     </view>
 
     <view class="card green feature-card">
-      <view>
-        <text class="card-title">小鹅小测评</text>
-        <text class="card-copy">先了解当前膝关节状态，再安排更合适的训练顺序。</text>
+      <view class="feature-head">
+        <view class="feature-copy">
+          <text class="section-kicker green-kicker">评估入口</text>
+          <text class="card-title">小鹅小测评</text>
+          <text class="card-copy">先了解当前膝关节状态，再安排更合适的训练顺序。</text>
+        </view>
+        <image class="feature-visual" src="{{featureIcons.report}}" mode="aspectFit" />
       </view>
       <button class="success-btn card-action" bindtap="goAssessment">开始测评</button>
     </view>
 
     <view class="card feature-card">
-      <view>
-        <text class="card-title">每日练</text>
-        <text class="card-copy">围绕 3 个核心动作练习，动作更聚焦，训练流程也更顺。</text>
+      <view class="feature-head">
+        <view class="feature-copy">
+          <text class="section-kicker peach-kicker">今日练习</text>
+          <text class="card-title">每日练</text>
+          <text class="card-copy">围绕 3 个核心动作练习，流程更清楚，训练也更省力。</text>
+        </view>
+        <image class="feature-visual" src="{{featureIcons.detect}}" mode="aspectFit" />
       </view>
       <button class="primary-btn card-action" bindtap="goTraining">开始训练</button>
     </view>
@@ -48,20 +69,26 @@
     <view class="card video-entry" bindtap="goVideo">
       <view class="video-head">
         <view class="video-copy">
+          <text class="section-kicker sky-kicker">今日推荐</text>
           <text class="card-title">科普视频</text>
-          <text class="card-copy">今日推荐：{{recommendedVideo.title}}</text>
+          <text class="card-copy">{{recommendedVideo.title}}</text>
           <text class="video-reason">{{recommendedVideo.reason}}</text>
         </view>
-        <image class="video-mascot" src="{{mascot}}" mode="aspectFill" />
-      </view>
-      <view class="video-cover">
-        <text class="play-mark">▶</text>
+        <view class="video-preview">
+          <image class="video-mascot" src="{{featureIcons.video}}" mode="aspectFit" />
+          <view class="play-badge">
+            <text class="play-mark">▶</text>
+          </view>
+        </view>
       </view>
     </view>
   </view>
 
   <view class="float-chat" bindtap="goChat">
     <image class="float-chat-icon" src="{{mascot}}" mode="aspectFit" />
-    <text class="float-chat-text">小百科</text>
+    <view class="float-chat-copy">
+      <text class="float-chat-label">语音问答</text>
+      <text class="float-chat-text">小百科</text>
+    </view>
   </view>
 </view>

@@ -36,7 +36,7 @@
   "window": {
     "backgroundColor": "#F7F5F0",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#FFFFFF",
+    "navigationBarBackgroundColor": "#F7F5F0",
     "navigationBarTitleText": "\u5c0f\u9e45\u966a\u7ec3",
     "navigationBarTextStyle": "black"
   },

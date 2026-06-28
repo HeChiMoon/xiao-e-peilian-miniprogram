@@ -10,7 +10,14 @@ const DEFAULT_PROFILE = {
   name: '',
   age: '',
   healthLevel: '待完善',
-  avatar: '/assets/images/goose-main.png'
+  avatar: '/assets/images/xiao-e/avatar.png'
+}
+
+const XIAO_E_ASSETS = {
+  mascot: '/assets/images/xiao-e/mascot.png',
+  detect: '/assets/images/xiao-e/detect.png',
+  report: '/assets/images/xiao-e/report.png',
+  video: '/assets/images/xiao-e/video.png'
 }
 
 function buildVideoPreview(context) {
@@ -24,7 +31,7 @@ function buildVideoPreview(context) {
 
   return {
     title: video.title,
-    reason: video.recommendReason || '结合当前状态推荐优先观看。'
+    reason: video.recommendReason || '结合当前状态，建议优先看看这条。'
   }
 }
 
@@ -80,7 +87,7 @@ function buildDailyFocus(context) {
   return {
     title: '今天状态不错，继续保持',
     copy: completedCount >= 3
-      ? '今天的训练已经完成，可以看一看科普视频，顺便做做放松。'
+      ? '今天的训练已经完成，可以看看科普视频，顺便做做放松。'
       : '继续完成每日练，动作慢一点、稳一点就很好。'
   }
 }
@@ -92,7 +99,8 @@ Page({
     progressText: '0/3',
     reportText: '还未测评',
     poseText: '还未检测',
-    mascot: '/assets/images/goose-main.png',
+    mascot: XIAO_E_ASSETS.mascot,
+    featureIcons: XIAO_E_ASSETS,
     recommendedVideo: buildVideoPreview({}),
     dailyFocus: buildDailyFocus({})
   },
@@ -101,17 +109,21 @@ Page({
     const progress = getTrainingProgress()
     const report = getAssessment()
     const localProfile = getElderProfile(DEFAULT_PROFILE)
+    const completedIds = Array.isArray(progress.completedIds) ? progress.completedIds : []
     const localContext = {
       profile: localProfile,
       report,
-      progress,
+      progress: {
+        ...progress,
+        completedIds
+      },
       pose: null
     }
 
     this.setData({
       profile: localProfile,
       greeting: buildGreeting(localProfile),
-      progressText: `${progress.completedIds.length}/3`,
+      progressText: `${completedIds.length}/3`,
       reportText: report ? `${report.levelText} · ${report.score}分` : '还未测评',
       poseText: '还未检测',
       recommendedVideo: buildVideoPreview(localContext),

@@ -213,8 +213,9 @@ Page({
         icon: 'success'
       })
     } catch (error) {
+      console.warn('子女端绑定失败', error)
       wx.showToast({
-        title: error.message || '绑定失败',
+        title: '绑定失败，请检查绑定码',
         icon: 'none'
       })
     } finally {

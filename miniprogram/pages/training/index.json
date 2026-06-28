@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "每日练"
+  "navigationBarTitleText": "每日练",
+  "navigationBarBackgroundColor": "#F7F5F0",
+  "navigationBarTextStyle": "black"
 }

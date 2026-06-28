@@ -93,9 +93,5 @@ Page({
     } finally {
       this.setData({ resetting: false })
     }
-  },
-
-  quitTraining() {
-    wx.switchTab({ url: '/pages/home/index' })
   }
 })

@@ -18,7 +18,7 @@ const DEFAULT_PROFILE = {
   name: '未命名用户',
   age: '',
   healthLevel: '待完善',
-  avatar: '/assets/images/goose-main.png'
+  avatar: '/assets/images/xiao-e/avatar.png'
 }
 
 function buildPoseText(record) {

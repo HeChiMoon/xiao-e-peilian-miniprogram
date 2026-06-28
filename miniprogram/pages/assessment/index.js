@@ -33,16 +33,16 @@ function levelFromScore(score) {
 
 function getActionPreview(actionKey) {
   const map = {
-    legShape: '/assets/images/goose-main.png',
-    squat: '/assets/images/penguin/encourage.jpg',
+    legShape: '/assets/images/xiao-e/mascot.png',
+    squat: '/assets/images/xiao-e/ok.jpg',
     legRaise: '/assets/images/action-leg-raise.jpg',
-    balance: '/assets/images/penguin/worried.jpg',
-    ligament: '/assets/images/penguin/searching.jpg',
-    stride: '/assets/images/penguin/happy.jpg',
-    jump: '/assets/images/penguin/confused.jpg'
+    balance: '/assets/images/xiao-e/report.png',
+    ligament: '/assets/images/xiao-e/detect.png',
+    stride: '/assets/images/xiao-e/happy.png',
+    jump: '/assets/images/xiao-e/confused.jpg'
   }
 
-  return map[actionKey] || '/assets/images/goose-main.png'
+  return map[actionKey] || '/assets/images/xiao-e/mascot.png'
 }
 
 Page({

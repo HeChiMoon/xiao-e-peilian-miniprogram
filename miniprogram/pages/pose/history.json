@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "检测历史",
-  "enablePullDownRefresh": true,
-  "backgroundColor": "#F7F5F0"
+  "navigationBarBackgroundColor": "#F7F5F0",
+  "navigationBarTextStyle": "black",
+  "enablePullDownRefresh": true
 }

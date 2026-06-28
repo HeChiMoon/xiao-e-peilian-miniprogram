@@ -1,5 +1,5 @@
 <view class="page no-tab admin-page">
-  <view class="admin-hero">
+  <view class="admin-hero card peach">
     <text class="role-label">管理员端</text>
     <text class="hero-title">小鹅陪练管理台</text>
     <text class="subtitle">内容、训练和风险提醒的后台视图。</text>
@@ -13,7 +13,8 @@
   </view>
 
   <view class="card task-card">
-    <text class="card-title">管理事项</text>
+    <text class="section-kicker sky-kicker">管理事项</text>
+    <text class="card-title">当前可操作内容</text>
     <button
       wx:for="{{dashboard.tasks}}"
       wx:key="*this"

@@ -1,8 +1,9 @@
 <view class="camera-page">
   <view class="camera-shell">
     <camera
+      wx:if="{{cameraVisible}}"
       class="camera-view"
-      device-position="back"
+      device-position="{{devicePosition}}"
       flash="off"
       frame-size="large"
       bindinitdone="onCameraReady"
@@ -19,6 +20,7 @@
     <scroll-view class="panel-scroll" scroll-y="true">
       <view class="panel-content">
         <view wx:if="{{!(result && result.pass && fromPractice)}}" class="action-info">
+          <text class="section-kicker green-kicker">相机检测</text>
           <text class="action-name">{{actionName}}</text>
           <text class="action-guide">{{guide}}</text>
         </view>
@@ -51,9 +53,25 @@
     </scroll-view>
 
     <view class="action-bar">
+      <view wx:if="{{!autoAdvancing}}" class="camera-toolbar-card">
+        <view class="camera-toolbar-head">
+          <view class="camera-toolbar-copy">
+            <text class="camera-toolbar-label">当前视角</text>
+            <text class="camera-toolbar-value">{{cameraLabel}}</text>
+          </view>
+          <text class="camera-toolbar-tag">{{devicePosition === 'back' ? '推荐' : '自拍'}}</text>
+        </view>
+        <button
+          class="camera-switch-btn"
+          bindtap="toggleDevicePosition"
+          disabled="{{switchingCamera || taking || uploading || analyzing || autoAdvancing}}"
+        >{{switchCameraText}}</button>
+      </view>
+
       <button
         wx:if="{{!hasAttempted}}"
         class="primary-btn"
+        disabled="{{!cameraReady || switchingCamera}}"
         loading="{{taking || uploading || analyzing}}"
         bindtap="takePhoto"
       >开始检测</button>
@@ -61,6 +79,7 @@
       <button
         wx:elif="{{!autoAdvancing}}"
         class="retry-btn"
+        disabled="{{!cameraReady || switchingCamera}}"
         loading="{{taking || uploading || analyzing}}"
         bindtap="takePhoto"
       >重新检测</button>

@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "小鹅测评"
+  "navigationBarTitleText": "小鹅测评",
+  "navigationBarBackgroundColor": "#F7F5F0",
+  "navigationBarTextStyle": "black"
 }

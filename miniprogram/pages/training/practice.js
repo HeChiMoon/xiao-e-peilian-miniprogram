@@ -63,13 +63,13 @@ function formatCloudPoseFeedback(record, actionKey) {
     status = 'unsupported'
     message = '这次检测没有成功，请调整姿势后再试。'
   } else if (actionKey === 'wallSquat' && angle > max) {
-    message = `当前主要侧膝关节约 ${angle}°，下蹲还不够明显。请背部贴墙，双脚向前一点，慢慢下蹲。`
+    message = `当前主要侧膝关节约 ${angle} 度，下蹲还不够明显。请背部贴墙，双脚向前一点，慢慢下蹲。`
     label = '下蹲幅度偏小'
   } else if (actionKey === 'wallSquat' && angle < min) {
-    message = `当前主要侧膝关节约 ${angle}°，下蹲幅度偏大，请稍微站高一点。`
+    message = `当前主要侧膝关节约 ${angle} 度，下蹲幅度偏大，请稍微站高一点。`
     label = '下蹲幅度偏大'
   } else if (actionKey !== 'wallSquat' && angle < min) {
-    message = `当前膝关节约 ${angle}°，膝盖可以再伸直一点，动作慢慢来。`
+    message = `当前膝关节约 ${angle} 度，膝盖可以再伸直一点，动作慢慢来。`
     label = '膝盖需要更伸直'
   } else if (actionKey === 'legRaise' && legLineAngle < 8) {
     message = `当前${activeSide}抬起高度还不够，请坐稳或扶稳后，慢慢把腿抬高一点。`
@@ -79,11 +79,11 @@ function formatCloudPoseFeedback(record, actionKey) {
     label = '请抬起一只脚'
   } else if (score >= passScore) {
     if (actionKey === 'legRaise') {
-      message = `当前${activeSide}膝关节约 ${angle}°，抬腿高度合适，继续慢起慢落。`
+      message = `当前${activeSide}膝关节约 ${angle} 度，抬腿高度合适，继续慢起慢落。`
     } else if (actionKey === 'singleLegStand') {
-      message = `当前${supportSide}膝关节约 ${angle}°，支撑腿稳定，动作达标。`
+      message = `当前${supportSide}膝关节约 ${angle} 度，支撑腿稳定，动作达标。`
     } else if (actionKey === 'wallSquat') {
-      message = `当前主要侧膝关节约 ${angle}°，靠墙静蹲达标，继续保持背部贴墙。`
+      message = `当前主要侧膝关节约 ${angle} 度，靠墙静蹲达标，继续保持背部贴墙。`
     }
   }
 
@@ -91,7 +91,7 @@ function formatCloudPoseFeedback(record, actionKey) {
     status,
     label,
     message,
-    angleText: `${angle}°`,
+    angleText: `${angle}度`,
     scoreText: `${score}分`,
     shouldCount: engineOk && score >= passScore
   }
@@ -180,7 +180,7 @@ Page({
     }
     this.setData({
       cameraReady: true,
-      message: '摄像头已打开，请把全身放进绿色框内。',
+      message: '摄像头已打开，请把身体放进提示框内。',
       visionLabel: '正在识别',
       visionStatus: 'ready'
     })
@@ -209,7 +209,7 @@ Page({
         recognitionActive: false,
         visionLabel: '暂不支持',
         visionStatus: 'unsupported',
-        message: '当前基础库暂不支持实时识别，请先用下方相机检测。'
+        message: '当前基础库暂不支持实时识别，请先使用下方相机检测。'
       })
       return
     }
@@ -238,7 +238,7 @@ Page({
         recognitionActive: false,
         visionLabel: '暂不支持',
         visionStatus: 'unsupported',
-        message: '当前基础库暂不支持实时识别，请先用下方相机检测。'
+        message: '当前基础库暂不支持实时识别，请先使用下方相机检测。'
       })
       return
     }
@@ -321,7 +321,7 @@ Page({
         cloudPoseActive: false,
         cloudPoseStatus: 'unsupported',
         cloudPoseLabel: '请重新摆好姿势',
-        cloudPoseMessage: '已经快速尝试多次了，请把全身重新放进框里，再继续检测。'
+        cloudPoseMessage: '已经快速尝试多次了，请把身体重新放进框里，再继续检测。'
       })
       return
     }
@@ -429,8 +429,8 @@ Page({
       cloudPoseActive: true,
       cloudPoseChecking: false,
       cloudPoseStatus: 'ready',
-        cloudPoseLabel: '继续检测',
-      cloudPoseMessage: '请把全身重新放进框里，系统会继续帮您检测。',
+      cloudPoseLabel: '继续检测',
+      cloudPoseMessage: '请把身体重新放进框里，系统会继续帮您检测。',
       message: '准备好了就继续，系统会快速帮您判断。'
     })
     this.scheduleCloudPoseCheck(600)
@@ -493,11 +493,5 @@ Page({
       this.completeTimer = null
       wx.redirectTo({ url: `/pages/training/learn?id=${this.data.level.id + 1}` })
     }, COMPLETE_DELAY)
-  },
-
-  quitTraining() {
-    this.stopVision()
-    this.stopCloudPoseCoach()
-    wx.switchTab({ url: '/pages/home/index' })
   }
 })

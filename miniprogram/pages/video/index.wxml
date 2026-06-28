@@ -35,10 +35,33 @@
             <text class="tip-text">上下滑动切换视频</text>
           </view>
 
-          <view class="bottom-panel">
+          <view class="side-actions" catchtap="noop">
+            <view class="action-item" data-id="{{item.id}}" bindtap="toggleLike">
+              <view class="action-circle {{item.liked ? 'active' : ''}}">
+                <image class="action-icon" src="{{actionIcons.like}}" mode="aspectFit" />
+              </view>
+              <text class="action-count">{{item.likeCount}}</text>
+            </view>
+
+            <view class="action-item" data-id="{{item.id}}" bindtap="toggleSave">
+              <view class="action-circle {{item.saved ? 'active' : ''}}">
+                <image class="action-icon" src="{{actionIcons.save}}" mode="aspectFit" />
+              </view>
+              <text class="action-count">{{item.saveCount}}</text>
+            </view>
+
+            <view class="action-item" data-id="{{item.id}}" bindtap="openComments">
+              <view class="action-circle">
+                <image class="action-icon" src="{{actionIcons.comment}}" mode="aspectFit" />
+              </view>
+              <text class="action-count">{{item.commentCount}}</text>
+            </view>
+          </view>
+
+          <view class="bottom-panel" catchtap="noop">
             <view class="panel-head">
               <text class="page-title">科普视频</text>
-              <text wx:if="{{item.recommended}}" class="recommend-pill">推荐 {{item.recommendRank}}</text>
+              <text wx:if="{{item.recommended}}" class="recommend-pill">推荐</text>
             </view>
             <text class="video-title">{{item.title}}</text>
             <text class="video-desc">{{item.desc}}</text>
@@ -48,4 +71,59 @@
       </view>
     </swiper-item>
   </swiper>
+
+  <view wx:if="{{showComments}}" class="comment-mask" bindtap="closeComments">
+    <view class="comment-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+
+      <view class="comment-head">
+        <view class="comment-head-main">
+          <text class="comment-title">评论区</text>
+          <text class="comment-subtitle">{{commentVideoTitle}}</text>
+        </view>
+        <text class="comment-close" bindtap="closeComments">收起</text>
+      </view>
+
+      <view class="quick-comment-block">
+        <text class="sheet-label">快捷留言</text>
+        <view class="quick-comment-list">
+          <text
+            wx:for="{{quickComments}}"
+            wx:key="*this"
+            class="quick-comment-pill"
+            data-text="{{item}}"
+            bindtap="fillQuickComment"
+          >{{item}}</text>
+        </view>
+      </view>
+
+      <scroll-view class="comment-list" scroll-y>
+        <view wx:if="{{!commentItems.length}}" class="comment-empty">还没有留言，您可以先说一句。</view>
+        <view wx:for="{{commentItems}}" wx:key="id" class="comment-row">
+          <view class="comment-avatar">{{item.avatarText}}</view>
+          <view class="comment-card">
+            <view class="comment-meta">
+              <text class="comment-author">{{item.author}}</text>
+              <text class="comment-time">{{item.timeText}}</text>
+            </view>
+            <text class="comment-content">{{item.text}}</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="comment-editor">
+        <view class="comment-input-row">
+          <input
+            class="comment-input"
+            value="{{commentDraft}}"
+            maxlength="24"
+            placeholder="留一句鼓励的话"
+            placeholder-class="comment-placeholder"
+            bindinput="onCommentInput"
+          />
+          <button class="comment-submit" bindtap="submitComment">发送</button>
+        </view>
+      </view>
+    </view>
+  </view>
 </view>

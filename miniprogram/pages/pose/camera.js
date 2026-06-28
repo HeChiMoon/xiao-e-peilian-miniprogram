@@ -6,7 +6,7 @@ const { uploadPoseImage, analyzePoseImage } = require('../../services/poseServic
 const ACTIONS = {
   wallSquat: {
     name: '靠墙静蹲',
-    guide: '手机放在身体侧前方 30 到 45 度，距离约 2.5 到 3 米。请把胸口、髋部、膝盖、脚踝和双脚都拍进画面。',
+    guide: '手机放在身体侧前方约 30 到 45 度，距离约 2.5 到 3 米。请把胸口、髋部、膝盖、脚踝和双脚都拍进画面。',
     frameCopy: '胸口到双脚都要入镜'
   },
   legRaise: {
@@ -16,7 +16,7 @@ const ACTIONS = {
   },
   singleLegStand: {
     name: '单腿站立',
-    guide: '请扶稳椅背，手机放在正前方或侧前方，让髋部、膝盖、脚踝和双脚都能看到。',
+    guide: '请找稳固椅背，手机放在正前方或侧前方，让髋部、膝盖、脚踝和双脚都能看到。',
     frameCopy: '髋膝脚踝和双脚都要入镜'
   }
 }
@@ -37,7 +37,7 @@ function getMainAngle(record) {
 
 function getIdleStatusText(fromPractice) {
   return fromPractice
-    ? '请先摆好动作，把关键部位放进画面，然后点击开始检测。'
+    ? '请先摆好动作，把关键部位放进画面，然后点开始检测。'
     : '请摆好动作后点击开始检测。'
 }
 
@@ -64,8 +64,9 @@ function buildFailureHint(actionKey, detected) {
   }
 
   if (actionKey === 'legRaise') {
-    return '已经识别到人像，但动作还不够清楚。请确认髋部、膝盖、脚踝没有被遮挡。'
+    return '已经识别到人像，但动作还不够清楚。请确认髋部、膝盖和脚踝没有被遮挡。'
   }
+
   return '已经识别到人像，但动作还不够清楚。请确认关键关节没有被遮挡。'
 }
 
@@ -82,7 +83,7 @@ function formatResult(record, actionKey) {
 
   return {
     ...record,
-    angleText: `${getMainAngle(record)}°`,
+    angleText: `${getMainAngle(record)}度`,
     scoreText: `${score}分`,
     pass: detected && score >= passScore,
     debugText: detected && hasUsableAngle ? '' : buildFailureHint(actionKey, detected),
@@ -99,6 +100,14 @@ function shouldRetryLegRaise(record) {
   return message.includes('未返回可用的人体关键点') || message.includes('没有拿到坐姿抬腿骨架点')
 }
 
+function getSwitchCameraText(devicePosition) {
+  return devicePosition === 'back' ? '切换到前置视角' : '切换到后置视角'
+}
+
+function getCameraLabel(devicePosition) {
+  return devicePosition === 'back' ? '后置视角' : '前置视角'
+}
+
 Page({
   data: {
     fromPractice: false,
@@ -109,7 +118,12 @@ Page({
     guide: ACTIONS.wallSquat.guide,
     frameCopy: ACTIONS.wallSquat.frameCopy,
     backButtonText: '返回上一页',
+    devicePosition: 'back',
+    cameraLabel: getCameraLabel('back'),
+    switchCameraText: getSwitchCameraText('back'),
+    cameraVisible: true,
     cameraReady: false,
+    switchingCamera: false,
     taking: false,
     uploading: false,
     analyzing: false,
@@ -126,17 +140,21 @@ Page({
     const levelId = Number(query.levelId || 0)
     const fromPractice = query.from === 'practice'
     const action = ACTIONS[actionKey]
-    const finalLevel = isFinalLevel(levelId)
 
     this.setData({
       fromPractice,
       levelId,
-      isFinalLevel: finalLevel,
+      isFinalLevel: isFinalLevel(levelId),
       actionKey,
       actionName: action.name,
       guide: action.guide,
       frameCopy: action.frameCopy,
       backButtonText: fromPractice ? '返回练习' : '返回上一页',
+      devicePosition: 'back',
+      cameraLabel: getCameraLabel('back'),
+      switchCameraText: getSwitchCameraText('back'),
+      cameraVisible: true,
+      switchingCamera: false,
       statusText: getIdleStatusText(fromPractice)
     })
   },
@@ -159,6 +177,7 @@ Page({
 
     this.setData({
       cameraReady: true,
+      switchingCamera: false,
       statusText: '相机已打开。请摆好动作并保持稳定，然后点击开始检测。'
     })
   },
@@ -166,12 +185,59 @@ Page({
   onCameraError() {
     this.setData({
       cameraReady: false,
+      switchingCamera: false,
       statusText: '无法访问摄像头，请检查微信相机权限后重试。'
     })
   },
 
+  toggleDevicePosition() {
+    if (this.data.taking || this.data.uploading || this.data.analyzing || this.data.autoAdvancing || this.data.switchingCamera) {
+      return
+    }
+
+    if (this.finishTimer) {
+      clearTimeout(this.finishTimer)
+      this.finishTimer = null
+    }
+
+    const nextPosition = this.data.devicePosition === 'back' ? 'front' : 'back'
+
+    this.setData({
+      devicePosition: nextPosition,
+      cameraLabel: getCameraLabel(nextPosition),
+      switchCameraText: getSwitchCameraText(nextPosition),
+      cameraVisible: false,
+      cameraReady: false,
+      switchingCamera: true,
+      result: null,
+      hasAttempted: false,
+      failedAttempts: 0,
+      canFinishPractice: false,
+      autoAdvancing: false,
+      statusText: `已切换到${nextPosition === 'back' ? '后置' : '前置'}视角，请重新摆好动作后开始检测。`
+    })
+
+    wx.nextTick(() => {
+      this.setData({ cameraVisible: true })
+      this.cameraContext = wx.createCameraContext()
+    })
+  },
+
   takePhoto() {
-    if (!this.cameraContext || this.data.taking || this.data.uploading || this.data.analyzing || this.data.autoAdvancing) {
+    if (
+      !this.cameraContext ||
+      !this.data.cameraReady ||
+      this.data.switchingCamera ||
+      this.data.taking ||
+      this.data.uploading ||
+      this.data.analyzing ||
+      this.data.autoAdvancing
+    ) {
+      if (!this.data.cameraReady || this.data.switchingCamera) {
+        this.setData({
+          statusText: '相机还在准备中，请稍等一下再开始检测。'
+        })
+      }
       return
     }
 

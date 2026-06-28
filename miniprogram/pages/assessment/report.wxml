@@ -1,7 +1,8 @@
 <view class="page no-tab report-page" wx:if="{{report}}">
   <view class="card report-card">
-    <image class="report-goose" src="/assets/images/goose-main.png" mode="aspectFill" />
-    <text class="report-title">小鹅测评 · 您的腿脚健康报告</text>
+    <image class="report-goose" src="/assets/images/xiao-e/report.png" mode="aspectFit" />
+    <text class="section-kicker peach-kicker">测评结果</text>
+    <text class="report-title">小鹅测评 · 您的膝关节健康报告</text>
     <text class="report-date">{{report.createdAt}}</text>
     <view class="risk-badge {{report.className}}">{{report.levelText}}</view>
     <text class="score">风险分：{{report.score}}</text>
@@ -9,11 +10,13 @@
   </view>
 
   <view class="card">
+    <text class="section-kicker green-kicker">推荐计划</text>
     <text class="card-title">推荐训练计划</text>
     <text class="card-copy">{{report.suggestion}}</text>
   </view>
 
   <view class="card green">
+    <text class="section-kicker sky-kicker">安全提醒</text>
     <text class="card-title">安全提醒</text>
     <text class="card-copy">测评结果只用于运动陪练和健康科普，不能替代医生诊断。如果哪里不舒服，请及时就医。</text>
   </view>

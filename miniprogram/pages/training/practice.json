@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "动作练习"
+  "navigationBarTitleText": "动作练习",
+  "navigationBarBackgroundColor": "#F7F5F0",
+  "navigationBarTextStyle": "black"
 }

@@ -68,7 +68,7 @@ Page({
         wx.navigateBack()
       }, 500)
     } catch (error) {
-      console.error('完善资料保存失败', error)
+      console.warn('完善资料云端保存失败，已保留本地资料', error)
       saveElderProfile(nextProfile)
       wx.showToast({
         title: '已保存到本机',

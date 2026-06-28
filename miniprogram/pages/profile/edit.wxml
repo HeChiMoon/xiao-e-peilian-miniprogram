@@ -1,5 +1,6 @@
 <view class="page no-tab edit-profile-page">
-  <view class="card header-card">
+  <view class="card header-card peach">
+    <text class="section-kicker peach-kicker">资料完善</text>
     <text class="hero-title">完善老人资料</text>
     <text class="subtitle">补充病史、疼痛部位和紧急联系人，后续训练建议会更准确。</text>
   </view>
@@ -17,7 +18,7 @@
 
     <view class="form-row">
       <text class="form-label">疼痛部位</text>
-      <input class="form-input" value="{{form.painAreas}}" placeholder="例如：左膝、右膝、腰背" bindinput="onInput" data-field="painAreas" />
+      <input class="form-input" value="{{form.painAreas}}" placeholder="例如：左膝、右膝、腰部" bindinput="onInput" data-field="painAreas" />
     </view>
 
     <view class="form-row">

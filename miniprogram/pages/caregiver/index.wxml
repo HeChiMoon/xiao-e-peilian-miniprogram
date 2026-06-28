@@ -1,5 +1,5 @@
 <view class="page no-tab caregiver-page">
-  <view class="header-card">
+  <view class="header-card card green">
     <text class="role-label">子女端</text>
     <text class="hero-title">家庭看护</text>
     <text class="subtitle">先完成绑定，再同步查看老人最近的测评、检测和训练概览。</text>
@@ -8,12 +8,15 @@
   <view class="content">
     <view class="card binding-card">
       <view class="section-head">
-        <text class="card-title">绑定老人</text>
+        <view>
+          <text class="section-kicker green-kicker">绑定入口</text>
+          <text class="card-title">绑定老人</text>
+        </view>
         <text class="status-badge {{statusTone}}">{{detectedSource || '待开始'}}</text>
       </view>
 
       <text class="card-copy">{{statusText}}</text>
-      <text class="scan-tip">扫一扫老人端二维码后，系统会自动带入绑定码。</text>
+      <text class="scan-tip">扫一扫老人端普通二维码后，系统会自动带入绑定码。</text>
 
       <input
         class="binding-input"
@@ -44,9 +47,7 @@
       <view wx:if="{{boundElder}}" class="bound-box">
         <text class="bound-tag">绑定完成</text>
         <text class="bound-title">{{boundElder.name}}</text>
-        <text class="bound-copy">
-          {{boundElder.age ? boundElder.age + '岁 · ' : ''}}{{boundElder.healthLevel || '资料已同步'}}
-        </text>
+        <text class="bound-copy">{{boundElder.age ? boundElder.age + '岁 · ' : ''}}{{boundElder.healthLevel || '资料已同步'}}</text>
         <text class="bound-note">{{successNote}}</text>
       </view>
 
@@ -55,24 +56,28 @@
 
     <view wx:if="{{boundElder}}" class="card elder-card">
       <view class="section-head">
-        <text class="card-title">老人概览</text>
+        <view>
+          <text class="section-kicker sky-kicker">基础概览</text>
+          <text class="card-title">老人概览</text>
+        </view>
         <text class="status-badge success">已同步</text>
       </view>
+
       <text class="elder-name">{{dashboard.elderCard.name || boundElder.name}}</text>
       <view class="elder-grid">
-        <view>
+        <view class="info-tile">
           <text class="mini-label">年龄</text>
           <text class="mini-value">{{dashboard.elderCard.age || '待完善'}}</text>
         </view>
-        <view>
+        <view class="info-tile">
           <text class="mini-label">健康等级</text>
           <text class="mini-value small">{{dashboard.elderCard.healthLevel || '待完善'}}</text>
         </view>
-        <view>
+        <view class="info-tile">
           <text class="mini-label">疼痛部位</text>
           <text class="mini-value small">{{dashboard.elderCard.painAreas || '暂无记录'}}</text>
         </view>
-        <view>
+        <view class="info-tile">
           <text class="mini-label">备注</text>
           <text class="mini-value small">{{dashboard.elderCard.note || '暂无备注'}}</text>
         </view>
@@ -81,31 +86,35 @@
 
     <view wx:if="{{boundElder}}" class="dashboard-grid">
       <view class="card dashboard-card">
+        <text class="section-kicker peach-kicker">最近测评</text>
         <text class="card-title">{{dashboard.assessmentCard.title}}</text>
         <text class="dashboard-primary">{{dashboard.assessmentCard.primary}}</text>
         <text class="dashboard-secondary">{{dashboard.assessmentCard.secondary}}</text>
       </view>
 
       <view class="card dashboard-card">
+        <text class="section-kicker sky-kicker">最近检测</text>
         <text class="card-title">{{dashboard.poseCard.title}}</text>
         <text class="dashboard-primary">{{dashboard.poseCard.primary}}</text>
         <text class="dashboard-secondary">{{dashboard.poseCard.secondary}}</text>
       </view>
 
       <view class="card dashboard-card">
+        <text class="section-kicker green-kicker">训练进度</text>
         <text class="card-title">{{dashboard.trainingCard.title}}</text>
         <text class="dashboard-primary">{{dashboard.trainingCard.primary}}</text>
         <text class="dashboard-secondary">{{dashboard.trainingCard.secondary}}</text>
       </view>
     </view>
 
-    <view wx:if="{{!boundElder}}" class="card">
+    <view wx:if="{{!boundElder}}" class="card pending-card">
+      <text class="section-kicker">绑定后可看</text>
       <text class="card-title">当前可查看内容</text>
       <view class="reminder-row">已接通绑定确认链路</view>
       <view class="reminder-row">绑定成功后会同步老人基础资料</view>
       <view class="reminder-row">最近测评、检测和训练概览会在绑定后自动展示</view>
     </view>
 
-    <button class="outline-btn" bindtap="goRole">返回身份选择</button>
+    <button class="outline-btn back-btn" bindtap="goRole">返回身份选择</button>
   </view>
 </view>

@@ -14,14 +14,14 @@ const ROLE_ITEMS = [
     title: '老人端',
     desc: '完成建档、测评、每日练和小百科问答。',
     action: '进入老人端',
-    image: '/assets/images/goose-main.png'
+    image: '/assets/images/xiao-e/avatar.png'
   },
   {
     role: 'caregiver',
     title: '子女端',
     desc: '确认绑定老人信息，查看家庭看护概览。',
     action: '进入子女端',
-    image: '/assets/images/penguin/happy.jpg'
+    image: '/assets/images/xiao-e/profile.png'
   }
 ]
 
@@ -32,7 +32,7 @@ const DEFAULT_LOCAL_PROFILE = {
 Page({
   data: {
     roles: ROLE_ITEMS,
-    mascot: '/assets/images/goose-main.png',
+    mascot: '/assets/images/xiao-e/mascot.png',
     checkingLogin: false,
     checkingText: ''
   },

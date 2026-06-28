@@ -1,7 +1,8 @@
 <view class="page no-tab assessment-page">
   <view wx:if="{{stage === 'intro'}}" class="content">
     <view class="card intro-card">
-      <image class="intro-goose" src="/assets/images/goose-main.png" mode="aspectFill" />
+      <text class="section-kicker peach-kicker">开始前</text>
+      <image class="intro-goose" src="/assets/images/xiao-e/report.png" mode="aspectFit" />
       <text class="hero-title">{{intro.title}}</text>
       <text class="intro-text">{{intro.greeting}}</text>
       <view class="warning-box">
@@ -13,7 +14,10 @@
   </view>
 
   <view wx:if="{{stage === 'basic'}}" class="content">
-    <text class="stage-title">第一部分：先问问您</text>
+    <view class="stage-header">
+      <text class="section-kicker green-kicker">第 1 步</text>
+      <text class="stage-title">先问问您</text>
+    </view>
     <view wx:for="{{basicQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
       <text class="question-title">{{item.title}}</text>
       <view class="option-list">
@@ -39,11 +43,14 @@
   </view>
 
   <view wx:if="{{stage === 'actions'}}" class="content">
-    <text class="stage-title">第二部分：跟着做动作</text>
+    <view class="stage-header">
+      <text class="section-kicker peach-kicker">第 2 步</text>
+      <text class="stage-title">跟着做动作</text>
+    </view>
     <view wx:for="{{actionTests}}" wx:for-index="qindex" wx:key="key" class="card question-card">
       <view class="action-head">
         <text class="action-index">{{qindex + 1}}</text>
-        <view>
+        <view class="action-copy">
           <text class="question-title">{{item.title}}</text>
           <text class="question-guide">{{item.guide}}</text>
         </view>
@@ -72,7 +79,10 @@
   </view>
 
   <view wx:if="{{stage === 'risk'}}" class="content">
-    <text class="stage-title">第三部分：最近情况</text>
+    <view class="stage-header">
+      <text class="section-kicker sky-kicker">第 3 步</text>
+      <text class="stage-title">最近情况</text>
+    </view>
     <view wx:for="{{riskQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
       <text class="question-title">{{item.title}}</text>
       <view class="option-list">

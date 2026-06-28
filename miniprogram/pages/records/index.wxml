@@ -1,10 +1,11 @@
 <view class="page no-tab records-page">
-  <view class="hero-card">
+  <view class="hero-card card">
+    <text class="section-kicker green-kicker">训练记录</text>
     <text class="hero-title">训练记录</text>
-    <text class="subtitle">今日完成：{{progressText}}</text>
+    <text class="subtitle">今天完成：{{progressText}}</text>
   </view>
 
-  <view class="summary-card">
+  <view class="summary-card card green">
     <text class="summary-value">{{progressText}}</text>
     <text class="summary-label">今天已完成 {{completedCount}} 个动作</text>
     <text class="summary-copy">{{tipText}}</text>

@@ -1,7 +1,8 @@
 <view class="page no-tab pose-history-page">
   <view class="history-hero">
+    <text class="section-kicker green-kicker">姿态记录</text>
     <text class="hero-title">检测历史</text>
-    <text class="subtitle">查看每次检测的动作、角度、评分和训练建议，点击记录可进入详情。</text>
+    <text class="subtitle">查看每次动作检测的角度、评分和训练建议，点开记录可以看详情。</text>
   </view>
 
   <view class="summary-card">
@@ -20,7 +21,7 @@
     <button class="outline-btn" bindtap="goHome">返回首页</button>
   </view>
 
-  <view wx:if="{{loading}}" class="empty-card">正在读取检测记录…</view>
+  <view wx:if="{{loading}}" class="empty-card">正在读取检测记录</view>
 
   <view wx:elif="{{records.length === 0}}" class="empty-card">
     <text>还没有动作检测记录。</text>

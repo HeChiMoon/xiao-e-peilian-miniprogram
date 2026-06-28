@@ -1,17 +1,13 @@
 .edit-profile-page {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
-}
-
-.header-card {
-  background: #FFF0E8;
+  gap: 22rpx;
 }
 
 .form-card {
   display: flex;
   flex-direction: column;
-  gap: 26rpx;
+  gap: 24rpx;
 }
 
 .form-row {
@@ -21,20 +17,20 @@
 }
 
 .form-label {
-  color: #3F3F3F;
-  font-size: 30rpx;
-  font-weight: 900;
+  color: #243447;
+  font-size: 29rpx;
+  font-weight: 800;
 }
 
 .form-input,
 .form-textarea {
   width: 100%;
-  border: 3rpx solid #E8E6E1;
+  border: 2rpx solid #e8e1d7;
   border-radius: 24rpx;
-  background: #FFFFFF;
-  color: #3F3F3F;
-  font-size: 30rpx;
-  font-weight: 800;
+  background: #ffffff;
+  color: #243447;
+  font-size: 29rpx;
+  font-weight: 700;
 }
 
 .form-input {
@@ -52,5 +48,5 @@
 .double-row {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18rpx;
+  gap: 16rpx;
 }

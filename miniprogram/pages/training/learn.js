@@ -155,9 +155,5 @@ Page({
 
   startPractice() {
     wx.navigateTo({ url: `/pages/training/practice?id=${this.data.level.id}` })
-  },
-
-  quitTraining() {
-    wx.switchTab({ url: '/pages/home/index' })
   }
 })

@@ -1,19 +1,21 @@
 <view class="page no-tab training-page">
   <view class="card progress-card">
+    <text class="section-kicker green-kicker">今日进度</text>
     <text class="card-title">每日训练</text>
-    <text class="card-copy">今日进度：{{progressText}}</text>
+    <text class="card-copy">今天已完成 {{progressText}}</text>
     <view class="progress-track">
       <view class="progress-fill" style="width: {{progressWidth}}"></view>
     </view>
+
     <view wx:if="{{allCompleted}}" class="finish-tip">
-      <text>今天的 3 个动作都完成了。</text>
+      <text class="finish-title">今天 3 个动作都完成了</text>
       <button class="restart-btn" loading="{{resetting}}" bindtap="restartToday">重新开始今日训练</button>
     </view>
   </view>
 
   <view wx:if="{{plan}}" class="card plan-card">
     <view class="plan-head">
-      <view>
+      <view class="plan-copy">
         <text class="plan-kicker">{{plan.riskText}}</text>
         <text class="card-title">{{plan.headline}}</text>
       </view>
@@ -26,6 +28,11 @@
   </view>
 
   <view class="map-card">
+    <view class="map-head">
+      <text class="section-kicker peach-kicker">训练顺序</text>
+      <text class="map-title">今天练这 3 个动作</text>
+    </view>
+
     <view
       wx:for="{{levels}}"
       wx:key="id"
@@ -42,7 +49,8 @@
   </view>
 
   <view wx:if="{{plan}}" class="card hint-card">
-    <text class="card-title">动作小提示</text>
+    <text class="section-kicker sky-kicker">动作提示</text>
+    <text class="card-title">练习前先看一眼</text>
     <block wx:for="{{levels}}" wx:key="id">
       <view wx:if="{{item.recommended || item.focus}}" class="hint-row">
         <text class="hint-name">{{item.shortName}}</text>
@@ -50,6 +58,4 @@
       </view>
     </block>
   </view>
-
-  <button class="quit-btn" bindtap="quitTraining">先不练了</button>
 </view>

@@ -1,9 +1,13 @@
 <view class="page no-tab role-page">
-  <view class="role-hero">
-    <image class="role-mascot" src="{{mascot}}" mode="aspectFill" />
+  <view class="role-hero card">
+    <view class="role-art">
+      <view class="role-art-ring role-art-ring-outer"></view>
+      <view class="role-art-ring role-art-ring-inner"></view>
+      <image class="role-mascot" src="{{mascot}}" mode="aspectFill" />
+    </view>
     <text class="role-kicker">小鹅陪练</text>
     <text class="role-title">请选择您的身份</text>
-    <text class="role-copy">同一个微信号再次进入时，系统会自动续上您上次的身份和资料。</text>
+    <text class="role-copy">同一个微信号再次进入时，系统会自动续接您上次的身份和资料。</text>
   </view>
 
   <view wx:if="{{checkingLogin}}" class="resume-card">
@@ -22,7 +26,10 @@
     >
       <image class="role-icon" src="{{item.image}}" mode="aspectFill" />
       <view class="role-content">
-        <text class="role-name">{{item.title}}</text>
+        <view class="role-head">
+          <text class="role-name">{{item.title}}</text>
+          <text class="role-chip">{{item.role === 'elder' ? '主要入口' : (item.role === 'caregiver' ? '家庭查看' : '演示后台')}}</text>
+        </view>
         <text class="role-desc">{{item.desc}}</text>
         <text class="role-action">{{item.action}}</text>
       </view>

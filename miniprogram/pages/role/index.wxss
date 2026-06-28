@@ -6,46 +6,95 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 10rpx 24rpx 22rpx;
   text-align: center;
+  padding: 42rpx 34rpx 36rpx;
+  margin-bottom: 22rpx;
+  background: linear-gradient(180deg, #ffffff, #fcfaf6);
+}
+
+.role-art {
+  position: relative;
+  width: 150rpx;
+  height: 150rpx;
+}
+
+.role-art-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.role-art-ring-outer {
+  background: rgba(240, 161, 116, 0.12);
+  transform: scale(1.08);
+}
+
+.role-art-ring-inner {
+  background: linear-gradient(180deg, #ffe5d4, #fff6ef);
 }
 
 .role-mascot {
-  width: 136rpx;
-  height: 136rpx;
-  border: 8rpx solid #FFF0E8;
+  position: absolute;
+  inset: 14rpx;
+  width: 122rpx;
+  height: 122rpx;
   border-radius: 50%;
-  background: #F4A882;
-  box-shadow: 0 16rpx 40rpx rgba(244, 168, 130, 0.26);
 }
 
 .role-kicker,
 .role-title,
-.role-copy {
+.role-copy,
+.resume-title,
+.resume-copy,
+.role-name,
+.role-desc,
+.role-action,
+.role-chip {
   display: block;
 }
 
 .role-kicker {
-  margin-top: 14rpx;
-  color: #F4A882;
-  font-size: 28rpx;
-  font-weight: 900;
+  margin-top: 18rpx;
+  color: #e29063;
+  font-size: 26rpx;
+  font-weight: 700;
 }
 
 .role-title {
-  margin-top: 8rpx;
-  color: #3F3F3F;
-  font-size: 42rpx;
-  font-weight: 900;
-  line-height: 1.18;
+  margin-top: 10rpx;
+  color: #243447;
+  font-size: 44rpx;
+  font-weight: 800;
+  line-height: 1.24;
 }
 
 .role-copy {
   max-width: 560rpx;
-  margin-top: 12rpx;
-  color: #6B6B6B;
-  font-size: 28rpx;
-  line-height: 1.55;
+  margin-top: 14rpx;
+  color: #667085;
+  font-size: 27rpx;
+  line-height: 1.62;
+}
+
+.resume-card {
+  margin-bottom: 18rpx;
+  padding: 24rpx;
+  border-radius: 26rpx;
+  background: linear-gradient(180deg, #fff7ef, #fffaf4);
+  box-shadow: 0 12rpx 28rpx rgba(181, 173, 159, 0.14);
+}
+
+.resume-title {
+  color: #243447;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.resume-copy {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 25rpx;
+  line-height: 1.5;
 }
 
 .role-list {
@@ -54,89 +103,86 @@
   gap: 16rpx;
 }
 
-.resume-card {
-  margin: 0 0 18rpx;
-  padding: 22rpx 24rpx;
-  border-radius: 24rpx;
-  background: #fff7f1;
-  box-shadow: 0 8rpx 24rpx rgba(220, 215, 205, 0.45);
-}
-
-.resume-title,
-.resume-copy {
-  display: block;
-}
-
-.resume-title {
-  color: #3f3f3f;
-  font-size: 30rpx;
-  font-weight: 900;
-}
-
-.resume-copy {
-  margin-top: 8rpx;
-  color: #6b6b6b;
-  font-size: 25rpx;
-  line-height: 1.5;
-}
-
 .role-card {
-  min-height: 140rpx;
+  min-height: 156rpx;
   display: grid;
-  grid-template-columns: 88rpx 1fr;
+  grid-template-columns: 96rpx minmax(0, 1fr);
   gap: 18rpx;
   align-items: center;
-  padding: 20rpx 22rpx;
-  border-radius: 28rpx;
-  background: #FFFFFF;
-  box-shadow: 0 8rpx 28rpx rgba(220, 215, 205, 0.62);
+  padding: 24rpx;
+  border-radius: 30rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(181, 173, 159, 0.14);
   text-align: left;
 }
 
 .role-card.elder {
-  background: #FFF7F1;
+  background: linear-gradient(180deg, #fff8f2, #fffdf9);
 }
 
 .role-card.caregiver {
-  background: #F0F9F4;
+  background: linear-gradient(180deg, #f2faf5, #fcfefc);
 }
 
 .role-card.admin {
-  background: #F5F4EF;
+  background: linear-gradient(180deg, #f7f6f2, #ffffff);
 }
 
 .role-icon {
-  width: 88rpx;
-  height: 88rpx;
-  border-radius: 50%;
+  width: 96rpx;
+  height: 96rpx;
+  border-radius: 28rpx;
 }
 
 .role-content {
   min-width: 0;
 }
 
-.role-name,
-.role-desc,
-.role-action {
-  display: block;
+.role-head {
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
 }
 
 .role-name {
-  color: #3F3F3F;
+  color: #243447;
   font-size: 32rpx;
-  font-weight: 900;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.role-chip {
+  flex: 0 0 auto;
+  min-height: 40rpx;
+  padding: 0 14rpx;
+  border-radius: 20rpx;
+  background: rgba(240, 161, 116, 0.14);
+  color: #cb7c48;
+  font-size: 21rpx;
+  font-weight: 700;
+  line-height: 40rpx;
+}
+
+.caregiver .role-chip {
+  background: rgba(135, 201, 159, 0.18);
+  color: #4d8d64;
+}
+
+.admin .role-chip {
+  background: rgba(117, 176, 209, 0.14);
+  color: #4d7f9a;
 }
 
 .role-desc {
-  margin-top: 6rpx;
-  color: #6B6B6B;
+  margin-top: 10rpx;
+  color: #667085;
   font-size: 25rpx;
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .role-action {
-  margin-top: 8rpx;
-  color: #C66F3C;
+  margin-top: 10rpx;
+  color: #243447;
   font-size: 26rpx;
-  font-weight: 900;
+  font-weight: 700;
 }

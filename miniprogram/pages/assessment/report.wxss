@@ -1,16 +1,18 @@
 .report-page {
   display: flex;
   flex-direction: column;
-  gap: 24rpx;
+  gap: 22rpx;
 }
 
 .report-card {
   text-align: center;
+  background: linear-gradient(180deg, #ffffff, #fcfaf6);
 }
 
 .report-goose {
   width: 180rpx;
   height: 180rpx;
+  margin: 0 auto;
   border-radius: 50%;
 }
 
@@ -22,16 +24,16 @@
 }
 
 .report-title {
-  margin-top: 22rpx;
-  color: #3F3F3F;
+  margin-top: 18rpx;
+  color: #243447;
   font-size: 34rpx;
-  font-weight: 900;
+  font-weight: 800;
   line-height: 1.35;
 }
 
 .report-date {
   margin-top: 8rpx;
-  color: #6B6B6B;
+  color: #667085;
   font-size: 25rpx;
 }
 
@@ -40,28 +42,29 @@
   align-items: center;
   justify-content: center;
   min-width: 180rpx;
-  height: 66rpx;
-  margin-top: 24rpx;
-  border-radius: 33rpx;
-  color: #FFFFFF;
-  font-size: 30rpx;
-  font-weight: 900;
+  height: 62rpx;
+  margin-top: 22rpx;
+  padding: 0 20rpx;
+  border-radius: 20rpx;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 800;
 }
 
-.risk-badge.low { background: #88C9A1; }
-.risk-badge.medium { background: #FFA726; }
-.risk-badge.high { background: #E57373; }
+.risk-badge.low { background: #87c99f; }
+.risk-badge.medium { background: #f0a174; }
+.risk-badge.high { background: #d95745; }
 
 .score {
   margin-top: 18rpx;
-  color: #F4A882;
+  color: #cb7c48;
   font-size: 30rpx;
-  font-weight: 900;
+  font-weight: 800;
 }
 
 .summary {
   margin-top: 18rpx;
-  color: #3F3F3F;
-  font-size: 30rpx;
-  line-height: 1.7;
+  color: #243447;
+  font-size: 29rpx;
+  line-height: 1.68;
 }

@@ -1,10 +1,11 @@
 <view class="page no-tab pose-detail-page">
   <view class="detail-hero">
+    <text class="section-kicker green-kicker">姿态详情</text>
     <text class="hero-title">检测详情</text>
-    <text class="subtitle">查看单次膝关节角度、标准范围、评分变化和骨架示意。</text>
+    <text class="subtitle">查看单次检测的膝关节角度、标准范围、评分变化和骨架示意。</text>
   </view>
 
-  <view wx:if="{{loading}}" class="empty-card">正在读取检测详情…</view>
+  <view wx:if="{{loading}}" class="empty-card">正在读取检测详情</view>
 
   <view wx:elif="{{errorText}}" class="empty-card">
     <text>{{errorText}}</text>
@@ -76,7 +77,7 @@
           <text class="metric-value {{compare.angleDeltaClass}}">{{compare.angleDeltaText}}</text>
         </view>
       </view>
-      <text wx:else class="compare-empty">还没有上一条同动作记录，完成下一次检测后会显示变化。</text>
+      <text wx:else class="compare-empty">还没有上一条同动作记录，完成下次检测后会显示变化。</text>
     </view>
 
     <view class="card suggestion-card">

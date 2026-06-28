@@ -1,3 +1,5 @@
 {
-  "navigationBarTitleText": "动作学习"
+  "navigationBarTitleText": "动作学习",
+  "navigationBarBackgroundColor": "#F7F5F0",
+  "navigationBarTextStyle": "black"
 }

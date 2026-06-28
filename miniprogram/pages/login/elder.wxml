@@ -1,64 +1,84 @@
 <view class="page no-tab elder-login-page">
-  <view class="top-space"></view>
-
-  <view class="avatar-wrap">
-    <image class="doctor-goose" src="{{mascot}}" mode="aspectFill" />
+  <view class="login-hero card">
+    <view class="hero-art">
+      <view class="hero-ring hero-ring-outer"></view>
+      <view class="hero-ring hero-ring-inner"></view>
+      <image class="doctor-goose" src="{{mascot}}" mode="aspectFill" />
+    </view>
+    <text class="section-kicker peach-kicker">首次进入</text>
+    <text class="hero-title">完善个人信息</text>
+    <text class="subtitle">先补充姓名、性别和出生年份，保存后就能进入首页，其他资料后面再慢慢完善。</text>
   </view>
 
-  <view class="info-panel">
-    <text class="panel-title">完善个人信息</text>
+  <view class="card info-panel">
+    <view class="form-heading">
+      <text class="section-kicker green-kicker">建档信息</text>
+    </view>
 
-    <view class="form-block">
-      <text class="form-label">性别</text>
-      <view class="gender-row">
-        <button
-          class="gender-btn {{gender === '男' ? 'active' : ''}}"
-          data-gender="男"
-          bindtap="chooseGender"
-        >男</button>
-        <button
-          class="gender-btn {{gender === '女' ? 'active' : ''}}"
-          data-gender="女"
-          bindtap="chooseGender"
-        >女</button>
+    <view class="field-card name-card">
+      <view class="field-main">
+        <text class="form-label">姓名</text>
+        <input
+          class="name-input"
+          value="{{name}}"
+          maxlength="12"
+          placeholder="请输入姓名"
+          placeholder-class="input-placeholder"
+          bindinput="onNameInput"
+        />
       </view>
     </view>
 
-    <view class="form-block">
-      <text class="form-label">姓名</text>
-      <input
-        class="name-input"
-        value="{{name}}"
-        maxlength="12"
-        placeholder="请输入姓名"
-        placeholder-class="input-placeholder"
-        bindinput="onNameInput"
-      />
+    <view class="field-card">
+      <view class="field-main">
+        <text class="form-label">性别</text>
+        <view class="gender-row">
+          <button
+            class="gender-btn {{gender === '男' ? 'active' : ''}}"
+            data-gender="男"
+            bindtap="chooseGender"
+          >男</button>
+          <button
+            class="gender-btn {{gender === '女' ? 'active' : ''}}"
+            data-gender="女"
+            bindtap="chooseGender"
+          >女</button>
+        </view>
+      </view>
     </view>
 
-    <view class="form-block">
-      <text class="form-label">出生年份</text>
-      <slider
-        value="{{birthYear}}"
-        min="{{yearMin}}"
-        max="{{yearMax}}"
-        step="1"
-        block-size="28"
-        block-color="#B56F49"
-        activeColor="#E8E2DA"
-        backgroundColor="#E8E8E8"
-        bindchange="onYearChange"
-        bindchanging="onYearChange"
-      />
-      <text class="year-value">{{birthYear}}年</text>
+    <view class="field-card year-card">
+      <view class="field-main">
+        <view class="year-head">
+          <text class="form-label">出生年份</text>
+          <text class="year-value">{{birthYear}} 年</text>
+        </view>
+        <slider
+          value="{{birthYear}}"
+          min="{{yearMin}}"
+          max="{{yearMax}}"
+          step="1"
+          block-size="28"
+          block-color="#cb7c48"
+          activeColor="#f0a174"
+          backgroundColor="#e9e2d8"
+          bindchange="onYearChange"
+          bindchanging="onYearChange"
+        />
+      </view>
     </view>
 
-    <button class="submit-btn" loading="{{saving}}" bindtap="submit">{{saving ? '保存中…' : '完成注册'}}</button>
+    <button class="voice-assist-card" bindtap="openVoice">
+      <image class="voice-assist-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+      <view class="voice-assist-copy">
+        <text class="voice-assist-title">小鹅语音帮填</text>
+        <text class="voice-assist-desc">不会填时，按住说话问小鹅。</text>
+      </view>
+      <text class="voice-assist-arrow">›</text>
+    </button>
+
+    <button class="primary-btn submit-btn" loading="{{saving}}" bindtap="submit">{{saving ? '保存中...' : '完成注册'}}</button>
   </view>
-
-  <button class="voice-float" bindtap="openVoice">
-    <text class="voice-icon">语音助手</text>
-  </button>
 
   <view wx:if="{{voiceOpen}}" class="modal-mask" bindtap="closeVoice">
     <view class="modal-card voice-card" catchtap="noop">
