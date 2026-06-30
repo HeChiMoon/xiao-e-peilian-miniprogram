@@ -1,24 +1,75 @@
 <view class="page no-tab assessment-page">
-  <view wx:if="{{stage === 'intro'}}" class="content">
+  <view wx:if="{{stage == 'intro'}}" class="content">
     <view class="card intro-card">
       <text class="section-kicker peach-kicker">开始前</text>
-      <image class="intro-goose" src="/assets/images/xiao-e/report.png" mode="aspectFit" />
+      <image class="intro-goose" src="/assets/images/xiao-e-icons/health-archive.png" mode="aspectFit" />
       <text class="hero-title">{{intro.title}}</text>
       <text class="intro-text">{{intro.greeting}}</text>
       <view class="warning-box">
         <text>{{intro.safety}}</text>
       </view>
     </view>
-    <button class="primary-btn" bindtap="startAssessment">开始测评</button>
+    <button class="primary-btn" bindtap="startAssessment">开始筛查</button>
     <button class="outline-btn" bindtap="resetAssessment">重新开始</button>
   </view>
 
-  <view wx:if="{{stage === 'basic'}}" class="content">
+  <view wx:if="{{stage == 'profile'}}" class="content">
     <view class="stage-header">
       <text class="section-kicker green-kicker">第 1 步</text>
-      <text class="stage-title">先问问您</text>
+      <text class="stage-title">基本信息</text>
+      <text class="stage-desc">先记录几项基础信息，后面用于理解筛查结果。</text>
     </view>
-    <view wx:for="{{basicQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+
+    <view class="card form-card">
+      <view wx:for="{{profileFields}}" wx:key="key" wx:for-index="index" class="field-row">
+        <view class="field-copy">
+          <text class="field-label">{{item.label}}</text>
+          <text class="field-unit">{{item.unit}}</text>
+        </view>
+        <input
+          class="number-input"
+          type="number"
+          placeholder="{{item.placeholder}}"
+          value="{{item.value}}"
+          data-index="{{index}}"
+          bindinput="onProfileInput"
+        />
+      </view>
+    </view>
+
+    <view wx:for="{{profileQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+      <text class="question-title">{{item.title}}</text>
+      <view class="option-grid">
+        <button
+          wx:for="{{item.options}}"
+          wx:for-item="option"
+          wx:for-index="oindex"
+          wx:key="value"
+          class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
+          data-section="profileQuestions"
+          data-qindex="{{qindex}}"
+          data-oindex="{{oindex}}"
+          bindtap="chooseOption"
+        >
+          {{option.label}}
+        </button>
+      </view>
+    </view>
+
+    <view class="nav-actions">
+      <button class="outline-btn" bindtap="prevStage">上一步</button>
+      <button class="primary-btn" bindtap="nextStage">下一步</button>
+    </view>
+  </view>
+
+  <view wx:if="{{stage == 'health'}}" class="content">
+    <view class="stage-header">
+      <text class="section-kicker peach-kicker">第 2 步</text>
+      <text class="stage-title">健康与疼痛</text>
+      <text class="stage-desc">这一步用于判断是否适合自测和训练。</text>
+    </view>
+
+    <view wx:for="{{healthQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
       <text class="question-title">{{item.title}}</text>
       <view class="option-list">
         <button
@@ -27,7 +78,7 @@
           wx:for-index="oindex"
           wx:key="value"
           class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
-          data-section="basicQuestions"
+          data-section="healthQuestions"
           data-qindex="{{qindex}}"
           data-oindex="{{oindex}}"
           bindtap="chooseOption"
@@ -36,26 +87,34 @@
         </button>
       </view>
     </view>
+
+    <view class="card question-card">
+      <text class="question-title">{{painScale.title}}</text>
+      <text class="question-guide">{{painScale.guide}}</text>
+      <view class="pain-score">{{painScore}} 分</view>
+      <slider value="{{painScore}}" min="{{painScale.min}}" max="{{painScale.max}}" step="1" activeColor="#f0a174" bindchange="onPainScaleChange" />
+      <view class="scale-row">
+        <text>不疼</text>
+        <text>难以忍受</text>
+      </view>
+    </view>
+
     <view class="nav-actions">
       <button class="outline-btn" bindtap="prevStage">上一步</button>
-      <button class="primary-btn" bindtap="nextFromBasic">下一步</button>
+      <button class="primary-btn" bindtap="nextStage">下一步</button>
     </view>
   </view>
 
-  <view wx:if="{{stage === 'actions'}}" class="content">
+  <view wx:if="{{stage == 'mobility'}}" class="content">
     <view class="stage-header">
-      <text class="section-kicker peach-kicker">第 2 步</text>
-      <text class="stage-title">跟着做动作</text>
+      <text class="section-kicker sky-kicker">第 3 步</text>
+      <text class="stage-title">活动度</text>
+      <text class="stage-desc">重点看膝盖能不能自然伸直。</text>
     </view>
-    <view wx:for="{{actionTests}}" wx:for-index="qindex" wx:key="key" class="card question-card">
-      <view class="action-head">
-        <text class="action-index">{{qindex + 1}}</text>
-        <view class="action-copy">
-          <text class="question-title">{{item.title}}</text>
-          <text class="question-guide">{{item.guide}}</text>
-        </view>
-      </view>
-      <button class="outline-btn camera-guide" data-index="{{qindex}}" bindtap="openActionGuide">查看动作示范</button>
+
+    <view wx:for="{{mobilityQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
+      <text class="question-title">{{item.title}}</text>
+      <text class="question-guide">{{item.guide}}</text>
       <view class="option-list">
         <button
           wx:for="{{item.options}}"
@@ -63,7 +122,7 @@
           wx:for-index="oindex"
           wx:key="value"
           class="option-btn {{item.selected === option.value ? 'selected' : ''}}"
-          data-section="actionTests"
+          data-section="mobilityQuestions"
           data-qindex="{{qindex}}"
           data-oindex="{{oindex}}"
           bindtap="chooseOption"
@@ -72,17 +131,78 @@
         </button>
       </view>
     </view>
+
+    <view class="card question-card">
+      <text class="question-title">如果不能轻松完成，主要原因是什么？</text>
+      <text class="question-guide">可以多选。能轻松完成也可以不选。</text>
+      <view class="chip-grid">
+        <button
+          wx:for="{{mobilityReasons}}"
+          wx:for-index="index"
+          wx:key="key"
+          class="reason-chip {{item.selected ? 'selected' : ''}}"
+          data-index="{{index}}"
+          bindtap="toggleMobilityReason"
+        >
+          {{item.label}}
+        </button>
+      </view>
+    </view>
+
     <view class="nav-actions">
       <button class="outline-btn" bindtap="prevStage">上一步</button>
-      <button class="primary-btn" bindtap="nextFromActions">下一步</button>
+      <button class="primary-btn" bindtap="nextStage">下一步</button>
     </view>
   </view>
 
-  <view wx:if="{{stage === 'risk'}}" class="content">
+  <view wx:if="{{stage == 'strength'}}" class="content">
     <view class="stage-header">
-      <text class="section-kicker sky-kicker">第 3 步</text>
-      <text class="stage-title">最近情况</text>
+      <text class="section-kicker green-kicker">第 4 步</text>
+      <text class="stage-title">力量和平衡</text>
+      <text class="stage-desc">用两个小计时测试了解下肢力量和平衡。全程扶稳，疼痛就停。</text>
     </view>
+
+    <view class="card timer-card">
+      <text class="question-title">{{timerTests.sitToStand.title}}</text>
+      <text class="question-guide">{{timerTests.sitToStand.guide}}</text>
+      <view class="timer-display {{timers.sitToStand.unable ? 'unable' : ''}}">
+        {{timers.sitToStand.display}}
+      </view>
+      <text class="timer-target">{{timerTests.sitToStand.target}}</text>
+      <view class="timer-actions">
+        <button class="primary-btn" data-type="sitToStand" bindtap="startTimer">开始</button>
+        <button class="outline-btn" data-type="sitToStand" bindtap="finishTimer">完成 5 次</button>
+      </view>
+      <button class="text-btn" data-type="sitToStand" bindtap="markTimerUnable">{{timerTests.sitToStand.unableText}}</button>
+    </view>
+
+    <view class="card timer-card">
+      <text class="question-title">{{timerTests.singleLegStand.title}}</text>
+      <text class="question-guide">{{timerTests.singleLegStand.guide}}</text>
+      <view class="timer-display {{timers.singleLegStand.unable ? 'unable' : ''}}">
+        {{timers.singleLegStand.display}}
+      </view>
+      <text class="timer-target">{{timerTests.singleLegStand.target}}</text>
+      <view class="timer-actions">
+        <button class="primary-btn" data-type="singleLegStand" bindtap="startTimer">开始</button>
+        <button class="outline-btn" data-type="singleLegStand" bindtap="finishTimer">停止</button>
+      </view>
+      <button class="text-btn" data-type="singleLegStand" bindtap="markTimerUnable">{{timerTests.singleLegStand.unableText}}</button>
+    </view>
+
+    <view class="nav-actions">
+      <button class="outline-btn" bindtap="prevStage">上一步</button>
+      <button class="primary-btn" bindtap="nextStage">下一步</button>
+    </view>
+  </view>
+
+  <view wx:if="{{stage == 'risk'}}" class="content">
+    <view class="stage-header">
+      <text class="section-kicker peach-kicker">第 5 步</text>
+      <text class="stage-title">功能与风险</text>
+      <text class="stage-desc">最后确认跌倒风险和日常影响。</text>
+    </view>
+
     <view wx:for="{{riskQuestions}}" wx:for-index="qindex" wx:key="key" class="card question-card">
       <text class="question-title">{{item.title}}</text>
       <view class="option-list">
@@ -101,20 +221,10 @@
         </button>
       </view>
     </view>
+
     <view class="nav-actions">
       <button class="outline-btn" bindtap="prevStage">上一步</button>
       <button class="success-btn" loading="{{savingReport}}" bindtap="submitAssessment">{{savingReport ? '保存中...' : '生成报告'}}</button>
-    </view>
-  </view>
-
-  <view wx:if="{{showActionModal}}" class="modal-mask" bindtap="closeActionGuide">
-    <view class="modal-card" catchtap="noop">
-      <view class="modal-body action-modal">
-        <image class="action-preview" src="{{actionImage}}" mode="aspectFit" />
-        <text class="card-title">{{currentAction.title}}</text>
-        <text class="card-copy">{{currentAction.guide}}</text>
-        <button class="primary-btn" bindtap="closeActionGuide">继续答题</button>
-      </view>
     </view>
   </view>
 </view>

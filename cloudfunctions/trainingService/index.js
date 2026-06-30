@@ -43,28 +43,27 @@ function includesAny(value, keywords) {
   return keywords.some((keyword) => text.includes(keyword))
 }
 
+function uniqueIds(ids) {
+  return ids
+    .map(Number)
+    .filter((id, index, arr) => LEVEL_IDS.includes(id) && arr.indexOf(id) === index)
+}
+
 function getReportRisk(report) {
-  if (!report) {
-    return 'unknown'
-  }
+  if (!report) return 'unknown'
+  if (report.safetyFlags && report.safetyFlags.blocked) return 'high'
 
   const level = String(report.level || report.levelText || '').toLowerCase()
   const score = Number(report.score) || 0
-  if (level.includes('high') || level.includes('高') || score >= 24) {
-    return 'high'
-  }
-  if (level.includes('middle') || level.includes('medium') || level.includes('中') || level.includes('关注') || score >= 12) {
-    return 'middle'
-  }
+  if (level.includes('high') || level.includes('高') || level.includes('专业评估') || score >= 12) return 'high'
+  if (level.includes('middle') || level.includes('medium') || level.includes('中') || level.includes('关注') || score >= 6) return 'middle'
   return 'low'
 }
 
 function getPoseRisk(pose) {
-  if (!pose) {
-    return 'unknown'
-  }
+  if (!pose) return 'unknown'
   if (pose.riskLevel === 'high') return 'high'
-  if (pose.riskLevel === 'middle') return 'middle'
+  if (pose.riskLevel === 'middle' || pose.riskLevel === 'medium') return 'middle'
   return 'low'
 }
 
@@ -77,35 +76,37 @@ function mergeRisk(reportRisk, poseRisk, elder) {
   ].join(' ')
   const painSignal = includesAny(profileText, ['疼', '痛', '肿', '僵', '关节', '活动受限', '摔倒'])
 
-  if (reportRisk === 'high' || poseRisk === 'high' || (painSignal && reportRisk === 'middle')) {
-    return 'high'
-  }
-  if (reportRisk === 'middle' || poseRisk === 'middle' || painSignal) {
-    return 'middle'
-  }
-  if (reportRisk === 'unknown' && poseRisk === 'unknown') {
-    return 'unknown'
-  }
+  if (reportRisk === 'high' || poseRisk === 'high' || (painSignal && reportRisk === 'middle')) return 'high'
+  if (reportRisk === 'middle' || poseRisk === 'middle' || painSignal) return 'middle'
+  if (reportRisk === 'unknown' && poseRisk === 'unknown') return 'unknown'
   return 'low'
 }
 
-function uniqueIds(ids) {
-  return ids.filter((id, index) => LEVEL_IDS.includes(id) && ids.indexOf(id) === index)
-}
-
-function buildRecommendedOrder(riskLevel, progress, pose) {
-  let baseOrder = [1, 2, 3]
+function getAssessmentOrder(report, riskLevel) {
+  const profile = report && report.recommendationProfile
+  if (profile && Array.isArray(profile.recommendedOrder) && profile.recommendedOrder.length > 0) {
+    return uniqueIds(profile.recommendedOrder.concat(LEVEL_IDS))
+  }
 
   if (riskLevel === 'high' || riskLevel === 'middle' || riskLevel === 'unknown') {
-    baseOrder = [2, 1, 3]
-  } else {
+    return [2, 1, 3]
+  }
+  return [1, 2, 3]
+}
+
+function buildRecommendedOrder(riskLevel, progress, pose, report) {
+  let baseOrder = getAssessmentOrder(report, riskLevel)
+
+  if (riskLevel === 'low') {
     const start = Math.min(Math.max(progress.currentUnlocked, 1), LEVEL_IDS.length)
-    baseOrder = LEVEL_IDS.slice(start - 1).concat(LEVEL_IDS.slice(0, start - 1))
+    const progressOrder = LEVEL_IDS.slice(start - 1).concat(LEVEL_IDS.slice(0, start - 1))
+    baseOrder = uniqueIds(baseOrder.concat(progressOrder))
   }
 
   const actionToLevel = {
     wallSquat: 1,
     legRaise: 2,
+    straightLegRaise: 2,
     singleLegStand: 3
   }
   const poseLevel = pose && actionToLevel[pose.actionKey]
@@ -120,9 +121,7 @@ function chooseFocusLevel(recommendedIds, progress) {
   const completed = progress.completedIds || []
   const unlocked = Number(progress.currentUnlocked) || 1
   const available = recommendedIds.find((id) => id <= unlocked && completed.indexOf(id) < 0)
-  if (available) {
-    return available
-  }
+  if (available) return available
   return recommendedIds.find((id) => completed.indexOf(id) < 0) || recommendedIds[0] || 1
 }
 
@@ -130,10 +129,10 @@ function buildReason(riskLevel, elder, report, pose, progress) {
   const parts = []
 
   if (report) {
-    parts.push(`最近测评为${report.levelText || report.level || '已完成'}，分数 ${Number(report.score) || 0} 分`)
+    parts.push(`最近筛查为${report.levelText || report.level || '已完成'}，分数 ${Number(report.score) || 0} 分`)
   }
   if (pose) {
-    parts.push(`最近${pose.actionName || '姿态检测'}评分 ${Number(pose.score) || 0} 分`)
+    parts.push(`最近${pose.actionName || '姿势检测'}评分 ${Number(pose.score) || 0} 分`)
   }
   if (elder && (elder.painAreas || elder.medicalHistory)) {
     parts.push('已结合病史和疼痛部位')
@@ -143,7 +142,7 @@ function buildReason(riskLevel, elder, report, pose, progress) {
   }
 
   if (parts.length === 0) {
-    return '当前还缺少测评和检测记录，先按低冲击、容易完成的顺序开始，边练边建立个人数据。'
+    return '当前还缺少筛查和检测记录，先按低冲击、容易完成的顺序开始，边练边建立个人数据。'
   }
 
   const prefix = riskLevel === 'high'
@@ -155,8 +154,13 @@ function buildReason(riskLevel, elder, report, pose, progress) {
   return `${prefix}${parts.join('；')}。`
 }
 
-function buildSafetyTips(riskLevel, pose) {
+function buildSafetyTips(riskLevel, pose, report) {
   const tips = ['动作慢一点，疼痛加重就停下', '旁边准备稳固椅子或墙面', '每次先热身，不追求一次做很多']
+  const blocked = Boolean(report && report.safetyFlags && report.safetyFlags.blocked)
+
+  if (blocked) {
+    return ['筛查提示暂不建议自行训练', '可以先看科普视频或咨询专业人员', '如有疼痛、肿胀或近期手术，请先听医生意见']
+  }
   if (riskLevel === 'high') {
     return ['优先完成直腿抬高', '靠墙静蹲和单腿站立先降低幅度', '如果出现明显肿胀或刺痛，先休息并考虑就医']
   }
@@ -164,27 +168,30 @@ function buildSafetyTips(riskLevel, pose) {
     return tips.concat('先完成推荐动作，再看体力决定是否继续')
   }
   if (pose && pose.riskLevel === 'middle') {
-    return tips.concat(`最近 ${pose.actionName || '检测动作'} 还可以再放慢一点`)
+    return tips.concat(`最近${pose.actionName || '检测动作'}还可以再放慢一点`)
   }
   return tips
 }
 
-function buildLevelHints(riskLevel, pose) {
+function buildLevelHints(riskLevel, pose, report) {
+  const profileHints = report && report.recommendationProfile && report.recommendationProfile.actionHints
+    ? report.recommendationProfile.actionHints
+    : {}
   const hints = {
-    1: '背贴墙面，膝盖不要超过脚尖，先做小幅度。',
-    2: '膝盖尽量伸直，抬起和放下都要慢。',
-    3: '一定扶稳椅背，脚轻轻离地即可。'
+    1: profileHints[1] || '背贴墙面，膝盖不要超过脚尖，先做小幅度。',
+    2: profileHints[2] || '膝盖尽量伸直，抬起和放下都要慢。',
+    3: profileHints[3] || '一定扶稳椅背，脚轻轻离地即可。'
   }
 
   if (riskLevel === 'high') {
-    hints[1] = '今天只做轻量版，蹲得浅一点也可以。'
-    hints[3] = '如果不稳，先在家人看护下尝试。'
+    hints[1] = profileHints[1] || '今天只做轻量版，蹲得浅一点也可以。'
+    hints[3] = profileHints[3] || '如果不稳，先在家人看护下尝试。'
   }
 
   if (pose && pose.actionKey === 'wallSquat') {
     hints[1] = '最近静蹲检测需要关注，先缩小下蹲幅度，保持膝盖朝向脚尖。'
   }
-  if (pose && pose.actionKey === 'legRaise') {
+  if (pose && (pose.actionKey === 'legRaise' || pose.actionKey === 'straightLegRaise')) {
     hints[2] = '最近抬腿检测需要关注，重点是膝盖伸直，不要靠惯性甩腿。'
   }
   if (pose && pose.actionKey === 'singleLegStand') {
@@ -198,10 +205,10 @@ async function getCurrentRecord(openid) {
   return progressCollection.where({ ownerOpenId: openid }).limit(1).get()
 }
 
-async function getLatestByOwner(collection, openid) {
+async function getLatestByOwner(collection, openid, orderField = 'createdAt') {
   return collection
     .where({ ownerOpenId: openid })
-    .orderBy('createdAt', 'desc')
+    .orderBy(orderField, 'desc')
     .limit(1)
     .get()
     .then((result) => result.data[0] || null)
@@ -231,12 +238,12 @@ async function getPlan(event) {
   const progress = progressResult.data.length > 0
     ? normalizeProgress(progressResult.data[0], dayKey)
     : normalizeProgress({}, dayKey)
-  const elder = await getLatestByOwner(elders, OPENID)
-  const report = await getLatestByOwner(assessments, OPENID)
-  const pose = await getLatestByOwner(poseRecords, OPENID)
+  const elder = await getLatestByOwner(elders, OPENID, 'updatedAt')
+  const report = await getLatestByOwner(assessments, OPENID, 'updatedAt')
+  const pose = await getLatestByOwner(poseRecords, OPENID, 'createdAt')
 
   const riskLevel = mergeRisk(getReportRisk(report), getPoseRisk(pose), elder)
-  const recommendedIds = buildRecommendedOrder(riskLevel, progress, pose)
+  const recommendedIds = buildRecommendedOrder(riskLevel, progress, pose, report)
   const focusLevelId = chooseFocusLevel(recommendedIds, progress)
 
   return {
@@ -249,13 +256,14 @@ async function getPlan(event) {
       riskText: riskLevel === 'high' ? '偏谨慎' : riskLevel === 'middle' ? '稳步训练' : riskLevel === 'unknown' ? '先建立数据' : '循序推进',
       headline: `今日建议先做${LEVEL_NAMES[focusLevelId] || '推荐动作'}`,
       reason: buildReason(riskLevel, elder, report, pose, progress),
-      safetyTips: buildSafetyTips(riskLevel, pose),
-      levelHints: buildLevelHints(riskLevel, pose),
+      safetyTips: buildSafetyTips(riskLevel, pose, report),
+      levelHints: buildLevelHints(riskLevel, pose, report),
       basis: {
         hasElderProfile: Boolean(elder),
         hasAssessment: Boolean(report),
         hasPoseRecord: Boolean(pose),
-        completedCount: progress.completedIds.length
+        completedCount: progress.completedIds.length,
+        assessmentBlocked: Boolean(report && report.safetyFlags && report.safetyFlags.blocked)
       }
     }
   }

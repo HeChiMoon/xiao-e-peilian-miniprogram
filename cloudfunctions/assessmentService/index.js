@@ -22,7 +22,14 @@ function normalizeReport(report = {}) {
     summary: trimText(report.summary),
     suggestion: trimText(report.suggestion),
     createdAt: trimText(report.createdAt),
-    answers: report.answers && typeof report.answers === 'object' ? report.answers : {}
+    answers: report.answers && typeof report.answers === 'object' ? report.answers : {},
+    dimensionScores: report.dimensionScores && typeof report.dimensionScores === 'object' ? report.dimensionScores : {},
+    dimensionStates: report.dimensionStates && typeof report.dimensionStates === 'object' ? report.dimensionStates : {},
+    safetyFlags: report.safetyFlags && typeof report.safetyFlags === 'object' ? report.safetyFlags : {
+      blocked: false,
+      reasons: []
+    },
+    recommendationProfile: report.recommendationProfile && typeof report.recommendationProfile === 'object' ? report.recommendationProfile : {}
   }
 }
 
@@ -63,6 +70,7 @@ async function saveLatest(event) {
   const result = await collection.add({
     data: {
       ...report,
+      createdAt: db.serverDate(),
       savedAt: db.serverDate()
     }
   })
