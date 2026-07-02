@@ -196,6 +196,8 @@
 
 .video-entry {
   overflow: hidden;
+  background: linear-gradient(135deg, #ffffff 0%, #eef7f4 100%);
+  box-shadow: 0 14rpx 34rpx rgba(78, 103, 96, 0.12);
 }
 
 .video-head {
@@ -213,8 +215,9 @@
 .video-reason {
   display: block;
   margin-top: 14rpx;
-  color: #5f7487;
+  color: #3e665f;
   font-size: 24rpx;
+  font-weight: 700;
   line-height: 1.5;
 }
 
@@ -224,8 +227,8 @@
   height: 152rpx;
   margin-left: auto;
   border-radius: 32rpx;
-  background: linear-gradient(180deg, #eff7fb, #f8fbfd);
-  box-shadow: inset 0 0 0 2rpx rgba(117, 176, 209, 0.1);
+  background: linear-gradient(180deg, #dff0ec, #f6fbf9);
+  box-shadow: inset 0 0 0 2rpx rgba(74, 134, 122, 0.16);
 }
 
 .video-mascot {
