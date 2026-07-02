@@ -317,12 +317,15 @@
 
 .comment-input-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 118rpx;
+  grid-template-columns: minmax(0, 1fr) 128rpx;
   gap: 14rpx;
   align-items: center;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .comment-input {
+  min-width: 0;
   height: 72rpx;
   padding: 0 22rpx;
   border-radius: 999rpx;
@@ -337,13 +340,19 @@
 }
 
 .comment-submit {
-  width: 118rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 128rpx;
+  min-width: 0;
   height: 72rpx;
+  margin: 0;
   padding: 0;
   border-radius: 999rpx;
   background: #2f7568;
   color: #ffffff;
   font-size: 27rpx;
   font-weight: 800;
-  line-height: 72rpx;
+  line-height: 1;
+  box-sizing: border-box;
 }

@@ -237,25 +237,6 @@
   object-fit: contain;
 }
 
-.play-badge {
-  position: absolute;
-  right: 12rpx;
-  bottom: 12rpx;
-  width: 44rpx;
-  height: 44rpx;
-  border-radius: 22rpx;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(36, 52, 71, 0.84);
-}
-
-.play-mark {
-  color: #ffffff;
-  font-size: 20rpx;
-  line-height: 1;
-}
-
 .float-chat {
   position: fixed;
   right: 22rpx;

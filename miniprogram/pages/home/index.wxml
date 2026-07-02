@@ -76,9 +76,6 @@
           </view>
           <view class="video-preview">
             <image class="video-mascot" src="{{featureIcons.video}}" mode="aspectFit" />
-            <view class="play-badge">
-              <text class="play-mark">▶</text>
-            </view>
           </view>
         </view>
       </view>
