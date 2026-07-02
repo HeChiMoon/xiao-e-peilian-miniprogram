@@ -1,8 +1,8 @@
 const { trainingLevels } = require('../../data/mock')
 const { completeLevel } = require('../../utils/storage')
 const { completeCloudLevel } = require('../../services/trainingService')
-const { createVisionSession } = require('../../services/visionService')
-const { getVisionRule } = require('../../services/trainingVisionRules')
+const { createVisionSession } = require('./services/visionService')
+const { getVisionRule } = require('./services/trainingVisionRules')
 const { uploadPoseImage, analyzePoseImage } = require('../../services/poseService')
 
 const FRAME_INTERVAL = 360
