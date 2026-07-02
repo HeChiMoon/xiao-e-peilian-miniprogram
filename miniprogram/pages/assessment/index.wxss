@@ -37,6 +37,13 @@
   line-height: 1.3;
 }
 
+.stage-desc {
+  display: block;
+  color: #667085;
+  font-size: 27rpx;
+  line-height: 1.55;
+}
+
 .question-card {
   display: flex;
   flex-direction: column;
@@ -65,10 +72,252 @@
   gap: 14rpx;
 }
 
+.option-grid,
+.chip-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+  width: 100%;
+  overflow: hidden;
+}
+
+.option-grid .option-btn,
+.option-list .option-btn,
+.chip-grid .reason-chip,
+.timer-actions button,
+.nav-actions button {
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.form-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 180rpx minmax(0, 1fr);
+  gap: 18rpx;
+  align-items: center;
+}
+
+.field-copy {
+  min-width: 0;
+}
+
+.field-label,
+.field-unit {
+  display: block;
+}
+
+.field-label {
+  color: #243447;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.field-unit {
+  margin-top: 4rpx;
+  color: #98a2b3;
+  font-size: 24rpx;
+}
+
+.number-input {
+  height: 84rpx;
+  padding: 0 24rpx;
+  border-radius: 24rpx;
+  background: #f7f4ee;
+  color: #243447;
+  font-size: 30rpx;
+  font-weight: 700;
+  box-sizing: border-box;
+}
+
+.pain-score {
+  height: 112rpx;
+  border-radius: 28rpx;
+  background: #fff4ec;
+  color: #cb7c48;
+  font-size: 46rpx;
+  font-weight: 900;
+  line-height: 112rpx;
+  text-align: center;
+}
+
+.scale-row {
+  display: flex;
+  justify-content: space-between;
+  color: #667085;
+  font-size: 24rpx;
+}
+
+.reason-chip {
+  min-height: 76rpx;
+  padding: 0 14rpx;
+  border-radius: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f7f4ee;
+  color: #344054;
+  font-size: 27rpx;
+  font-weight: 800;
+  line-height: 1.25;
+  box-sizing: border-box;
+}
+
+.reason-chip::after {
+  border: 0;
+}
+
+.reason-chip.selected {
+  background: #87c99f;
+  color: #ffffff;
+}
+
+.timer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+  border: 2rpx solid transparent;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.timer-card.running {
+  border-color: rgba(217, 87, 69, 0.28);
+  background: linear-gradient(180deg, #ffffff, #fff7f4);
+}
+
+.timer-card.done {
+  border-color: rgba(74, 151, 98, 0.22);
+}
+
+.timer-cue {
+  min-height: 62rpx;
+  padding: 14rpx 18rpx;
+  border-radius: 20rpx;
+  background: #eef8f2;
+  color: #2f6f46;
+  font-size: 27rpx;
+  font-weight: 900;
+  line-height: 1.3;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.timer-cue.running {
+  background: #fff0ee;
+  color: #b94131;
+}
+
+.timer-cue.done {
+  background: #eef8f2;
+  color: #2f6f46;
+}
+
+.timer-display {
+  height: 136rpx;
+  border-radius: 32rpx;
+  background: #eef8f2;
+  color: #2f6f46;
+  font-size: 54rpx;
+  font-weight: 900;
+  line-height: 136rpx;
+  text-align: center;
+}
+
+.timer-display.running {
+  background: #fff0ee;
+  color: #b94131;
+}
+
+.timer-display.done {
+  background: #eef8f2;
+  color: #2f6f46;
+}
+
+.timer-display.unable {
+  background: #fff4ec;
+  color: #cb7c48;
+  font-size: 42rpx;
+}
+
+.timer-target {
+  display: block;
+  color: #667085;
+  font-size: 26rpx;
+  line-height: 1.45;
+  text-align: center;
+}
+
+.timer-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+  width: 100%;
+  overflow: hidden;
+}
+
+.timer-btn {
+  height: 92rpx;
+  border-radius: 28rpx;
+  padding: 0 12rpx;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 900;
+  line-height: 92rpx;
+  text-align: center;
+  box-shadow: none;
+  box-sizing: border-box;
+}
+
+.timer-btn::after {
+  border: 0;
+}
+
+.timer-btn.start.active {
+  background: #4a9762;
+  box-shadow: 0 12rpx 24rpx rgba(74, 151, 98, 0.22);
+}
+
+.timer-btn.finish.active {
+  background: #d95745;
+  box-shadow: 0 12rpx 24rpx rgba(217, 87, 69, 0.22);
+}
+
+.timer-btn.muted {
+  background: #e4ece7;
+  color: #6c7a71;
+}
+
+.timer-btn.disabled {
+  background: #f0ede7;
+  color: #aaa39a;
+}
+
+.text-btn {
+  height: 72rpx;
+  border-radius: 22rpx;
+  background: transparent;
+  color: #d95745;
+  font-size: 27rpx;
+  font-weight: 800;
+}
+
+.text-btn::after {
+  border: 0;
+}
+
 .nav-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16rpx;
+  gap: 18rpx;
+  width: 100%;
+  overflow: hidden;
 }
 
 .action-head {

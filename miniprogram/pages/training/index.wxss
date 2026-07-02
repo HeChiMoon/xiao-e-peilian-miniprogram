@@ -20,6 +20,13 @@
   background: linear-gradient(180deg, #edf8f1, #f8fcf9);
 }
 
+.finish-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 16rpx;
+}
+
 .finish-title,
 .plan-kicker,
 .plan-focus,
@@ -37,8 +44,8 @@
   line-height: 1.5;
 }
 
+.home-btn,
 .restart-btn {
-  margin-top: 14rpx;
   height: 78rpx;
   border: 0;
   border-radius: 24rpx;
@@ -52,7 +59,16 @@
   font-weight: 800;
 }
 
+.home-btn {
+  background: #f0a174;
+  color: #ffffff;
+}
+
 .restart-btn::after {
+  border: 0;
+}
+
+.home-btn::after {
   border: 0;
 }
 

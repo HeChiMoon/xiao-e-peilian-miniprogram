@@ -162,30 +162,40 @@
       <text class="stage-desc">用两个小计时测试了解下肢力量和平衡。全程扶稳，疼痛就停。</text>
     </view>
 
-    <view class="card timer-card">
+    <view class="card timer-card {{timers.sitToStand.status}}">
       <text class="question-title">{{timerTests.sitToStand.title}}</text>
       <text class="question-guide">{{timerTests.sitToStand.guide}}</text>
-      <view class="timer-display {{timers.sitToStand.unable ? 'unable' : ''}}">
+      <view class="timer-cue {{timers.sitToStand.status}}">
+        <text wx:if="{{timers.sitToStand.status == 'running'}}">正在计时，完成 5 次后点右侧按钮</text>
+        <text wx:elif="{{timers.sitToStand.status == 'done'}}">已记录，可以继续下一项</text>
+        <text wx:else>准备好后，先点绿色开始</text>
+      </view>
+      <view class="timer-display {{timers.sitToStand.unable ? 'unable' : ''}} {{timers.sitToStand.status}}">
         {{timers.sitToStand.display}}
       </view>
       <text class="timer-target">{{timerTests.sitToStand.target}}</text>
       <view class="timer-actions">
-        <button class="primary-btn" data-type="sitToStand" bindtap="startTimer">开始</button>
-        <button class="outline-btn" data-type="sitToStand" bindtap="finishTimer">完成 5 次</button>
+        <button class="timer-btn start {{timers.sitToStand.status == 'running' ? 'muted' : 'active'}}" data-type="sitToStand" bindtap="startTimer">开始</button>
+        <button class="timer-btn finish {{timers.sitToStand.status == 'running' ? 'active' : 'disabled'}}" disabled="{{timers.sitToStand.status != 'running'}}" data-type="sitToStand" bindtap="finishTimer">完成 5 次</button>
       </view>
       <button class="text-btn" data-type="sitToStand" bindtap="markTimerUnable">{{timerTests.sitToStand.unableText}}</button>
     </view>
 
-    <view class="card timer-card">
+    <view class="card timer-card {{timers.singleLegStand.status}}">
       <text class="question-title">{{timerTests.singleLegStand.title}}</text>
       <text class="question-guide">{{timerTests.singleLegStand.guide}}</text>
-      <view class="timer-display {{timers.singleLegStand.unable ? 'unable' : ''}}">
+      <view class="timer-cue {{timers.singleLegStand.status}}">
+        <text wx:if="{{timers.singleLegStand.status == 'running'}}">正在计时，站不稳或到时间就点停止</text>
+        <text wx:elif="{{timers.singleLegStand.status == 'done'}}">已记录，可以进入下一步</text>
+        <text wx:else>扶稳椅背后，先点绿色开始</text>
+      </view>
+      <view class="timer-display {{timers.singleLegStand.unable ? 'unable' : ''}} {{timers.singleLegStand.status}}">
         {{timers.singleLegStand.display}}
       </view>
       <text class="timer-target">{{timerTests.singleLegStand.target}}</text>
       <view class="timer-actions">
-        <button class="primary-btn" data-type="singleLegStand" bindtap="startTimer">开始</button>
-        <button class="outline-btn" data-type="singleLegStand" bindtap="finishTimer">停止</button>
+        <button class="timer-btn start {{timers.singleLegStand.status == 'running' ? 'muted' : 'active'}}" data-type="singleLegStand" bindtap="startTimer">开始</button>
+        <button class="timer-btn finish {{timers.singleLegStand.status == 'running' ? 'active' : 'disabled'}}" disabled="{{timers.singleLegStand.status != 'running'}}" data-type="singleLegStand" bindtap="finishTimer">停止</button>
       </view>
       <button class="text-btn" data-type="singleLegStand" bindtap="markTimerUnable">{{timerTests.singleLegStand.unableText}}</button>
     </view>

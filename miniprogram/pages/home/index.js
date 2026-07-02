@@ -10,14 +10,14 @@ const DEFAULT_PROFILE = {
   name: '',
   age: '',
   healthLevel: '待完善',
-  avatar: '/assets/images/xiao-e/avatar.png'
+  avatar: '/assets/images/xiao-e-icons/role-elder.png'
 }
 
 const XIAO_E_ASSETS = {
-  mascot: '/assets/images/xiao-e/mascot.png',
-  detect: '/assets/images/xiao-e/detect.png',
-  report: '/assets/images/xiao-e/report.png',
-  video: '/assets/images/xiao-e/video.png'
+  mascot: '/assets/images/xiao-e-icons/voice-assistant.png',
+  detect: '/assets/images/xiao-e-icons/pose-history.png',
+  report: '/assets/images/xiao-e-icons/health-archive.png',
+  video: '/assets/images/xiao-e-icons/video.png'
 }
 
 function buildVideoPreview(context) {
@@ -106,9 +106,18 @@ Page({
   },
 
   onShow() {
-    const progress = getTrainingProgress()
-    const report = getAssessment()
-    const localProfile = getElderProfile(DEFAULT_PROFILE)
+    let progress = { completedIds: [], currentUnlocked: 1 }
+    let report = null
+    let localProfile = DEFAULT_PROFILE
+
+    try {
+      progress = getTrainingProgress()
+      report = getAssessment()
+      localProfile = getElderProfile(DEFAULT_PROFILE)
+    } catch (error) {
+      console.warn('首页读取本地数据失败，使用默认内容', error)
+    }
+
     const completedIds = Array.isArray(progress.completedIds) ? progress.completedIds : []
     const localContext = {
       profile: localProfile,
@@ -130,9 +139,15 @@ Page({
       dailyFocus: buildDailyFocus(localContext)
     })
 
-    this.loadCloudProfile()
-    this.loadCloudAssessment()
-    this.loadHomeRecommendation()
+    this.loadCloudProfile().catch((error) => {
+      console.warn('首页云端资料刷新失败', error)
+    })
+    this.loadCloudAssessment().catch((error) => {
+      console.warn('首页云端测评刷新失败', error)
+    })
+    this.loadHomeRecommendation().catch((error) => {
+      console.warn('首页推荐刷新失败', error)
+    })
   },
 
   async loadCloudProfile() {
@@ -159,18 +174,20 @@ Page({
   },
 
   async loadHomeRecommendation() {
-    const results = await Promise.all([
+    const results = await Promise.allSettled([
       getCloudElderProfile(DEFAULT_PROFILE),
       getCloudAssessmentReport(),
       getCloudTrainingProgress(),
       getLatestPoseDetection()
     ])
 
+    const values = results.map((result) => result.status === 'fulfilled' ? result.value : null)
+
     const context = {
-      profile: results[0] || this.data.profile,
-      report: results[1] || getAssessment(),
-      progress: results[2] || getTrainingProgress(),
-      pose: results[3] || null
+      profile: values[0] || this.data.profile,
+      report: values[1] || getAssessment(),
+      progress: values[2] || getTrainingProgress(),
+      pose: values[3] || null
     }
 
     this.setData({

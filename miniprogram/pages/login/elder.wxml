@@ -16,6 +16,7 @@
     </view>
 
     <view class="field-card name-card">
+      <image class="field-icon" src="{{icons.registerName}}" mode="aspectFit" />
       <view class="field-main">
         <text class="form-label">姓名</text>
         <input
@@ -30,6 +31,7 @@
     </view>
 
     <view class="field-card">
+      <image class="field-icon" src="{{gender === '男' ? icons.genderMale : icons.genderFemale}}" mode="aspectFit" />
       <view class="field-main">
         <text class="form-label">性别</text>
         <view class="gender-row">
@@ -48,6 +50,7 @@
     </view>
 
     <view class="field-card year-card">
+      <image class="field-icon" src="{{icons.birthYear}}" mode="aspectFit" />
       <view class="field-main">
         <view class="year-head">
           <text class="form-label">出生年份</text>
@@ -69,7 +72,7 @@
     </view>
 
     <button class="voice-assist-card" bindtap="openVoice">
-      <image class="voice-assist-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+      <image class="voice-assist-img" src="{{icons.voiceAssistant}}" mode="aspectFit" />
       <view class="voice-assist-copy">
         <text class="voice-assist-title">小鹅语音帮填</text>
         <text class="voice-assist-desc">不会填时，按住说话问小鹅。</text>
@@ -85,7 +88,7 @@
       <view class="modal-body">
         <view class="voice-head">
           <view class="voice-ring {{voiceListening ? 'listening' : ''}}">
-            <text>{{voiceListening ? '听' : '问'}}</text>
+            <image class="voice-state-img" src="{{voiceListening ? icons.listening : icons.thinking}}" mode="aspectFit" />
           </view>
           <view>
             <text class="card-title">小鹅语音助手</text>

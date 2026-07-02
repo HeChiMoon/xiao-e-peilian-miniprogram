@@ -12,16 +12,16 @@ const ROLE_ITEMS = [
   {
     role: 'elder',
     title: '老人端',
-    desc: '完成建档、测评、每日练和小百科问答。',
+    desc: '测评、训练、小百科',
     action: '进入老人端',
-    image: '/assets/images/xiao-e/avatar.png'
+    image: '/assets/images/xiao-e-icons/role-elder.png'
   },
   {
     role: 'caregiver',
     title: '子女端',
-    desc: '确认绑定老人信息，查看家庭看护概览。',
+    desc: '绑定老人，看训练',
     action: '进入子女端',
-    image: '/assets/images/xiao-e/profile.png'
+    image: '/assets/images/xiao-e-icons/role-caregiver.png'
   }
 ]
 
@@ -32,13 +32,43 @@ const DEFAULT_LOCAL_PROFILE = {
 Page({
   data: {
     roles: ROLE_ITEMS,
-    mascot: '/assets/images/xiao-e/mascot.png',
+    mascot: '/assets/images/xiao-e-icons/voice-assistant.png',
     checkingLogin: false,
     checkingText: ''
   },
 
   onShow() {
-    this.tryAutoResume()
+    if (this._autoResumeTimer) {
+      clearTimeout(this._autoResumeTimer)
+    }
+    this._autoResumeTimer = setTimeout(() => {
+      this.tryAutoResume()
+    }, 300)
+  },
+
+  onHide() {
+    if (this._autoResumeTimer) {
+      clearTimeout(this._autoResumeTimer)
+      this._autoResumeTimer = null
+    }
+  },
+
+  onUnload() {
+    if (this._autoResumeTimer) {
+      clearTimeout(this._autoResumeTimer)
+      this._autoResumeTimer = null
+    }
+  },
+
+  openPage(method, url) {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        wx[method]({
+          url,
+          complete: resolve
+        })
+      }, 120)
+    })
   },
 
   async tryAutoResume() {
@@ -51,8 +81,8 @@ Page({
     this.setData({
       checkingLogin: true,
       checkingText: role === 'elder'
-        ? '正在为您续上老人端资料…'
-        : '正在为您打开子女端…'
+        ? '正在打开老人端'
+        : '正在打开子女端'
     })
 
     try {
@@ -78,8 +108,8 @@ Page({
     this.setData({
       checkingLogin: true,
       checkingText: role === 'elder'
-        ? '正在检查您的老人端资料…'
-        : '正在进入子女端…'
+        ? '正在进入老人端'
+        : '正在进入子女端'
     })
 
     await this.openRole(role, false)
@@ -96,9 +126,6 @@ Page({
       if (currentOpenId && savedOpenId && savedOpenId !== currentOpenId) {
         clearDemoLocalData()
         saveCurrentOpenId(currentOpenId)
-        if (isResume) {
-          return
-        }
         saveCurrentRole(role)
       } else if (currentOpenId) {
         saveCurrentOpenId(currentOpenId)
@@ -111,15 +138,13 @@ Page({
         const canUseLocalResume = Boolean(!currentOpenId && isResume && hasLocalProfile)
 
         if (hasCloudProfile || canUseLocalResume) {
-          wx.switchTab({ url: '/pages/home/index' })
-          return
+          return this.openPage('switchTab', '/pages/home/index')
         }
 
-        wx.navigateTo({ url: '/pages/login/elder' })
-        return
+        return this.openPage('navigateTo', '/pages/login/elder')
       }
 
-      wx.navigateTo({ url: '/pages/caregiver/index' })
+      return this.openPage('navigateTo', '/pages/caregiver/index')
     } finally {
       setTimeout(() => {
         this.redirecting = false

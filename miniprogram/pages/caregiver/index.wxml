@@ -8,9 +8,12 @@
   <view class="content">
     <view class="card binding-card">
       <view class="section-head">
-        <view>
-          <text class="section-kicker green-kicker">绑定入口</text>
-          <text class="card-title">绑定老人</text>
+        <view class="section-title-with-icon">
+          <image class="section-icon" src="/assets/images/xiao-e-icons/scan-bind.png" mode="aspectFit" />
+          <view>
+            <text class="section-kicker green-kicker">绑定入口</text>
+            <text class="card-title">绑定老人</text>
+          </view>
         </view>
         <text class="status-badge {{statusTone}}">{{detectedSource || '待开始'}}</text>
       </view>

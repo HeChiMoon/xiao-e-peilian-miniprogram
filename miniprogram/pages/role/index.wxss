@@ -1,5 +1,5 @@
 .role-page {
-  padding-top: 18rpx;
+  padding-top: 12rpx;
 }
 
 .role-hero {
@@ -7,15 +7,15 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  padding: 42rpx 34rpx 36rpx;
-  margin-bottom: 22rpx;
+  padding: 34rpx 34rpx 30rpx;
+  margin-bottom: 20rpx;
   background: linear-gradient(180deg, #ffffff, #fcfaf6);
 }
 
 .role-art {
   position: relative;
-  width: 150rpx;
-  height: 150rpx;
+  width: 136rpx;
+  height: 136rpx;
 }
 
 .role-art-ring {
@@ -36,8 +36,8 @@
 .role-mascot {
   position: absolute;
   inset: 14rpx;
-  width: 122rpx;
-  height: 122rpx;
+  width: 108rpx;
+  height: 108rpx;
   border-radius: 50%;
 }
 
@@ -54,26 +54,27 @@
 }
 
 .role-kicker {
-  margin-top: 18rpx;
+  margin-top: 16rpx;
   color: #e29063;
   font-size: 26rpx;
   font-weight: 700;
 }
 
 .role-title {
-  margin-top: 10rpx;
+  margin-top: 8rpx;
   color: #243447;
-  font-size: 44rpx;
+  font-size: 42rpx;
   font-weight: 800;
   line-height: 1.24;
 }
 
 .role-copy {
   max-width: 560rpx;
-  margin-top: 14rpx;
+  margin-top: 12rpx;
   color: #667085;
-  font-size: 27rpx;
-  line-height: 1.62;
+  font-size: 29rpx;
+  font-weight: 700;
+  line-height: 1.45;
 }
 
 .resume-card {
@@ -100,16 +101,16 @@
 .role-list {
   display: flex;
   flex-direction: column;
-  gap: 16rpx;
+  gap: 18rpx;
 }
 
 .role-card {
-  min-height: 156rpx;
+  min-height: 132rpx;
   display: grid;
-  grid-template-columns: 96rpx minmax(0, 1fr);
+  grid-template-columns: 88rpx minmax(0, 1fr);
   gap: 18rpx;
   align-items: center;
-  padding: 24rpx;
+  padding: 22rpx 24rpx;
   border-radius: 30rpx;
   background: #ffffff;
   box-shadow: 0 12rpx 30rpx rgba(181, 173, 159, 0.14);
@@ -129,9 +130,9 @@
 }
 
 .role-icon {
-  width: 96rpx;
-  height: 96rpx;
-  border-radius: 28rpx;
+  width: 88rpx;
+  height: 88rpx;
+  border-radius: 26rpx;
 }
 
 .role-content {
@@ -141,6 +142,7 @@
 .role-head {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12rpx;
 }
 
@@ -153,14 +155,14 @@
 
 .role-chip {
   flex: 0 0 auto;
-  min-height: 40rpx;
+  min-height: 38rpx;
   padding: 0 14rpx;
   border-radius: 20rpx;
   background: rgba(240, 161, 116, 0.14);
   color: #cb7c48;
   font-size: 21rpx;
   font-weight: 700;
-  line-height: 40rpx;
+  line-height: 38rpx;
 }
 
 .caregiver .role-chip {
@@ -174,10 +176,10 @@
 }
 
 .role-desc {
-  margin-top: 10rpx;
+  margin-top: 8rpx;
   color: #667085;
-  font-size: 25rpx;
-  line-height: 1.5;
+  font-size: 26rpx;
+  line-height: 1.35;
 }
 
 .role-action {

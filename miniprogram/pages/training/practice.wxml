@@ -11,7 +11,7 @@
 
   <view class="card feedback-card">
     <view class="top-row">
-      <image class="round-img" src="/assets/images/xiao-e/detect.png" mode="aspectFit" />
+      <image class="round-img" src="/assets/images/xiao-e-icons/pose-history.png" mode="aspectFit" />
       <view>
         <text class="assistant-title">小鹅动作练习</text>
         <text class="assistant-copy">先看清动作要求，再进入相机检测页面完成一次姿势判断。</text>

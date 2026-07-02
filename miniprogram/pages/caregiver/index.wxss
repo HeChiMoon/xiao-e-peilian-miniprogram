@@ -40,15 +40,35 @@
   gap: 16rpx;
 }
 
+.section-title-with-icon {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.section-title-with-icon > view {
+  min-width: 0;
+}
+
+.section-icon {
+  flex: 0 0 auto;
+  width: 76rpx;
+  height: 76rpx;
+  border-radius: 20rpx;
+}
+
 .status-badge {
   flex: 0 0 auto;
   min-width: 108rpx;
+  max-width: 168rpx;
   padding: 10rpx 16rpx;
   border-radius: 999rpx;
   text-align: center;
   font-size: 22rpx;
   font-weight: 700;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 
 .status-badge.idle {
@@ -109,13 +129,15 @@
 
 .binding-action-row {
   display: flex;
-  gap: 16rpx;
+  flex-direction: column;
+  gap: 20rpx;
 }
 
 .half-btn {
-  flex: 1 1 0;
-  width: auto;
+  flex: none;
+  width: 100%;
   min-width: 0;
+  margin: 0;
 }
 
 .bound-box {

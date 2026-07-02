@@ -42,7 +42,7 @@
   inset: 14rpx;
   width: 128rpx;
   height: 128rpx;
-  border-radius: 50%;
+  border-radius: 32rpx;
 }
 
 .info-panel {
@@ -63,12 +63,22 @@
 }
 
 .field-card {
+  display: grid;
+  grid-template-columns: 84rpx minmax(0, 1fr);
+  gap: 18rpx;
+  align-items: center;
   min-height: 128rpx;
   margin-bottom: 18rpx;
   padding: 24rpx;
   border: 2rpx solid #f0ebe2;
   border-radius: 26rpx;
   background: #fffdfa;
+}
+
+.field-icon {
+  width: 84rpx;
+  height: 84rpx;
+  border-radius: 22rpx;
 }
 
 .name-card {
@@ -179,7 +189,7 @@
 .voice-assist-img {
   width: 64rpx;
   height: 64rpx;
-  border-radius: 20rpx;
+  border-radius: 18rpx;
   background: #fff6ef;
 }
 
@@ -221,6 +231,9 @@
 }
 
 .voice-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 104rpx;
   height: 104rpx;
   border-radius: 50%;
@@ -230,6 +243,11 @@
   font-weight: 800;
   line-height: 104rpx;
   text-align: center;
+}
+
+.voice-state-img {
+  width: 86rpx;
+  height: 86rpx;
 }
 
 .voice-ring.listening {

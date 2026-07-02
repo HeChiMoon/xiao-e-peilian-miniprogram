@@ -56,6 +56,13 @@
   border-bottom: 1rpx solid #ece7df;
 }
 
+.menu-icon {
+  flex: 0 0 auto;
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 20rpx;
+}
+
 .menu-row:last-child {
   border-bottom: 0;
 }
@@ -99,8 +106,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 22rpx;
+  gap: 18rpx;
   text-align: center;
+}
+
+.qr-modal-card {
+  max-height: 86vh;
+  overflow-y: auto;
 }
 
 .binding-status {
@@ -121,8 +133,8 @@
 
 .binding-qr-image,
 .binding-qr-placeholder {
-  width: 440rpx;
-  height: 440rpx;
+  width: 420rpx;
+  height: 420rpx;
   border-radius: 24rpx;
   background: #ffffff;
 }
@@ -142,14 +154,30 @@
 
 .binding-actions {
   width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14rpx;
-  padding-top: 6rpx;
+  display: flex;
+  flex-direction: column;
+  gap: 18rpx;
+  padding-top: 8rpx;
 }
 
 .half-btn {
   width: 100%;
+  margin: 0;
+}
+
+.qr-modal .half-btn {
+  min-width: 0;
+  height: 92rpx;
+  border-radius: 26rpx;
+  font-size: 30rpx;
+  line-height: 92rpx;
+}
+
+.qr-modal .primary-btn,
+.qr-modal .outline-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .settings-modal {

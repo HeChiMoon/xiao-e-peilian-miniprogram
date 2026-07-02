@@ -9,7 +9,10 @@
 
     <view wx:if="{{allCompleted}}" class="finish-tip">
       <text class="finish-title">今天 3 个动作都完成了</text>
-      <button class="restart-btn" loading="{{resetting}}" bindtap="restartToday">重新开始今日训练</button>
+      <view class="finish-actions">
+        <button class="home-btn" bindtap="goHome">回到首页</button>
+        <button class="restart-btn" loading="{{resetting}}" bindtap="restartToday">重新开始今日训练</button>
+      </view>
     </view>
   </view>
 
@@ -50,7 +53,7 @@
 
   <view wx:if="{{plan}}" class="card hint-card">
     <text class="section-kicker sky-kicker">动作提示</text>
-    <text class="card-title">练习前先看一眼</text>
+    <text class="card-title">练习前先看一看</text>
     <block wx:for="{{levels}}" wx:key="id">
       <view wx:if="{{item.recommended || item.focus}}" class="hint-row">
         <text class="hint-name">{{item.shortName}}</text>

@@ -4,7 +4,7 @@ const activeTrainingLevels = [
     name: '靠墙静蹲',
     shortName: '静蹲',
     video: '/pages/training/assets/wall-squat.mp4',
-    image: '/assets/images/xiao-e/ok.jpg',
+    image: '/assets/images/action-wall-squat.jpg',
     description: '背部轻轻贴墙，双脚与肩同宽，慢慢下蹲到舒适位置。',
     guide: '膝盖朝向脚尖，保持 10 秒。疼痛明显时立刻停止。',
     feedback: '背贴墙面，膝盖不要超过脚尖，动作慢一点。'
@@ -24,7 +24,7 @@ const activeTrainingLevels = [
     name: '单腿站立',
     shortName: '单腿站',
     video: '/pages/training/assets/single-leg-stand.mp4',
-    image: '/assets/images/xiao-e/report.png',
+    image: '/assets/images/action-single-leg-stand.jpg',
     description: '扶住椅背，慢慢抬起一只脚，保持身体稳定。',
     guide: '保持 8 秒以上，身体晃动过大时降低难度。',
     feedback: '旁边一定扶稳，脚轻轻离地就好。'
@@ -33,122 +33,163 @@ const activeTrainingLevels = [
 
 const assessmentSections = {
   intro: {
-    title: '小鹅腿脚测评',
-    greeting: '爷爷奶奶好，欢迎来到小鹅腿脚测评。我们像做小检查一样，看看膝盖和腿脚灵不灵便。',
-    safety: '旁边一定要有稳固的椅子或墙壁扶着，最好有家人在旁边看着。如果觉得疼或者站不稳，马上停下来，不要勉强。'
+    title: '小鹅下肢功能筛查',
+    greeting: '爷爷奶奶好，我们先做一次简单筛查，看看疼痛、活动度、力量和平衡情况，再给出今天更合适的训练顺序。',
+    safety: '这不是医生诊断。测试时请扶稳椅子或墙面，最好有家人在旁边。疼痛明显、刚做过手术、医生要求避免运动时，请先不要自测。'
   },
-  basicQuestions: [
+  profileFields: [
+    { key: 'age', label: '年龄', unit: '岁', placeholder: '例如 68' },
+    { key: 'height', label: '身高', unit: 'cm', placeholder: '例如 165' },
+    { key: 'weight', label: '体重', unit: 'kg', placeholder: '例如 62' }
+  ],
+  profileQuestions: [
     {
-      key: 'walking',
-      title: '平时走路怎么样？',
+      key: 'gender',
+      title: '您的性别',
+      dimension: 'profile',
       options: [
-        { label: '完全可以自己走', value: 'independent', score: 0 },
-        { label: '需要拐杖或助行器', value: 'support', score: 2 },
-        { label: '主要坐轮椅', value: 'wheelchair', score: 5 }
+        { label: '男', value: 'male', score: 0 },
+        { label: '女', value: 'female', score: 0 }
       ]
     },
     {
-      key: 'pain',
-      title: '最近膝盖疼不疼？',
+      key: 'living',
+      title: '主要居住方式',
+      dimension: 'profile',
       options: [
-        { label: '没有明显疼痛', value: 'none', score: 0 },
-        { label: '偶尔疼一下', value: 'mild', score: 1 },
-        { label: '经常疼，每周多次', value: 'persistent', score: 5, stop: true },
-        { label: '疼得厉害，影响走路', value: 'severe', score: 6, stop: true }
+        { label: '与家人同住', value: 'family', score: 0 },
+        { label: '独居', value: 'alone', score: 0 },
+        { label: '养老机构', value: 'facility', score: 0 },
+        { label: '其他', value: 'other', score: 0 }
       ]
     }
   ],
-  actionTests: [
+  healthQuestions: [
     {
-      key: 'legShape',
-      title: '照镜子看腿型',
-      guide: '请面对镜子自然站立，看看两条腿是否一样直，膝盖是否明显内扣或外翻。',
+      key: 'walkingAid',
+      title: '行走时是否需要辅助工具？',
+      dimension: 'safety',
       options: [
-        { label: '双腿较直，比较对称', value: 'good', score: 0 },
-        { label: '有一点不对称', value: 'fair', score: 1 },
-        { label: '腿型明显歪斜或不对称', value: 'poor', score: 2 }
+        { label: '不需要', value: 'none', score: 0 },
+        { label: '手杖', value: 'cane', score: 2 },
+        { label: '助行器', value: 'walker', score: 4 },
+        { label: '轮椅', value: 'wheelchair', score: 8, block: true, reason: '平时主要使用轮椅，暂不建议自行完成动作筛查。' }
       ]
     },
     {
-      key: 'squat',
-      title: '试着蹲一蹲',
-      guide: '扶住椅子，慢慢蹲一点点，再慢慢站起来。觉得疼就立刻停止。',
+      key: 'painFrequency',
+      title: '近 3 个月膝关节疼痛、肿胀或僵硬的频率',
+      dimension: 'pain',
       options: [
-        { label: '动作顺畅，不疼', value: 'good', score: 0 },
-        { label: '有点费力或有点疼', value: 'fair', score: 1 },
-        { label: '蹲不下去或疼得明显', value: 'poor', score: 2 }
+        { label: '无', value: 'none', score: 0 },
+        { label: '偶尔，每周 1-2 次', value: 'sometimes', score: 1 },
+        { label: '经常，每周 3-5 次', value: 'often', score: 3 },
+        { label: '持续，几乎每天', value: 'daily', score: 5 }
       ]
     },
     {
-      key: 'legRaise',
-      title: '坐着抬抬腿',
-      guide: '坐稳后，慢慢把一条腿向前抬起来，再轻轻放下。',
+      key: 'painArea',
+      title: '主要疼痛部位',
+      dimension: 'pain',
       options: [
-        { label: '能轻松抬起来', value: 'easy', score: 0 },
-        { label: '抬不起来', value: 'fail', score: 2 },
-        { label: '抬起后明显发抖', value: 'shake', score: 2 },
-        { label: '抬腿时膝盖疼', value: 'pain', score: 3 }
+        { label: '无疼痛', value: 'none', score: 0 },
+        { label: '膝盖前方', value: 'front', score: 1 },
+        { label: '膝盖内侧', value: 'inside', score: 1 },
+        { label: '膝盖外侧', value: 'outside', score: 1 },
+        { label: '膝盖后方', value: 'back', score: 1 }
       ]
     },
     {
-      key: 'balance',
-      title: '单脚站一站',
-      guide: '扶住椅背，轻轻抬起一只脚。尽量保持 10 秒，站不稳就马上放下。',
+      key: 'treatment',
+      title: '目前就医或康复情况',
+      dimension: 'pain',
       options: [
-        { label: '超过 10 秒，比较稳', value: 'stable', score: 0 },
-        { label: '能站几秒，但有点晃', value: 'fair', score: 1 },
-        { label: '几乎站不住', value: 'poor', score: 2 }
+        { label: '从未看过', value: 'none', score: 0 },
+        { label: '看过医生但未治疗', value: 'checked', score: 1 },
+        { label: '正在康复治疗', value: 'rehab', score: 1, caution: true }
       ]
     },
     {
-      key: 'ligament',
-      title: '轻轻活动小腿',
-      guide: '坐稳后，轻轻活动小腿。如果不确定动作，请让家人协助或跳过。',
+      key: 'recentSurgery',
+      title: '近 1 个月是否有下肢手术，或医生要求避免运动？',
+      dimension: 'safety',
       options: [
-        { label: '没有明显不适', value: 'good', score: 0 },
-        { label: '轻微不稳或酸胀', value: 'fair', score: 1 },
-        { label: '明显疼痛或不敢做', value: 'poor', score: 2 }
-      ]
-    },
-    {
-      key: 'stride',
-      title: '前后迈一小步',
-      guide: '扶住椅子，一只脚向前迈一小步，再回到原位。动作要慢。',
-      options: [
-        { label: '能稳定完成', value: 'good', score: 0 },
-        { label: '有点晃或膝盖不稳', value: 'fair', score: 1 },
-        { label: '疼痛明显或无法完成', value: 'poor', score: 2 }
-      ]
-    },
-    {
-      key: 'jump',
-      title: '原地轻轻踮脚',
-      guide: '如果平时运动少、膝盖不舒服或心里没把握，可以直接跳过。',
-      options: [
-        { label: '能轻松完成', value: 'good', score: 0 },
-        { label: '能做但不太稳', value: 'fair', score: 1 },
-        { label: '跳过或不适合做', value: 'skip', score: 1 },
-        { label: '疼痛明显', value: 'pain', score: 3 }
+        { label: '没有', value: 'no', score: 0 },
+        { label: '有', value: 'yes', score: 8, block: true, reason: '近期有手术或运动限制，应先听医生或康复师意见。' }
       ]
     }
   ],
+  painScale: {
+    key: 'painScore',
+    title: '如果有疼痛，疼痛程度大概几分？',
+    guide: '0 分是不疼，10 分是难以忍受。没有疼痛可以选 0 分。',
+    min: 0,
+    max: 10
+  },
+  mobilityQuestions: [
+    {
+      key: 'kneeExtension',
+      title: '坐稳后，能否把一条腿慢慢向前伸直？',
+      guide: '坐在椅子或床边，身体坐直，一条腿慢慢向前伸直。不要憋气，不要硬撑。',
+      dimension: 'mobility',
+      options: [
+        { label: '能轻松伸直', value: 'easy', score: 0 },
+        { label: '勉强能伸直', value: 'hard', score: 2 },
+        { label: '不能伸直', value: 'unable', score: 4 }
+      ]
+    }
+  ],
+  mobilityReasons: [
+    { key: 'pain', label: '疼痛' },
+    { key: 'stiffness', label: '关节僵硬' },
+    { key: 'balance', label: '坐不稳' },
+    { key: 'weakness', label: '肌肉无力' },
+    { key: 'other', label: '其他' }
+  ],
+  timerTests: {
+    sitToStand: {
+      title: '五次坐站',
+      guide: '坐在稳固椅子上，双脚踩稳。点击开始后完成 5 次站起坐下，再点完成。',
+      target: '12 秒以内较好',
+      unableText: '无法完成 5 次'
+    },
+    singleLegStand: {
+      title: '扶椅单腿站立',
+      guide: '扶稳椅背，单脚轻轻离地。点击开始后尽量站到 20 秒，站不住就点停止。',
+      target: '20 秒较好',
+      unableText: '无法站立'
+    }
+  },
   riskQuestions: [
     {
       key: 'fall',
-      title: '过去一年里，您摔倒过吗？',
+      title: '近 1 年内是否有跌倒经历？',
+      dimension: 'fallRisk',
       options: [
-        { label: '没有', value: 'no', score: 0 },
-        { label: '1 次', value: 'once', score: 1 },
-        { label: '2 次以上', value: 'twice', score: 3 }
+        { label: '无', value: 'none', score: 0 },
+        { label: '1 次', value: 'once', score: 2 },
+        { label: '2 次及以上', value: 'twice', score: 5 }
       ]
     },
     {
       key: 'dailyImpact',
-      title: '现在的腿脚会影响日常生活吗？',
+      title: '目前下肢功能对生活质量的影响程度',
+      dimension: 'dailyImpact',
       options: [
-        { label: '完全不影响', value: 'none', score: 0 },
-        { label: '有一点影响', value: 'some', score: 1 },
-        { label: '影响很大', value: 'large', score: 3 }
+        { label: '无影响', value: 'none', score: 0 },
+        { label: '轻微影响', value: 'mild', score: 1 },
+        { label: '中度影响', value: 'middle', score: 3 },
+        { label: '严重影响', value: 'severe', score: 5 }
+      ]
+    },
+    {
+      key: 'rehabWilling',
+      title: '是否愿意接受专业康复指导或训练？',
+      dimension: 'preference',
+      options: [
+        { label: '是', value: 'yes', score: 0 },
+        { label: '否', value: 'no', score: 0 },
+        { label: '不确定', value: 'unknown', score: 0 }
       ]
     }
   ]
@@ -235,7 +276,7 @@ const profile = {
   birthYear: 1961,
   gender: '男',
   healthLevel: '良好',
-  avatar: '/assets/images/xiao-e/avatar.png',
+  avatar: '/assets/images/xiao-e-icons/role-elder.png',
   phone: '19857520189'
 }
 
@@ -253,21 +294,21 @@ const roleItems = [
     title: '老人端',
     desc: '测评、每日练、语音问答',
     action: '完善信息进入',
-    image: '/assets/images/xiao-e/avatar.png'
+    image: '/assets/images/xiao-e-icons/role-elder.png'
   },
   {
     role: 'caregiver',
     title: '子女端',
     desc: '查看老人训练和健康情况',
     action: '进入家庭看护',
-    image: '/assets/images/xiao-e/profile.png'
+    image: '/assets/images/xiao-e-icons/role-caregiver.png'
   },
   {
     role: 'admin',
     title: '管理员端',
     desc: '内容、数据和提醒管理入口',
     action: '进入管理台',
-    image: '/assets/images/xiao-e/archive.png'
+    image: '/assets/images/xiao-e-icons/settings.png'
   }
 ]
 

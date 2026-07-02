@@ -8,7 +8,7 @@
 
     <view wx:for="{{messages}}" wx:key="index" class="message {{item.role}}">
       <view class="avatar">
-        <image wx:if="{{item.role === 'ai'}}" class="avatar-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+        <image wx:if="{{item.role === 'ai'}}" class="avatar-img" src="/assets/images/xiao-e-icons/voice-assistant.png" mode="aspectFit" />
         <text wx:else>我</text>
       </view>
       <view class="bubble">
@@ -26,7 +26,7 @@
 
     <view wx:if="{{loading}}" class="message ai">
       <view class="avatar">
-        <image class="avatar-img" src="/assets/images/xiao-e/avatar.png" mode="aspectFit" />
+        <image class="avatar-img" src="/assets/images/xiao-e-icons/listening.png" mode="aspectFit" />
       </view>
       <view class="bubble">
         <text class="bubble-text">小鹅正在整理回答，请稍等一下。</text>

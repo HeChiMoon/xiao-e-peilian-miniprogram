@@ -1,6 +1,6 @@
 <view class="page no-tab complete-page" wx:if="{{level}}">
   <view class="celebrate-card card">
-    <image class="celebrate-img" src="{{all ? '/assets/images/xiao-e/celebrate.png' : '/assets/images/xiao-e/happy.png'}}" mode="aspectFit" />
+    <image class="celebrate-img" src="{{all ? '/assets/images/xiao-e-icons/done.png' : '/assets/images/xiao-e-icons/warning.png'}}" mode="aspectFit" />
     <text class="section-kicker green-kicker">{{all ? '全部完成' : '当前完成'}}</text>
     <text class="celebrate-title">{{title}}</text>
     <text class="celebrate-copy">{{copy}}</text>

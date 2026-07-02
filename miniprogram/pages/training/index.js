@@ -78,6 +78,10 @@ Page({
     wx.navigateTo({ url: `/pages/training/learn?id=${id}` })
   },
 
+  goHome() {
+    wx.switchTab({ url: '/pages/home/index' })
+  },
+
   async restartToday() {
     if (this.data.resetting) {
       return

@@ -68,3 +68,167 @@
   font-size: 29rpx;
   line-height: 1.68;
 }
+
+.dimension-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16rpx;
+  margin-top: 20rpx;
+}
+
+.dimension-card {
+  min-height: 168rpx;
+  padding: 20rpx;
+  border-radius: 24rpx;
+  background: #f7f4ee;
+  border: 2rpx solid transparent;
+  box-sizing: border-box;
+}
+
+.dimension-card.low {
+  background: #eef8f2;
+  border-color: rgba(74, 151, 98, 0.12);
+}
+
+.dimension-card.medium {
+  background: #fff0e5;
+  border-color: rgba(203, 124, 72, 0.28);
+}
+
+.dimension-card.high {
+  background: #ffe7e2;
+  border-color: rgba(217, 87, 69, 0.36);
+}
+
+.dimension-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10rpx;
+  align-items: center;
+}
+
+.dimension-name,
+.dimension-score,
+.dimension-desc {
+  display: block;
+}
+
+.dimension-name {
+  color: #243447;
+  font-size: 27rpx;
+  font-weight: 900;
+}
+
+.dimension-badge {
+  min-width: 96rpx;
+  height: 44rpx;
+  padding: 0 14rpx;
+  border-radius: 22rpx;
+  background: #ffffff;
+  color: #4a9762;
+  font-size: 22rpx;
+  font-weight: 900;
+  line-height: 44rpx;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.dimension-card.medium .dimension-badge {
+  background: #cb7c48;
+  color: #ffffff;
+}
+
+.dimension-card.high .dimension-badge {
+  background: #d95745;
+  color: #ffffff;
+}
+
+.dimension-score {
+  margin-top: 14rpx;
+  color: #2f6f46;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.dimension-card.medium .dimension-score {
+  color: #9f4b30;
+}
+
+.dimension-card.high .dimension-score {
+  color: #b94131;
+}
+
+.dimension-desc {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 24rpx;
+  line-height: 1.42;
+}
+
+.action-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 16rpx;
+  margin-top: 22rpx;
+}
+
+.action-row {
+  display: grid;
+  grid-template-columns: 58rpx minmax(0, 1fr);
+  gap: 16rpx;
+  padding: 20rpx;
+  border-radius: 24rpx;
+  background: #fcfaf6;
+  box-sizing: border-box;
+}
+
+.action-index {
+  width: 54rpx;
+  height: 54rpx;
+  border-radius: 27rpx;
+  background: #f0a174;
+  color: #ffffff;
+  font-size: 28rpx;
+  font-weight: 900;
+  line-height: 54rpx;
+  text-align: center;
+}
+
+.action-copy {
+  min-width: 0;
+}
+
+.action-name,
+.action-hint {
+  display: block;
+}
+
+.action-name {
+  color: #243447;
+  font-size: 30rpx;
+  font-weight: 900;
+  line-height: 1.35;
+}
+
+.action-hint {
+  margin-top: 8rpx;
+  color: #667085;
+  font-size: 25rpx;
+  line-height: 1.5;
+}
+
+.blocked-card {
+  border: 2rpx solid rgba(217, 87, 69, 0.16);
+}
+
+.reason-row {
+  margin-top: 14rpx;
+  padding: 18rpx 20rpx;
+  border-radius: 20rpx;
+  background: #fff4ec;
+  color: #9f4b30;
+  font-size: 26rpx;
+  font-weight: 700;
+  line-height: 1.5;
+}

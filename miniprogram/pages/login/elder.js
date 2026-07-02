@@ -26,7 +26,7 @@ const DEFAULT_PROFILE = {
   birthYear: CURRENT_YEAR - DEFAULT_AGE,
   age: DEFAULT_AGE,
   healthLevel: '良好',
-  avatar: '/assets/images/xiao-e/avatar.png',
+  avatar: '/assets/images/xiao-e-icons/role-elder.png',
   phone: '',
   medicalHistory: '',
   painAreas: '',
@@ -72,7 +72,16 @@ function getFriendlyVoiceError(error) {
 
 Page({
   data: {
-    mascot: '/assets/images/xiao-e/mascot.png',
+    mascot: '/assets/images/xiao-e-icons/role-elder.png',
+    icons: {
+      registerName: '/assets/images/xiao-e-icons/register-name.png',
+      voiceAssistant: '/assets/images/xiao-e-icons/voice-assistant.png',
+      genderMale: '/assets/images/xiao-e-icons/gender-male.png',
+      genderFemale: '/assets/images/xiao-e-icons/gender-female.png',
+      birthYear: '/assets/images/xiao-e-icons/birth-year.png',
+      listening: '/assets/images/xiao-e-icons/listening.png',
+      thinking: '/assets/images/xiao-e-icons/thinking.png'
+    },
     name: '',
     gender: '男',
     birthYear: CURRENT_YEAR - DEFAULT_AGE,

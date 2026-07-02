@@ -55,6 +55,7 @@ button::after {
 }
 
 .hero-title {
+  display: block;
   color: #243447;
   font-size: 42rpx;
   font-weight: 800;
@@ -62,6 +63,8 @@ button::after {
 }
 
 .subtitle {
+  display: block;
+  margin-top: 12rpx;
   color: #667085;
   font-size: 28rpx;
   line-height: 1.65;
@@ -72,6 +75,23 @@ button::after {
   border-radius: 30rpx;
   background: #ffffff;
   box-shadow: 0 12rpx 36rpx rgba(180, 172, 157, 0.18);
+}
+
+.header-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.header-card .section-kicker,
+.header-card .hero-title,
+.header-card .subtitle {
+  flex: 0 0 auto;
+  width: 100%;
+}
+
+.header-card .section-kicker {
+  width: auto;
 }
 
 .card.green {
@@ -102,6 +122,7 @@ button::after {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
   min-height: 42rpx;
   margin-bottom: 12rpx;
   padding: 0 16rpx;
@@ -165,6 +186,8 @@ button::after {
 }
 
 .option-btn {
+  width: 100%;
+  min-width: 0;
   min-height: 86rpx;
   padding: 20rpx 26rpx;
   border: 3rpx solid #E8E6E1;
@@ -174,6 +197,7 @@ button::after {
   font-size: 28rpx;
   line-height: 1.45;
   text-align: left;
+  box-sizing: border-box;
 }
 
 .option-btn.selected {
@@ -221,6 +245,14 @@ button::after {
 
 .modal-body {
   padding: 34rpx;
+}
+
+.modal-body .primary-btn,
+.modal-body .success-btn,
+.modal-body .outline-btn,
+.modal-body .dark-btn {
+  width: 100%;
+  margin: 0;
 }
 
 .pill {

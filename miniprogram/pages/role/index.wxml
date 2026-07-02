@@ -6,12 +6,12 @@
       <image class="role-mascot" src="{{mascot}}" mode="aspectFill" />
     </view>
     <text class="role-kicker">小鹅陪练</text>
-    <text class="role-title">请选择您的身份</text>
-    <text class="role-copy">同一个微信号再次进入时，系统会自动续接您上次的身份和资料。</text>
+    <text class="role-title">请选择身份</text>
+    <text class="role-copy">老人练一练，家人看一看。</text>
   </view>
 
   <view wx:if="{{checkingLogin}}" class="resume-card">
-    <text class="resume-title">微信登录中</text>
+    <text class="resume-title">正在登录</text>
     <text class="resume-copy">{{checkingText}}</text>
   </view>
 
@@ -28,10 +28,9 @@
       <view class="role-content">
         <view class="role-head">
           <text class="role-name">{{item.title}}</text>
-          <text class="role-chip">{{item.role === 'elder' ? '主要入口' : (item.role === 'caregiver' ? '家庭查看' : '演示后台')}}</text>
+          <text class="role-chip">{{item.role === 'elder' ? '练习' : '看护'}}</text>
         </view>
         <text class="role-desc">{{item.desc}}</text>
-        <text class="role-action">{{item.action}}</text>
       </view>
     </button>
   </view>

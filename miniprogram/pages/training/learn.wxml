@@ -6,7 +6,7 @@
       id="learnVideo"
       class="learn-video"
       src="{{level.video}}"
-      poster="{{level.image || '/assets/images/xiao-e/mascot.png'}}"
+      poster="{{level.image || '/assets/images/xiao-e-icons/voice-assistant.png'}}"
       controls
       object-fit="contain"
       show-center-play-btn
@@ -39,7 +39,7 @@
   <view wx:if="{{showDialog}}" class="modal-mask" bindtap="closeDialog">
     <view class="modal-card goose-dialog" catchtap="noop">
       <view class="modal-body">
-        <image class="dialog-img" src="/assets/images/xiao-e/ok.jpg" mode="aspectFit" />
+        <image class="dialog-img" src="/assets/images/xiao-e-icons/voice-assistant.png" mode="aspectFit" />
         <text class="dialog-title">太棒了</text>
         <text class="dialog-copy">动作看明白了，我们就进入练习。小鹅会在旁边陪着您慢慢做。</text>
         <button class="primary-btn" bindtap="startPractice">进入练习</button>

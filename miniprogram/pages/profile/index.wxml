@@ -13,6 +13,7 @@
 
   <view class="card menu-card">
     <view class="menu-row" bindtap="openProfileEdit">
+      <image class="menu-icon" src="/assets/images/xiao-e-icons/profile-edit.png" mode="aspectFit" />
       <view class="menu-main">
         <text class="menu-title">完善资料</text>
         <text class="menu-desc">病史、疼痛部位、紧急联系人</text>
@@ -21,6 +22,7 @@
     </view>
 
     <view class="menu-row" bindtap="openSettings">
+      <image class="menu-icon" src="/assets/images/xiao-e-icons/settings.png" mode="aspectFit" />
       <view class="menu-main">
         <text class="menu-title">设置</text>
         <text class="menu-desc">提醒、清空当前数据、返回身份选择</text>
@@ -29,6 +31,7 @@
     </view>
 
     <view class="menu-row" bindtap="openTraining">
+      <image class="menu-icon" src="/assets/images/xiao-e-icons/training-record.png" mode="aspectFit" />
       <view class="menu-main">
         <text class="menu-title">训练记录</text>
         <text class="menu-desc">{{trainingText}}</text>
@@ -37,6 +40,7 @@
     </view>
 
     <view class="menu-row" bindtap="openHealth">
+      <image class="menu-icon" src="/assets/images/xiao-e-icons/health-archive.png" mode="aspectFit" />
       <view class="menu-main">
         <text class="menu-title">健康档案</text>
         <text class="menu-desc">资料、测评和训练概览</text>
@@ -45,6 +49,7 @@
     </view>
 
     <view class="menu-row" bindtap="openPoseHistory">
+      <image class="menu-icon" src="/assets/images/xiao-e-icons/pose-history.png" mode="aspectFit" />
       <view class="menu-main">
         <text class="menu-title">检测历史</text>
         <text class="menu-desc">角度、评分和训练建议</text>
@@ -54,7 +59,7 @@
   </view>
 
   <view wx:if="{{showQr}}" class="modal-mask" bindtap="closeQr">
-    <view class="modal-card" catchtap="noop">
+    <view class="modal-card qr-modal-card" catchtap="noop">
       <view class="modal-body qr-modal">
         <text class="card-title">绑定子女</text>
         <text class="binding-status">{{bindingLoading ? '正在生成绑定码...' : bindingStatus}}</text>
@@ -65,7 +70,6 @@
           <button class="outline-btn half-btn" bindtap="copyBindingCode">复制绑定码</button>
           <button class="primary-btn half-btn" bindtap="closeQr">知道了</button>
         </view>
-        <text class="card-copy">请让子女扫描这个普通二维码获取绑定码；如果当前设备不方便扫码，也可以直接复制绑定码手动输入完成绑定。</text>
       </view>
     </view>
   </view>
