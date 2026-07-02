@@ -84,6 +84,22 @@
         "value": ".claude"
       },
       {
+        "type": "folder",
+        "value": "design-assets"
+      },
+      {
+        "type": "folder",
+        "value": "docs"
+      },
+      {
+        "type": "folder",
+        "value": "pose"
+      },
+      {
+        "type": "folder",
+        "value": "video"
+      },
+      {
         "type": "file",
         "value": "project.private.config.json"
       }
