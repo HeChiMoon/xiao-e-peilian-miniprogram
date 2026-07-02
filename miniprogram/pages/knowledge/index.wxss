@@ -152,13 +152,19 @@
 }
 
 .action-btn.active {
-  background: #fff0e6;
   color: #d36f3e;
 }
 
 .action-icon {
   width: 28rpx;
   height: 28rpx;
+  opacity: 0.72;
+  transition: opacity 0.18s ease, filter 0.18s ease;
+}
+
+.action-btn.active .action-icon {
+  opacity: 1;
+  filter: sepia(1) saturate(2.2) hue-rotate(330deg) brightness(0.98);
 }
 
 .comment-mask {
