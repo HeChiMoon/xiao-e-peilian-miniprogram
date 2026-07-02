@@ -91,7 +91,7 @@
             placeholder-class="comment-placeholder"
             bindinput="onCommentInput"
           />
-          <button class="comment-submit" bindtap="submitComment">发送</button>
+          <view class="comment-submit" bindtap="submitComment">发送</view>
         </view>
       </view>
     </view>

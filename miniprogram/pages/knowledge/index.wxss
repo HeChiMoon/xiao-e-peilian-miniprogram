@@ -150,8 +150,7 @@
   box-sizing: border-box;
 }
 
-.action-btn::after,
-.comment-submit::after {
+.action-btn::after {
   border: 0;
 }
 
@@ -324,19 +323,23 @@
 
 .comment-editor {
   margin-top: 18rpx;
-}
-
-.comment-input-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 128rpx;
-  gap: 14rpx;
-  align-items: center;
   width: 100%;
   box-sizing: border-box;
 }
 
-.comment-input {
+.comment-input-row {
+  display: flex;
+  gap: 14rpx;
+  align-items: center;
+  width: 100%;
   min-width: 0;
+  box-sizing: border-box;
+}
+
+.comment-input {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 0;
   height: 72rpx;
   padding: 0 22rpx;
   border-radius: 999rpx;
@@ -351,10 +354,11 @@
 }
 
 .comment-submit {
+  flex: 0 0 118rpx;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 128rpx;
+  width: 118rpx;
   min-width: 0;
   height: 72rpx;
   margin: 0;
