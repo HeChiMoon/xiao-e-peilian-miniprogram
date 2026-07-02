@@ -150,7 +150,7 @@ Page({
   },
 
   goVideo() {
-    wx.navigateTo({ url: '/pages/video/index' })
+    wx.navigateTo({ url: '/pages/knowledge/index' })
   },
 
   restart() {

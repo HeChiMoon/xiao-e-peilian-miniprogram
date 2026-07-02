@@ -27,7 +27,7 @@
       ]
     },
     {
-      "root": "pages/video",
+      "root": "pages/knowledge",
       "pages": [
         "index"
       ]
@@ -37,7 +37,7 @@
     "backgroundColor": "#F7F5F0",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F7F5F0",
-    "navigationBarTitleText": "\u5c0f\u9e45\u966a\u7ec3",
+    "navigationBarTitleText": "小鹅陪练",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -48,13 +48,13 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "\u9996\u9875",
+        "text": "首页",
         "iconPath": "images/icons/home.png",
         "selectedIconPath": "images/icons/home-active.png"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "\u6211\u7684",
+        "text": "我的",
         "iconPath": "images/icons/usercenter.png",
         "selectedIconPath": "images/icons/usercenter-active.png"
       }
@@ -62,10 +62,10 @@
   },
   "permission": {
     "scope.camera": {
-      "desc": "\u7528\u4e8e\u8bad\u7ec3\u7ec3\u4e60\u548c\u76f8\u673a\u68c0\u6d4b\u65f6\u7684\u59ff\u6001\u6355\u6359\u753b\u9762"
+      "desc": "用于训练练习和相机检测时的姿态捕捙画面"
     },
     "scope.record": {
-      "desc": "\u7528\u4e8e\u5c0f\u9e45\u8bed\u97f3\u95ee\u7b54\u65f6\u8bb0\u5f55\u60a8\u7684\u63d0\u95ee"
+      "desc": "用于小鹅语音问答时记录您的提问"
     }
   },
   "sitemapLocation": "sitemap.json",

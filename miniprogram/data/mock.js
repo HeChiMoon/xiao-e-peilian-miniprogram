@@ -3,7 +3,7 @@ const activeTrainingLevels = [
     id: 1,
     name: '靠墙静蹲',
     shortName: '静蹲',
-    video: '/pages/training/assets/wall-squat.mp4',
+    video: '',
     image: '/assets/images/action-wall-squat.jpg',
     description: '背部轻轻贴墙，双脚与肩同宽，慢慢下蹲到舒适位置。',
     guide: '膝盖朝向脚尖，保持 10 秒。疼痛明显时立刻停止。',
@@ -23,7 +23,7 @@ const activeTrainingLevels = [
     id: 3,
     name: '单腿站立',
     shortName: '单腿站',
-    video: '/pages/training/assets/single-leg-stand.mp4',
+    video: '',
     image: '/assets/images/action-single-leg-stand.jpg',
     description: '扶住椅背，慢慢抬起一只脚，保持身体稳定。',
     guide: '保持 8 秒以上，身体晃动过大时降低难度。',
@@ -199,26 +199,29 @@ const videoItems = [
   {
     id: 'v1',
     title: '膝关节日常保护小知识',
-    desc: '了解低冲击运动前的准备和膝盖保护方法。',
-    src: '/pages/video/assets/science-1.mp4',
+    desc: '先了解低冲击活动、护膝和训练前准备，让每日练更安心。',
+    image: '/assets/images/xiao-e-icons/health-archive.png',
+    points: ['训练前先活动脚踝和膝盖', '上下楼时扶稳扶手', '疼痛明显时先休息'],
     likes: 128,
     saves: 34,
-    comments: ['动作讲得很清楚', '适合给爸妈看']
+    comments: ['讲得清楚', '适合给爸妈看']
   },
   {
     id: 'v2',
-    title: '适合长者的运动前热身',
-    desc: '慢慢活动脚踝和膝盖，让训练更安心。',
-    src: '/pages/video/assets/science-2.mp4',
+    title: '训练前怎么热身',
+    desc: '用简单动作慢慢活动脚踝、小腿和膝盖，减少突然用力。',
+    image: '/assets/images/xiao-e-icons/training-record.png',
+    points: ['动作幅度先小后大', '每个动作保持慢一点', '不追求速度和次数'],
     likes: 96,
     saves: 28,
     comments: ['热身很实用']
   },
   {
     id: 'v3',
-    title: '训练后如何放松腿部',
-    desc: '训练之后放松大腿和小腿，第二天更轻松。',
-    src: '/pages/video/assets/science-3.mp4',
+    title: '训练后怎么放松腿部',
+    desc: '训练结束后做轻柔放松，帮助大腿和小腿慢慢恢复。',
+    image: '/assets/images/action-leg-raise.jpg',
+    points: ['先坐下休息一会儿', '轻轻活动脚踝', '不要马上久站或快走'],
     likes: 74,
     saves: 19,
     comments: ['收藏了']
@@ -226,20 +229,22 @@ const videoItems = [
   {
     id: 'v4',
     title: '上下楼前先护好膝盖',
-    desc: '讲清日常起身、转身和上下楼时的膝关节保护重点。',
-    src: '/pages/video/assets/science-4.mp4',
+    desc: '日常上下楼、起身和转身时，先把动作放慢放稳。',
+    image: '/assets/images/action-wall-squat.jpg',
+    points: ['上楼好腿先上', '下楼不舒服的腿先下', '膝盖不舒服时少爬楼'],
     likes: 88,
     saves: 26,
-    comments: ['这条很适合家里老人']
+    comments: ['这条适合家里老人']
   },
   {
     id: 'v5',
     title: '膝盖不舒服时怎么安排活动',
-    desc: '疼痛、酸胀或活动受限时，先怎么做更稳妥。',
-    src: '/pages/video/assets/science-5.mp4',
+    desc: '疼痛、酸胀或活动受限时，先降低强度，不硬撑。',
+    image: '/assets/images/xiao-e-icons/warning.png',
+    points: ['先暂停高强度活动', '轻微不适可以短时间观察', '持续疼痛要及时就医'],
     likes: 92,
     saves: 31,
-    comments: ['讲得很实在']
+    comments: ['讲得实在']
   }
 ]
 
@@ -352,10 +357,10 @@ const adminDashboard = {
   metrics: [
     { label: '当前用户', value: '128' },
     { label: '今日训练', value: '86' },
-    { label: '内容视频', value: '12' },
+    { label: '科普资料', value: '12' },
     { label: '风险提醒', value: '9' }
   ],
-  tasks: ['训练动作内容维护', '科普视频内容审核', '高风险测评提醒查看']
+  tasks: ['训练动作内容维护', '健康知识内容审核', '高风险测评提醒查看']
 }
 
 module.exports = {

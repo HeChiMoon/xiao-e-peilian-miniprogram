@@ -1,23 +1,11 @@
 <view class="page no-tab learn-page" wx:if="{{level}}">
   <view class="video-shell">
-    <view wx:if="{{preparingMedia}}" class="subtitle-bar">正在准备示范内容，请稍等一下。</view>
-    <video
-      wx:if="{{hasVideo && !preparingMedia}}"
-      id="learnVideo"
-      class="learn-video"
-      src="{{level.video}}"
-      poster="{{level.image || '/assets/images/xiao-e-icons/voice-assistant.png'}}"
-      controls
-      object-fit="contain"
-      show-center-play-btn
-    ></video>
     <image
-      wx:elif="{{!hasVideo}}"
       class="learn-video learn-image"
       src="{{level.image}}"
       mode="aspectFit"
     />
-    <view wx:if="{{!preparingMedia}}" class="subtitle-bar">{{level.guide}}</view>
+    <view class="subtitle-bar">{{level.guide}}</view>
   </view>
 
   <view class="card">
@@ -32,7 +20,7 @@
   </view>
 
   <view class="action-grid">
-    <button class="outline-btn" bindtap="notYet">还没学会</button>
+    <button class="outline-btn" bindtap="notYet">再看一遍</button>
     <button class="primary-btn" bindtap="understood">学会了</button>
   </view>
 
@@ -41,7 +29,7 @@
       <view class="modal-body">
         <image class="dialog-img" src="/assets/images/xiao-e-icons/voice-assistant.png" mode="aspectFit" />
         <text class="dialog-title">太棒了</text>
-        <text class="dialog-copy">动作看明白了，我们就进入练习。小鹅会在旁边陪着您慢慢做。</text>
+        <text class="dialog-copy">动作看明白了，我们就进入练习。小鹅会陪着您慢慢做。</text>
         <button class="primary-btn" bindtap="startPractice">进入练习</button>
       </view>
     </view>

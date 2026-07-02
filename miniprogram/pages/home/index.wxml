@@ -70,7 +70,7 @@
         <view class="video-head">
           <view class="video-copy">
             <text class="section-kicker sky-kicker">今日推荐</text>
-            <text class="card-title">科普视频</text>
+            <text class="card-title">健康知识</text>
             <text class="card-copy">{{recommendedVideo.title}}</text>
             <text class="video-reason">{{recommendedVideo.reason}}</text>
           </view>

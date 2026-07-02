@@ -17,7 +17,7 @@ const XIAO_E_ASSETS = {
   mascot: '/assets/images/xiao-e-icons/voice-assistant.png',
   detect: '/assets/images/xiao-e-icons/pose-history.png',
   report: '/assets/images/xiao-e-icons/health-archive.png',
-  video: '/assets/images/xiao-e-icons/video.png'
+  video: '/assets/images/xiao-e-icons/knowledge.png'
 }
 
 function buildVideoPreview(context) {
@@ -73,7 +73,7 @@ function buildDailyFocus(context) {
   if (report && (String(report.level).includes('high') || String(report.levelText).includes('高'))) {
     return {
       title: '今天以安全为先',
-      copy: report.suggestion || '建议先看科普视频，再做低强度训练。'
+      copy: report.suggestion || '建议先看健康知识，再做低强度训练。'
     }
   }
 
@@ -87,7 +87,7 @@ function buildDailyFocus(context) {
   return {
     title: '今天状态不错，继续保持',
     copy: completedCount >= 3
-      ? '今天的训练已经完成，可以看看科普视频，顺便做做放松。'
+      ? '今天的训练已经完成，可以看看健康知识，顺便做做放松。'
       : '继续完成每日练，动作慢一点、稳一点就很好。'
   }
 }
@@ -206,7 +206,7 @@ Page({
   },
 
   goVideo() {
-    wx.navigateTo({ url: '/pages/video/index' })
+    wx.navigateTo({ url: '/pages/knowledge/index' })
   },
 
   goChat() {

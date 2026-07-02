@@ -1,0 +1,99 @@
+<view class="page no-tab knowledge-page">
+  <view class="knowledge-hero card">
+    <text class="section-kicker sky-kicker">健康知识</text>
+    <text class="hero-title">今天先看一点护膝小知识</text>
+    <text class="hero-copy">{{intro.copy}}</text>
+  </view>
+
+  <view class="knowledge-list">
+    <view wx:for="{{items}}" wx:key="id" class="card knowledge-card">
+      <view class="knowledge-head">
+        <image class="knowledge-icon" src="{{item.image}}" mode="aspectFit" />
+        <view class="knowledge-copy">
+          <view class="title-row">
+            <text class="knowledge-title">{{item.title}}</text>
+            <text wx:if="{{item.recommended}}" class="recommend-pill">推荐</text>
+          </view>
+          <text class="knowledge-desc">{{item.desc}}</text>
+          <text wx:if="{{item.recommended}}" class="recommend-reason">{{item.recommendReason}}</text>
+        </view>
+      </view>
+
+      <view wx:if="{{item.points && item.points.length}}" class="point-list">
+        <view wx:for="{{item.points}}" wx:for-item="point" wx:key="*this" class="point-row">
+          <text class="point-dot"></text>
+          <text class="point-text">{{point}}</text>
+        </view>
+      </view>
+
+      <view class="knowledge-actions">
+        <button class="action-btn {{item.liked ? 'active' : ''}}" data-id="{{item.id}}" bindtap="toggleLike">
+          <image class="action-icon" src="{{actionIcons.like}}" mode="aspectFit" />
+          <text>{{item.likeCount}}</text>
+        </button>
+        <button class="action-btn {{item.saved ? 'active' : ''}}" data-id="{{item.id}}" bindtap="toggleSave">
+          <image class="action-icon" src="{{actionIcons.save}}" mode="aspectFit" />
+          <text>{{item.saveCount}}</text>
+        </button>
+        <button class="action-btn" data-id="{{item.id}}" bindtap="openComments">
+          <image class="action-icon" src="{{actionIcons.comment}}" mode="aspectFit" />
+          <text>{{item.commentCount}}</text>
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showComments}}" class="comment-mask" bindtap="closeComments">
+    <view class="comment-sheet" catchtap="noop">
+      <view class="sheet-handle"></view>
+      <view class="comment-head">
+        <view class="comment-head-main">
+          <text class="comment-title">留言</text>
+          <text class="comment-subtitle">{{commentItemTitle}}</text>
+        </view>
+        <text class="comment-close" bindtap="closeComments">收起</text>
+      </view>
+
+      <view class="quick-comment-block">
+        <text class="sheet-label">快捷留言</text>
+        <view class="quick-comment-list">
+          <text
+            wx:for="{{quickComments}}"
+            wx:key="*this"
+            class="quick-comment-pill"
+            data-text="{{item}}"
+            bindtap="fillQuickComment"
+          >{{item}}</text>
+        </view>
+      </view>
+
+      <scroll-view class="comment-list" scroll-y>
+        <view wx:if="{{!commentItems.length}}" class="comment-empty">还没有留言，您可以先说一句。</view>
+        <view wx:for="{{commentItems}}" wx:key="id" class="comment-row">
+          <view class="comment-avatar">{{item.avatarText}}</view>
+          <view class="comment-card">
+            <view class="comment-meta">
+              <text class="comment-author">{{item.author}}</text>
+              <text class="comment-time">{{item.timeText}}</text>
+            </view>
+            <text class="comment-content">{{item.text}}</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <view class="comment-editor">
+        <view class="comment-input-row">
+          <input
+            class="comment-input"
+            value="{{commentDraft}}"
+            maxlength="24"
+            placeholder="留一句鼓励的话"
+            placeholder-class="comment-placeholder"
+            bindinput="onCommentInput"
+          />
+          <button class="comment-submit" bindtap="submitComment">发送</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

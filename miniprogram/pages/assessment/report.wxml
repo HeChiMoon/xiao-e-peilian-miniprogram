@@ -53,7 +53,7 @@
   </view>
 
   <button wx:if="{{canTrain}}" class="primary-btn" bindtap="goTraining">进入每日练</button>
-  <button wx:else class="primary-btn" bindtap="goVideo">先看科普视频</button>
+  <button wx:else class="primary-btn" bindtap="goVideo">先看健康知识</button>
   <button class="outline-btn" bindtap="restart">重新筛查</button>
   <button class="outline-btn" bindtap="backHome">返回首页</button>
 </view>

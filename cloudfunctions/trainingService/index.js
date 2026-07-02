@@ -159,7 +159,7 @@ function buildSafetyTips(riskLevel, pose, report) {
   const blocked = Boolean(report && report.safetyFlags && report.safetyFlags.blocked)
 
   if (blocked) {
-    return ['筛查提示暂不建议自行训练', '可以先看科普视频或咨询专业人员', '如有疼痛、肿胀或近期手术，请先听医生意见']
+    return ['筛查提示暂不建议自行训练', '可以先看健康知识或咨询专业人员', '如有疼痛、肿胀或近期手术，请先听医生意见']
   }
   if (riskLevel === 'high') {
     return ['优先完成直腿抬高', '靠墙静蹲和单腿站立先降低幅度', '如果出现明显肿胀或刺痛，先休息并考虑就医']

@@ -14,7 +14,7 @@ function buildSummary(progress) {
     remainingCount,
     nextLevelText: nextLevel ? nextLevel.name : '今天已经全部完成',
     tipText: completedCount >= trainingLevels.length
-      ? '今天的训练已经完成，可以休息一下，再看看科普视频。'
+      ? '今天的训练已经完成，可以休息一下，再看看健康知识。'
       : completedCount === 0
         ? '今天还没开始，先从第一个动作慢慢来就好。'
         : '继续完成剩下的动作，动作慢一点、稳一点就很好。'

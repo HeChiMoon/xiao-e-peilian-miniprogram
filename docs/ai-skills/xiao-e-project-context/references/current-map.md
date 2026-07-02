@@ -26,7 +26,7 @@ Subpackages:
 - `pages/training/learn`
 - `pages/training/practice`
 - `pages/training/complete`
-- `pages/video/index`
+- `pages/knowledge/index`
 
 ## Services
 
