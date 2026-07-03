@@ -7,6 +7,7 @@ const {
   clearDemoLocalData
 } = require('../../utils/storage')
 const { getSessionState } = require('../../services/authService')
+const { enableShareMenu, buildShareMessage, buildTimelineShare } = require('../../utils/share')
 
 const ROLE_ITEMS = [
   {
@@ -35,6 +36,10 @@ Page({
     mascot: '/assets/images/xiao-e-icons/voice-assistant.png',
     checkingLogin: false,
     checkingText: ''
+  },
+
+  onLoad() {
+    enableShareMenu()
   },
 
   onShow() {
@@ -154,5 +159,13 @@ Page({
         })
       }, 300)
     }
+  },
+
+  onShareAppMessage() {
+    return buildShareMessage()
+  },
+
+  onShareTimeline() {
+    return buildTimelineShare()
   }
 })

@@ -5,6 +5,7 @@ const { getCloudAssessmentReport } = require('../../services/assessmentService')
 const { getCloudTrainingProgress } = require('../../services/trainingService')
 const { getLatestPoseDetection } = require('../../services/poseService')
 const { getRecommendedVideoPreview } = require('../../utils/recommendation')
+const { enableShareMenu, buildShareMessage, buildTimelineShare } = require('../../utils/share')
 
 const DEFAULT_PROFILE = {
   name: '',
@@ -103,6 +104,10 @@ Page({
     featureIcons: XIAO_E_ASSETS,
     recommendedVideo: buildVideoPreview({}),
     dailyFocus: buildDailyFocus({})
+  },
+
+  onLoad() {
+    enableShareMenu()
   },
 
   onShow() {
@@ -211,5 +216,18 @@ Page({
 
   goChat() {
     wx.navigateTo({ url: '/pages/chat/index' })
+  },
+
+  onShareAppMessage() {
+    return buildShareMessage({
+      title: '\u8d77\u6b65\u8f7b\u76c8\uff1a\u6bcf\u65e5\u819d\u5173\u8282\u8bad\u7ec3\u966a\u4f34',
+      path: '/pages/role/index'
+    })
+  },
+
+  onShareTimeline() {
+    return buildTimelineShare({
+      title: '\u8d77\u6b65\u8f7b\u76c8\uff1a\u9002\u8001\u5316\u819d\u5173\u8282\u8bad\u7ec3\u966a\u4f34'
+    })
   }
 })

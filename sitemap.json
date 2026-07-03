@@ -1,0 +1,9 @@
+{
+  "desc": "用于声明小程序页面允许被微信搜索收录，实际上传版本以 miniprogram/sitemap.json 为准。",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

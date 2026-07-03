@@ -1,7 +1,9 @@
 {
-  "desc": "关于本文件的更多信息，请参考文档 https://developers.weixin.qq.com/miniprogram/dev/framework/sitemap.html",
-  "rules": [{
-    "action": "allow",
-    "page": "*"
-  }]
+  "desc": "用于声明小程序页面允许被微信搜索收录。",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
 }

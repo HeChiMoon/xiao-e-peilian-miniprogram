@@ -11,6 +11,7 @@ const { getCloudAssessmentReport } = require('../../services/assessmentService')
 const { getCloudTrainingProgress } = require('../../services/trainingService')
 const { getLatestPoseDetection } = require('../../services/poseService')
 const { recommendVideoItems } = require('../../utils/recommendation')
+const { enableShareMenu, buildShareMessage, buildTimelineShare } = require('../../utils/share')
 
 const DEFAULT_PROFILE = {
   name: '',
@@ -111,6 +112,7 @@ Page({
   },
 
   onLoad() {
+    enableShareMenu()
     this.stateMap = normalizeStateMap(getVideoState())
     this.context = {
       profile: getElderProfile(DEFAULT_PROFILE),
@@ -279,6 +281,21 @@ Page({
     wx.showToast({
       title: '留言成功',
       icon: 'none'
+    })
+  },
+
+  onShareAppMessage() {
+    const current = (this.data.items || [])[0] || {}
+    return buildShareMessage({
+      title: current.title ? `\u8d77\u6b65\u8f7b\u76c8\uff1a${current.title}` : '\u8d77\u6b65\u8f7b\u76c8\uff1a\u819d\u5173\u8282\u5065\u5eb7\u77e5\u8bc6',
+      path: '/pages/role/index'
+    })
+  },
+
+  onShareTimeline() {
+    const current = (this.data.items || [])[0] || {}
+    return buildTimelineShare({
+      title: current.title ? `\u8d77\u6b65\u8f7b\u76c8\uff1a${current.title}` : '\u8d77\u6b65\u8f7b\u76c8\uff1a\u819d\u5173\u8282\u5065\u5eb7\u77e5\u8bc6'
     })
   }
 })
